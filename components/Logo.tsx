@@ -6,7 +6,7 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg';
   showText?: boolean;
   className?: string;
-  variant?: 'default' | 'light'; // 'light' for use on dark backgrounds
+  variant?: 'default' | 'light'; 
 }
 
 export default function Logo({ size = 'md', showText = true, className = '', variant = 'default' }: LogoProps) {
@@ -18,80 +18,51 @@ export default function Logo({ size = 'md', showText = true, className = '', var
 
   const s = sizes[size];
   
-  // Text colors based on variant
   const textColor = variant === 'light' 
     ? 'text-white' 
     : 'text-cyan-500 text-glow';
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Logo Icon - Modern Crowd + Shield Design */}
-      <div className={`${s.icon} rounded bg-black border border-cyan-500/50 flex items-center justify-center shadow-lg shadow-cyan-500/20 relative overflow-hidden`}>
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'linear-gradient(90deg, white 1px, transparent 1px), linear-gradient(white 1px, transparent 1px)',
-            backgroundSize: '8px 8px'
-          }} />
-        </div>
+      {/* TRINETRA Eye (Ashoka Chakra Pupil) - Matched to App Theme */}
+      <div className={`${s.icon} rounded-md bg-[#0a0d14]/80 border border-[#06b6d4]/40 flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] relative overflow-hidden`}>
+        
         {/* Main Logo SVG */}
         <svg 
           viewBox="0 0 48 48" 
           fill="none" 
-          className="w-[70%] h-[70%] relative z-10"
+          className="w-[85%] h-[85%] relative z-10"
         >
-          {/* Stylized crowd/people silhouettes */}
-          <g opacity="0.9">
-            {/* Center person (larger) */}
-            <circle cx="24" cy="16" r="4" fill="white" />
-            <path 
-              d="M16 36c0-4.418 3.582-8 8-8s8 3.582 8 8" 
-              stroke="#10b981" 
-              strokeWidth="3" 
-              strokeLinecap="round"
-              fill="none"
-            />
-            
-            {/* Left person */}
-            <circle cx="12" cy="20" r="3" fill="white" opacity="0.7" />
-            <path 
-              d="M6 36c0-3.314 2.686-6 6-6s6 2.686 6 6" 
-              stroke="#10b981" 
-              strokeWidth="2.5" 
-              strokeLinecap="round"
-              fill="none"
-              opacity="0.7"
-            />
-            
-            {/* Right person */}
-            <circle cx="36" cy="20" r="3" fill="white" opacity="0.7" />
-            <path 
-              d="M30 36c0-3.314 2.686-6 6-6s6 2.686 6 6" 
-              stroke="#10b981" 
-              strokeWidth="2.5" 
-              strokeLinecap="round"
-              fill="none"
-              opacity="0.7"
-            />
-          </g>
+          {/* Outer HUD Ring */}
+          <circle cx="24" cy="24" r="20" stroke="#06b6d4" strokeWidth="1" strokeDasharray="3 5" opacity="0.4" />
           
-          {/* Shield accent at bottom */}
-          <path 
-            d="M24 44l-8-4v-4c0-2.21 3.582-4 8-4s8 1.79 8 4v4l-8 4z" 
-            fill="#10b981"
-            opacity="0.3"
-          />
+          {/* Cyber Eye Shape (TRINETRA) */}
+          <path d="M 4 24 Q 24 8 44 24 Q 24 40 4 24 Z" stroke="#06b6d4" strokeWidth="2.5" fill="rgba(6,182,212,0.08)" />
+          
+          {/* Inner Iris boundary (Red accent to match the app's alerts) */}
+          <circle cx="24" cy="24" r="9" stroke="#ff5258" strokeWidth="1.5" opacity="0.7" />
+          
+          {/* Ashoka Chakra (24 Spokes simulated with strokeDasharray) - Flag Element */}
+          <circle cx="24" cy="24" r="5" stroke="#06b6d4" strokeWidth="2" strokeDasharray="0.8 1.1" />
+          
+          {/* Center Bindu/Pupil */}
+          <circle cx="24" cy="24" r="2.5" fill="#06b6d4" className="animate-pulse" />
+          
+          {/* Crosshair accents */}
+          <path d="M24 10v3 M24 35v3 M10 24h3 M35 24h3" stroke="#06b6d4" strokeWidth="1.5" opacity="0.6" />
         </svg>
       </div>
       
       {/* Text */}
       {showText && (
         <div className="flex flex-col">
-          <span className={`${s.text} font-bold ${textColor} tracking-widest`}>
+          <span className={`${s.text} font-mono font-bold tracking-[0.2em] text-[#06b6d4]`}>
             TRINETRA
           </span>
           {size === 'lg' && (
-            <span className="text-[0.6rem] text-cyan-600/70 font-bold tracking-widest">BORDER SEC</span>
+            <span className="text-[0.6rem] text-cyan-700 font-mono font-bold tracking-widest uppercase mt-0.5">
+              Border Surveillance Node
+            </span>
           )}
         </div>
       )}
