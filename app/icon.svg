@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Shield background -->
+  <path d="M16 2 L28 8 L28 16 C28 24 16 30 16 30 C16 30 4 24 4 16 L4 8 Z" fill="#10b981"/>
+  <!-- Shield inner gradient -->
+  <path d="M16 4 L26 9 L26 16 C26 22.5 16 27.5 16 27.5 C16 27.5 6 22.5 6 16 L6 9 Z" fill="#059669"/>
+  <!-- People silhouette -->
+  <g fill="#ffffff" opacity="0.9">
+    <!-- Center person -->
+    <circle cx="16" cy="12" r="2.5"/>
+    <path d="M12 22 L16 16 L20 22 L18 22 L18 19 L14 19 L14 22 Z"/>
+    <!-- Left person (smaller) -->
+    <circle cx="10" cy="14" r="1.8"/>
+    <path d="M7 22 L10 17 L13 22 L11.5 22 L11.5 20 L8.5 20 L8.5 22 Z"/>
+    <!-- Right person (smaller) -->
+    <circle cx="22" cy="14" r="1.8"/>
+    <path d="M19 22 L22 17 L25 22 L23.5 22 L23.5 20 L20.5 20 L20.5 22 Z"/>
+  </g>
+</svg>
