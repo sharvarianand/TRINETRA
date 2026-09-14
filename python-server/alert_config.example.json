@@ -1,0 +1,10 @@
+{
+    "whatsappEnabled": false,
+    "whatsappNumber": "",
+    "alertCooldownMinutes": 5,
+    "twilioAccountSid": "",
+    "twilioAuthToken": "",
+    "twilioWhatsappNumber": "whatsapp:+14155238886",
+    "prototypeMode": true,
+    "emergencyContacts": []
+}
