@@ -1,0 +1,40 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local config (keep templates)
+.env
+.env.local
+
+# Test files
+test_*.py
+*_test.py
+
+# Git
+.git/
+.gitignore
+
+# Documentation (not needed for Docker)
+docs/
+*.md
+!README.md
