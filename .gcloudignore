@@ -1,0 +1,81 @@
+# This file tells gcloud which files to ignore when uploading to Cloud Build
+# Similar to .gitignore
+
+# Dependencies - these are huge!
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+
+# Next.js build output
+.next/
+out/
+build/
+
+# Python virtual environment
+.venv/
+*.venv*
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ML Models - very large files
+*.pt
+*.pth
+*.onnx
+*.h5
+*.pkl
+yolov8n.pt
+
+# Python server (we're only deploying Next.js)
+python-server/
+
+# Git
+.git/
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (secrets should be set via Cloud Run env vars)
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test files
+coverage/
+*.test.*
+*.spec.*
+__tests__/
+
+# Documentation
+README.md
+docs/
+
+# Temporary files
+tmp/
+temp/
+
+# Lock files (will use package.json only)
+# Actually, keep bun.lock for reproducible builds
+# bun.lock
+
+# Other
+.vercel/
+*.tsbuildinfo
