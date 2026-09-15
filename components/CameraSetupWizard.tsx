@@ -1,13 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Camera, Plus, Minus, Check, Wifi, Shield, Calculator, Upload } from 'lucide-react';
+import { Camera, Plus, Minus, Check, Wifi, X, Calculator, Upload } from 'lucide-react';
 import { AreaUnit, DensityLevel, calculateCapacity } from '@/lib/types';
+import Logo from './Logo';
 
 interface CameraInput {
-    id: string;
-    name: string;
-    url: string;
     zone: string;
     area: number;
     areaUnit: AreaUnit;
