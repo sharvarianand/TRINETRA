@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import Logo from '@/components/Logo';
 import { createClient } from '@/utils/supabase/client';
 
 export default function LoginPage() {
@@ -42,7 +43,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: \/auth/callback,
+          redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
       if (error) throw error;
@@ -58,11 +59,11 @@ export default function LoginPage() {
 
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-red/10 border border-brand-red/20 mb-5 shadow-[0_0_20px_rgba(239,51,72,0.15)]">
-            <Shield className="w-8 h-8 text-brand-red" />
+        <div className="flex flex-col items-center mb-10">
+          <div className="scale-125 mb-4">
+            <Logo size="lg" showText={false} />
           </div>
-          <h1 className="text-3xl font-black tracking-[0.2em] text-brand-text">TRINETRA</h1>
+          <h1 className="text-3xl font-black tracking-[0.2em] text-brand-text mt-4">TRINETRA</h1>
           <p className="text-xs text-brand-muted tracking-widest uppercase mt-3">SECURE ACCESS // BORDER SURVEILLANCE</p>
         </div>
 
@@ -162,3 +163,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

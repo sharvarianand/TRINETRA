@@ -9,10 +9,10 @@ export async function GET(request: Request) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(\/dashboard)
+      return NextResponse.redirect(`${origin}/dashboard`)
     }
   }
 
   // return the user to an error page with some instructions
-  return NextResponse.redirect(\/login?error=auth_failed)
+  return NextResponse.redirect(`${origin}/login?error=auth_failed`)
 }
