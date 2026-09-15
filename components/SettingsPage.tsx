@@ -60,6 +60,8 @@ interface NewCameraForm {
     densityLevel: DensityLevel;
     useManualCapacity: boolean;
     manualCapacity: number;
+    sourceType: 'stream' | 'upload';
+    videoFile: File | null;
 }
 
 const defaultSettings: SettingsData = {
@@ -80,7 +82,9 @@ const defaultNewCamera: NewCameraForm = {
     areaUnit: 'sqm',
     densityLevel: 'medium',
     useManualCapacity: false,
-    manualCapacity: 150
+    manualCapacity: 150,
+    sourceType: 'stream',
+    videoFile: null
 };
 
 const zones = ['Main Plaza', 'Entry Gate', 'Exit Gate', 'Stage Area', 'Food Court', 'Parking', 'VIP Area'];
@@ -1223,6 +1227,8 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
+
 
 
 
