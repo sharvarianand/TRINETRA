@@ -2,6 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Bot, User, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 
 interface Message {
   id: string;
@@ -11,12 +13,14 @@ interface Message {
 }
 
 export default function AICopilot() {
+  const router = useRouter();
+  const supabase = createClient();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      content: 'I am your TRINETRA AI Assistant. I can analyze camera feeds, query past incidents, and explain system features. How can I assist you today?',
+      content: 'I am your TRINETRA AI Assistant. I can analyze camera feeds, query the database for past incidents, and navigate the system for you. Try asking: "What time was the last person detected?" or "Go to settings".',
       timestamp: new Date()
     }
   ]);
@@ -35,10 +39,11 @@ export default function AICopilot() {
   const handleSend = async () => {
     if (!input.trim()) return;
     
+    const query = input;
     const userMsg: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input,
+      content: query,
       timestamp: new Date()
     };
     
@@ -46,9 +51,9 @@ export default function AICopilot() {
     setInput('');
     setIsTyping(true);
     
-    // Simulate AI processing / backend call
-    setTimeout(() => {
-      const aiResponse = generateMockResponse(userMsg.content);
+    // Simulate slight processing delay for natural feel
+    setTimeout(async () => {
+      const aiResponse = await processQuery(query);
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -57,29 +62,60 @@ export default function AICopilot() {
       };
       setMessages(prev => [...prev, aiMsg]);
       setIsTyping(false);
-    }, 1500);
+    }, 800);
   };
 
-  const generateMockResponse = (query: string) => {
+  const processQuery = async (query: string): Promise<string> => {
     const q = query.toLowerCase();
     
-    if (q.includes('video') || q.includes('camera') || q.includes('feed') || q.includes('show')) {
-      return "I'm currently monitoring the active camera in the Main Plaza. No critical anomalies detected in the live feed right now. Crowd density is at normal levels (approx. 42 people).";
-    }
-    if (q.includes('alert') || q.includes('incident') || q.includes('happened')) {
-      return "There were 3 incidents resolved today. The most recent was a 'High crowd density' warning at the Main Entrance 15 minutes ago, which has since normalized.";
-    }
-    if (q.includes('watchlist') || q.includes('suspect') || q.includes('face') || q.includes('plate')) {
-      return "The watchlist currently monitors your flagged faces and vehicle plates. When a match is detected on any camera, the system will immediately generate a critical alert on your dashboard.";
-    }
-    if (q.includes('help') || q.includes('how to')) {
-      return "You can use TRINETRA to manage camera streams, monitor crowds, track suspects, and review security logs. Navigate through the sidebar to access the Sector Map, Audit Ledger, and System Settings.";
-    }
-    if (q.includes('hello') || q.includes('hi')) {
-      return "Hello! I'm here to help you monitor the TRINETRA surveillance system. Ask me anything about the live feeds or recent alerts.";
+    // 1. ACTION AGENT (Navigation)
+    if (q.includes('navigate') || q.includes('go to') || q.includes('open') || q.includes('take me')) {
+      if (q.includes('setting') || q.includes('control')) {
+        setTimeout(() => router.push('/settings'), 1000);
+        return "Executing command: Navigating to System Control settings...";
+      }
+      if (q.includes('map') || q.includes('sector')) {
+        setTimeout(() => router.push('/heatmap'), 1000);
+        return "Executing command: Opening the Sector Map...";
+      }
+      if (q.includes('report') || q.includes('log')) {
+        setTimeout(() => router.push('/reports'), 1000);
+        return "Executing command: Accessing Incident Logs...";
+      }
+      if (q.includes('watch') || q.includes('suspect')) {
+        setTimeout(() => router.push('/watchlist'), 1000);
+        return "Executing command: Loading Suspect Watchlist...";
+      }
     }
     
-    return "I can analyze video feeds, search incident logs, and help you configure the system. Could you provide more details about what you're looking for?";
+    // 2. DATA QUERY AGENT (Supabase DB)
+    if (q.includes('person') || q.includes('detected') || q.includes('time') || q.includes('when') || q.includes('last')) {
+      try {
+        const { data, error } = await supabase
+          .from('alerts')
+          .select('*')
+          .order('timestamp', { ascending: false })
+          .limit(1);
+          
+        if (data && data.length > 0) {
+           const latest = data[0];
+           const time = new Date(latest.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+           const date = new Date(latest.timestamp).toLocaleDateString();
+           return "I checked the secure ledger. The most recent detection was a **\** recorded at **\** (\) in the **\** zone.";
+        } else {
+           return "I scanned the database ledger, but there are no detection alerts logged in the system yet.";
+        }
+      } catch (err) {
+        return "I encountered an error querying the encrypted database for recent detections.";
+      }
+    }
+    
+    // 3. FALLBACK COMMANDS
+    if (q.includes('hello') || q.includes('hi')) {
+      return "System Agent Online. I am ready to process queries about the database or navigate the dashboard for you.";
+    }
+    
+    return "I am currently running in rule-based agent mode. I can query the database for recent detections (e.g., 'when was the last person detected?') or navigate the interface (e.g., 'go to settings').";
   };
 
   return (
