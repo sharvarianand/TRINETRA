@@ -250,13 +250,24 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
 
         setCameraLoading(true);
         try {
+            let finalUrlToSave = newCamera.url;
+            if (newCamera.sourceType === 'upload' && newCamera.videoFile) {
+                const formData = new FormData();
+                formData.append('camera_id', newCamera.id);
+                formData.append('file', newCamera.videoFile);
+                const uploadResponse = await fetch(`${baseUrl}/cameras/upload`, { method: 'POST', body: formData });
+                const uploadData = await uploadResponse.json();
+                if (!uploadResponse.ok) throw new Error(uploadData.detail || 'Upload failed');
+                finalUrlToSave = uploadData.url;
+            }
+
             const response = await fetch(`${baseUrl}/cameras`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     id: newCamera.id,
                     name: newCamera.name,
-                    url: finalUrl,
+                    url: finalUrlToSave,
                     zone: newCamera.zone,
                     enabled: true,
                     area: newCamera.area,
@@ -347,9 +358,20 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         const calculatedCapacity = calculateCapacity(editForm.area, editForm.areaUnit, editForm.densityLevel);
         const capacity = editForm.useManualCapacity ? editForm.manualCapacity : calculatedCapacity;
 
+        let finalUrlToSave = editForm.url;
+        if (editForm.sourceType === 'upload' && editForm.videoFile) {
+            const formData = new FormData();
+            formData.append('camera_id', editingCameraId);
+            formData.append('file', editForm.videoFile);
+            const uploadResponse = await fetch(`${baseUrl}/cameras/upload`, { method: 'POST', body: formData });
+            const uploadData = await uploadResponse.json();
+            if (!uploadResponse.ok) throw new Error(uploadData.detail || 'Upload failed');
+            finalUrlToSave = uploadData.url;
+        }
+
         await updateCamera(editingCameraId, {
             name: editForm.name,
-            url: finalUrl,
+            url: finalUrlToSave,
             zone: editForm.zone,
             area: editForm.area,
             areaUnit: editForm.areaUnit,
@@ -1201,6 +1223,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 
 
