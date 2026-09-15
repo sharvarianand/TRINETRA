@@ -9,7 +9,7 @@ import {
   Users, Activity, BarChart3, Settings, Bell,
   Camera, AlertTriangle, TrendingUp, Clock, Menu, X,
   Home, FileText, Map, LogOut, CheckCircle, AlertCircle,
-  Sun, Moon, LucideProps
+  Sun, Moon, LucideProps, Lock
 } from 'lucide-react';
 import Logo from './Logo';
 import CameraGrid from './CameraGrid';
@@ -105,7 +105,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     { id: 'dashboard', label: 'Command Post', href: '/dashboard', icon: Home },
     { id: 'analysis', label: 'Intel Analysis', href: '/analysis', icon: BarChart3 },
     { id: 'heatmap', label: 'Sector Map', href: '/heatmap', icon: Map },
-    { id: 'blockchain', label: 'Audit Ledger', href: '/blockchain', icon: Shield },
+    { id: 'blockchain', label: 'Audit Ledger', href: '/blockchain', icon: Lock },
     { id: 'watchlist', label: 'Suspect Watch', href: '/watchlist', icon: Users },
     { id: 'reports', label: 'Incident Logs', href: '/reports', icon: FileText },
     { id: 'settings', label: 'System Control', href: '/settings', icon: Settings },
