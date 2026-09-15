@@ -432,7 +432,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                             onClick={saveSettings}
                             disabled={!hasChanges}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${hasChanges
-                                ? 'bg-brand-red text-white hover:bg-cyan-700'
+                                ? 'bg-brand-red text-white hover:bg-brand-red-dark'
                                 : 'bg-cyan-100 dark:bg-brand-card/30 text-brand-text dark:text-brand-muted cursor-not-allowed'
                                 }`}
                         >
@@ -506,7 +506,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                         </button>
                                         <button
                                             onClick={() => setShowAddCamera(true)}
-                                            className="flex items-center gap-2 px-3 py-2 bg-cyan-500/20 text-brand-muted dark:text-brand-text rounded-lg border border-brand-red/30 hover:bg-brand-red/30 transition-colors"
+                                            className="flex items-center gap-2 px-3 py-2 bg-brand-red/20 text-brand-muted dark:text-brand-text rounded-lg border border-brand-red/30 hover:bg-brand-red/30 transition-colors"
                                         >
                                             <Plus className="w-4 h-4" />
                                             Add Camera
@@ -684,7 +684,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => setNewCamera({ ...newCamera, useManualCapacity: !newCamera.useManualCapacity })}
-                                                                className={`relative w-10 h-5 rounded-full transition-colors ${newCamera.useManualCapacity ? 'bg-amber-500' : 'bg-cyan-500'}`}
+                                                                className={`relative w-10 h-5 rounded-full transition-colors ${newCamera.useManualCapacity ? 'bg-amber-500' : 'bg-brand-red'}`}
                                                             >
                                                                 <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${newCamera.useManualCapacity ? 'translate-x-5' : 'translate-x-0.5'}`}></div>
                                                             </button>
@@ -721,7 +721,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                 <button
                                                     onClick={addCamera}
                                                     disabled={cameraLoading}
-                                                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-brand-red transition-colors disabled:opacity-50"
+                                                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-red transition-colors disabled:opacity-50"
                                                 >
                                                     {cameraLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                                                     Add Camera
@@ -893,7 +893,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                         <button
                                                                             type="button"
                                                                             onClick={() => setEditForm({ ...editForm, useManualCapacity: !editForm.useManualCapacity })}
-                                                                            className={`relative w-8 h-4 rounded-full transition-colors ${editForm.useManualCapacity ? 'bg-amber-500' : 'bg-cyan-500'}`}
+                                                                            className={`relative w-8 h-4 rounded-full transition-colors ${editForm.useManualCapacity ? 'bg-amber-500' : 'bg-brand-red'}`}
                                                                         >
                                                                             <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform ${editForm.useManualCapacity ? 'translate-x-4' : 'translate-x-0.5'}`}></div>
                                                                         </button>
@@ -931,7 +931,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             <button
                                                                 onClick={saveEditedCamera}
                                                                 disabled={cameraLoading}
-                                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-brand-red transition-colors disabled:opacity-50"
+                                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-red transition-colors disabled:opacity-50"
                                                             >
                                                                 {cameraLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                                                                 Save Changes
@@ -948,13 +948,13 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                     /* Normal Camera Display */
                                                     <>
                                                         <div className="flex items-center gap-4">
-                                                            <div className={`w-3 h-3 rounded-full ${camera.status === 'online' ? 'bg-cyan-500' : camera.status === 'offline' ? 'bg-red-500' : 'bg-zinc-400'
+                                                            <div className={`w-3 h-3 rounded-full ${camera.status === 'online' ? 'bg-brand-red' : camera.status === 'offline' ? 'bg-red-500' : 'bg-zinc-400'
                                                                 }`}></div>
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="flex items-center gap-2">
                                                                     <span className="font-medium text-zinc-900 dark:text-white">{camera.name}</span>
-                                                                    <span className="text-xs text-brand-muted dark:text-brand-text bg-cyan-500/10 px-2 py-0.5 rounded">{camera.zone}</span>
-                                                                    <span className={`text-xs px-2 py-0.5 rounded ${camera.status === 'online' ? 'bg-cyan-500/10 text-brand-muted dark:text-brand-text' : 'bg-red-500/10 text-red-600 dark:text-red-400'
+                                                                    <span className="text-xs text-brand-muted dark:text-brand-text bg-brand-red/10 px-2 py-0.5 rounded">{camera.zone}</span>
+                                                                    <span className={`text-xs px-2 py-0.5 rounded ${camera.status === 'online' ? 'bg-brand-red/10 text-brand-muted dark:text-brand-text' : 'bg-red-500/10 text-red-600 dark:text-red-400'
                                                                         }`}>
                                                                         {camera.status || 'offline'}
                                                                     </span>
@@ -974,7 +974,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 </button>
                                                                 <button
                                                                     onClick={() => toggleCameraEnabled(camera)}
-                                                                    className={`relative w-10 h-5 rounded-full transition-colors ${camera.enabled ? 'bg-cyan-500' : 'bg-zinc-400 dark:bg-zinc-600'
+                                                                    className={`relative w-10 h-5 rounded-full transition-colors ${camera.enabled ? 'bg-brand-red' : 'bg-zinc-400 dark:bg-zinc-600'
                                                                         }`}
                                                                     title={camera.enabled ? 'Disable camera' : 'Enable camera'}
                                                                 >
@@ -1024,7 +1024,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 {/* Low Bandwidth Mode */}
                                 <div className="flex items-start justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4">
                                     <div className="flex items-start gap-4">
-                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.lowBandwidthMode ? 'bg-amber-500/20 border border-amber-500/30' : 'bg-cyan-500/10 border border-brand-red/20'
+                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.lowBandwidthMode ? 'bg-amber-500/20 border border-amber-500/30' : 'bg-brand-red/10 border border-brand-red/20'
                                             }`}>
                                             {settings.lowBandwidthMode ? (
                                                 <WifiOff className="w-6 h-6 text-amber-500" />
@@ -1087,7 +1087,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 {/* Privacy Masking */}
                                 <div className="flex items-start justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4">
                                     <div className="flex items-start gap-4">
-                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.privacyMaskingEnabled ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-cyan-500/10 border border-brand-red/20'
+                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.privacyMaskingEnabled ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-brand-red/10 border border-brand-red/20'
                                             }`}>
                                             {settings.privacyMaskingEnabled ? (
                                                 <EyeOff className="w-6 h-6 text-purple-500" />
@@ -1136,7 +1136,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <button
                                         onClick={() => updateSetting('showDensityOverlay', !settings.showDensityOverlay)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.showDensityOverlay ? 'bg-cyan-500' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.showDensityOverlay ? 'bg-brand-red' : 'bg-zinc-300 dark:bg-zinc-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.showDensityOverlay ? 'translate-x-8' : 'translate-x-1'
@@ -1152,7 +1152,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <button
                                         onClick={() => updateSetting('alertSoundEnabled', !settings.alertSoundEnabled)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.alertSoundEnabled ? 'bg-cyan-500' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.alertSoundEnabled ? 'bg-brand-red' : 'bg-zinc-300 dark:bg-zinc-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.alertSoundEnabled ? 'translate-x-8' : 'translate-x-1'
@@ -1190,7 +1190,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                 {/* Footer */}
                 <footer className="h-12 border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-6 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-bold text-brand-muted dark:text-brand-red tracking-wider">SETTINGS</span>
                     </div>
                     <div className="text-xs text-zinc-500">
@@ -1201,3 +1201,4 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+

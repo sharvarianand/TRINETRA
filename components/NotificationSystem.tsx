@@ -30,7 +30,7 @@ export default function NotificationSystem({ notifications = [], onDismiss }: No
 
   const getIcon = (type: Notification['type']) => {
     switch (type) {
-      case 'success': return <CheckCircle className="w-5 h-5 text-cyan-600" />;
+      case 'success': return <CheckCircle className="w-5 h-5 text-brand-muted" />;
       case 'warning': return <AlertTriangle className="w-5 h-5 text-amber-600" />;
       case 'error': return <AlertCircle className="w-5 h-5 text-red-600" />;
       default: return <Info className="w-5 h-5 text-blue-600" />;
@@ -75,3 +75,4 @@ export default function NotificationSystem({ notifications = [], onDismiss }: No
     </div>
   );
 }
+

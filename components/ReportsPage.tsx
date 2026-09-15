@@ -603,7 +603,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                 {/* Footer Status */}
                 <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200 no-print">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Reporting System Active</span>
                     </div>
                     <div className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -622,7 +622,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={printIncidentReport}
-                                    className="flex items-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-cyan-700 transition-colors"
+                                    className="flex items-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-red-dark transition-colors"
                                 >
                                     <Printer className="w-4 h-4" />
                                     Print
@@ -844,3 +844,4 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+

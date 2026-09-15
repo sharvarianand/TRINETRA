@@ -221,7 +221,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
 
                         <button
                             onClick={() => setStep(2)}
-                            className="w-full py-3 bg-cyan-500 hover:bg-brand-red text-white font-medium rounded-xl transition-colors"
+                            className="w-full py-3 bg-brand-red hover:bg-brand-red text-white font-medium rounded-xl transition-colors"
                         >
                             Continue
                         </button>
@@ -254,7 +254,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                     className="p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-xl border border-zinc-200 dark:border-zinc-600"
                                 >
                                     <div className="flex items-center gap-2 mb-3">
-                                        <div className="w-8 h-8 rounded-full bg-cyan-500 flex items-center justify-center text-white font-bold text-sm">
+                                        <div className="w-8 h-8 rounded-full bg-brand-red flex items-center justify-center text-white font-bold text-sm">
                                             {index + 1}
                                         </div>
                                         <input
@@ -381,7 +381,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                             type="checkbox"
                                                             checked={camera.useManualCapacity}
                                                             onChange={(e) => updateCamera(index, 'useManualCapacity', e.target.checked)}
-                                                            className="rounded border-zinc-300 dark:border-zinc-600 text-brand-red focus:ring-cyan-500"
+                                                            className="rounded border-zinc-300 dark:border-zinc-600 text-brand-red focus:ring-brand-red"
                                                         />
                                                         Manual Override
                                                     </label>
@@ -418,7 +418,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                             <button
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
-                                className="flex-1 py-3 bg-cyan-500 hover:bg-brand-red text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                                className="flex-1 py-3 bg-brand-red hover:bg-brand-red text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                             >
                                 {isSubmitting ? (
                                     <>
@@ -439,3 +439,4 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
         </div>
     );
 }
+

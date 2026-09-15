@@ -102,7 +102,7 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw grid background
-        ctx.strokeStyle = 'rgba(6, 182, 212, 0.1)';
+        ctx.strokeStyle = 'rgba(239, 51, 72, 0.1)';
         ctx.lineWidth = 1;
         for (let x = 0; x < canvas.width; x += 20) {
             ctx.beginPath();
@@ -214,14 +214,14 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
         <div className={`flex flex-col h-full ${className}`}>
             <div className="flex-1 flex gap-4">
                 {/* Heat Map Canvas */}
-                <div className="flex-1 bg-white dark:bg-[#0a101f] rounded-xl border border-cyan-900/30 p-4 relative overflow-hidden print:bg-white print:text-black print:border-gray-300">
+                <div className="flex-1 bg-white dark:bg-[#0a101f] rounded-xl border border-brand-border/30 p-4 relative overflow-hidden print:bg-white print:text-black print:border-gray-300">
                     <div className="absolute top-4 left-4 z-10">
-                        <h3 className="text-sm font-bold text-zinc-900 dark:text-cyan-100 tracking-wider">VENUE HEAT MAP</h3>
-                        <p className="text-xs text-zinc-700 dark:text-cyan-500/70 mt-1">Click on a zone for details</p>
+                        <h3 className="text-sm font-bold text-zinc-900 dark:text-brand-text tracking-wider">VENUE HEAT MAP</h3>
+                        <p className="text-xs text-zinc-700 dark:text-brand-red/70 mt-1">Click on a zone for details</p>
                     </div>
 
                     {/* Legend */}
-                    <div className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-zinc-100/80 dark:bg-black/40 px-3 py-2 rounded-lg border border-cyan-900/30 print:bg-white print:text-black print:border-gray-300">
+                    <div className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-zinc-100/80 dark:bg-black/40 px-3 py-2 rounded-lg border border-brand-border/30 print:bg-white print:text-black print:border-gray-300">
                         <span className="text-[10px] text-zinc-700 dark:text-gray-400">Density:</span>
                         <div className="flex gap-1">
                             <div className="w-4 h-3 rounded-sm bg-green-500/60" title="Low"></div>
@@ -245,12 +245,12 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
                 {/* Side Panel */}
                 <div className="w-80 flex flex-col gap-4">
                     {/* Overall Stats */}
-                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-cyan-900/30 p-4 print:bg-white print:text-black print:border-gray-300">
-                        <h3 className="text-xs font-bold text-zinc-900 dark:text-cyan-100 mb-3 tracking-wider">OVERALL STATISTICS</h3>
+                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-brand-border/30 p-4 print:bg-white print:text-black print:border-gray-300">
+                        <h3 className="text-xs font-bold text-zinc-900 dark:text-brand-text mb-3 tracking-wider">OVERALL STATISTICS</h3>
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
                                 <span className="text-xs text-zinc-700 dark:text-gray-400">Total People</span>
-                                <span className="text-lg font-mono text-cyan-600 dark:text-cyan-400">{totalPeople.toLocaleString()}</span>
+                                <span className="text-lg font-mono text-brand-muted dark:text-brand-text">{totalPeople.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-xs text-zinc-700 dark:text-gray-400">Total Capacity</span>
@@ -275,8 +275,8 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
                     </div>
 
                     {/* Selected Zone Details */}
-                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-cyan-900/30 p-4 flex-1 print:bg-white print:text-black print:border-gray-300">
-                        <h3 className="text-xs font-bold text-zinc-900 dark:text-cyan-100 mb-3 tracking-wider">
+                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-brand-border/30 p-4 flex-1 print:bg-white print:text-black print:border-gray-300">
+                        <h3 className="text-xs font-bold text-zinc-900 dark:text-brand-text mb-3 tracking-wider">
                             {selectedZone ? 'ZONE DETAILS' : 'SELECT A ZONE'}
                         </h3>
                         {selectedZone ? (
@@ -291,7 +291,7 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
                                 <div className="grid grid-cols-2 gap-3">
                                     <div className="bg-zinc-100 dark:bg-black/30 rounded-lg p-3 print:bg-white print:text-black print:border-gray-300">
                                         <div className="text-[10px] text-zinc-700 dark:text-gray-500 mb-1">PEOPLE</div>
-                                        <div className="text-xl font-mono text-cyan-600 dark:text-cyan-400">{selectedZone.peopleCount}</div>
+                                        <div className="text-xl font-mono text-brand-muted dark:text-brand-text">{selectedZone.peopleCount}</div>
                                     </div>
                                     <div className="bg-zinc-100 dark:bg-black/30 rounded-lg p-3 print:bg-white print:text-black print:border-gray-300">
                                         <div className="text-[10px] text-zinc-700 dark:text-gray-500 mb-1">CAPACITY</div>
@@ -340,13 +340,13 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
                     </div>
 
                     {/* Zone List */}
-                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-cyan-900/30 p-4 max-h-48 overflow-y-auto custom-scrollbar print:bg-white print:text-black print:border-gray-300">
-                        <h3 className="text-xs font-bold text-zinc-900 dark:text-cyan-100 mb-3 tracking-wider">ALL ZONES</h3>
+                    <div className="bg-white dark:bg-[#0f1729] rounded-lg border border-brand-border/30 p-4 max-h-48 overflow-y-auto custom-scrollbar print:bg-white print:text-black print:border-gray-300">
+                        <h3 className="text-xs font-bold text-zinc-900 dark:text-brand-text mb-3 tracking-wider">ALL ZONES</h3>
                         <div className="space-y-2">
                             {zones.sort((a, b) => b.density - a.density).map(zone => (
                                 <div
                                     key={zone.id}
-                                    className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors ${selectedZone?.id === zone.id ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-zinc-100 dark:bg-black/20 hover:bg-zinc-200 dark:hover:bg-black/40 print:bg-white print:text-black print:border-gray-300'
+                                    className={`flex items-center justify-between p-2 rounded-lg cursor-pointer transition-colors ${selectedZone?.id === zone.id ? 'bg-brand-red/20 border border-brand-red/30' : 'bg-zinc-100 dark:bg-black/20 hover:bg-zinc-200 dark:hover:bg-black/40 print:bg-white print:text-black print:border-gray-300'
                                         }`}
                                     onClick={() => setSelectedZone(zone)}
                                 >
@@ -355,7 +355,7 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
                                             }`} />
                                         <span className="text-xs text-black dark:text-gray-300">{zone.name}</span>
                                     </div>
-                                    <span className={`text-xs font-mono ${zone.density > 70 ? 'text-red-600 dark:text-red-400' : zone.density > 40 ? 'text-yellow-600 dark:text-yellow-400' : 'text-cyan-600 dark:text-green-400'
+                                    <span className={`text-xs font-mono ${zone.density > 70 ? 'text-red-600 dark:text-red-400' : zone.density > 40 ? 'text-yellow-600 dark:text-yellow-400' : 'text-brand-muted dark:text-green-400'
                                         }`}>
                                         {Math.round(zone.density)}%
                                     </span>
@@ -370,3 +370,4 @@ const HeatMapVisualization: React.FC<HeatMapProps> = ({ className = '' }) => {
 };
 
 export default HeatMapVisualization;
+

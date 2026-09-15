@@ -49,7 +49,7 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
       percentage: 0,
       message: 'Restricted (Clear)',
       color: 'text-brand-red',
-      bgColor: 'bg-cyan-500',
+      bgColor: 'bg-brand-red',
       borderColor: 'border-brand-red'
     };
   }
@@ -89,7 +89,7 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
       percentage,
       message: 'Safe capacity',
       color: 'text-brand-red',
-      bgColor: 'bg-cyan-500',
+      bgColor: 'bg-brand-red',
       borderColor: 'border-brand-red'
     };
   }
@@ -155,7 +155,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
         <div className="flex items-center gap-2">
           {serverConnected ? (
             <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 dark:bg-brand-card/30 rounded-full border border-cyan-200 dark:border-brand-border">
-              <span className="w-2 h-2 bg-brand-red dark:bg-cyan-400 rounded-full animate-pulse"></span>
+              <span className="w-2 h-2 bg-brand-red dark:bg-brand-red rounded-full animate-pulse"></span>
               <span className="text-xs text-brand-muted dark:text-brand-text font-medium">Live</span>
             </div>
           ) : (
@@ -187,7 +187,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
           {liveCameras.length}/{cameras.length} cameras online
         </span>
         <div className="flex items-center gap-1">
-          <span className="w-2 h-2 bg-cyan-500 rounded-full"></span>
+          <span className="w-2 h-2 bg-brand-red rounded-full"></span>
           <span className="text-xs text-zinc-500 dark:text-zinc-400">Safe</span>
           <span className="w-2 h-2 bg-amber-500 rounded-full ml-2"></span>
           <span className="text-xs text-zinc-500 dark:text-zinc-400">Moderate</span>
@@ -327,7 +327,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
               {cameraStats.people?.map((person: any) => (
                 <div
                   key={person.id}
-                  className="absolute w-2 h-2 bg-cyan-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)] transition-all duration-300"
+                  className="absolute w-2 h-2 bg-brand-red rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)] transition-all duration-300"
                   style={{ left: `${person.x}%`, top: `${person.y}%`, transform: 'translate(-50%, -50%)' }}
                 />
               ))}
@@ -366,7 +366,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
           <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-800 text-zinc-400 p-4 text-center">
             <WifiOff className="w-8 h-8 mb-2 opacity-50" />
             <span className="text-xs font-semibold">Feed Connection Lost</span>
-            <button onClick={handleRetry} className="mt-2 px-3 py-1 bg-brand-red hover:bg-cyan-700 text-white rounded-md text-[10px] uppercase font-bold transition-colors">
+            <button onClick={handleRetry} className="mt-2 px-3 py-1 bg-brand-red hover:bg-brand-red-dark text-white rounded-md text-[10px] uppercase font-bold transition-colors">
               Retry
             </button>
           </div>
@@ -460,3 +460,4 @@ function OfflineCameraPlaceholder({ camera }: { camera: CameraConfig }) {
     </div>
   );
 }
+

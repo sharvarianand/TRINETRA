@@ -156,7 +156,7 @@ export default function HeatMapPage({ user }: { user?: AppUser }) {
                 {/* Footer Status */}
                 <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Heat Map Active</span>
                     </div>
                     <div className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -167,3 +167,4 @@ export default function HeatMapPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+

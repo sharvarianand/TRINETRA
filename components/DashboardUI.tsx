@@ -456,7 +456,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                   <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                   <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Crowd Activity</h2>
                 </div>
-                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-600 dark:focus:ring-cyan-500 focus:border-cyan-600 dark:focus:border-brand-red">
+                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-600 dark:focus:ring-brand-red focus:border-brand-red dark:focus:border-brand-red">
                   <option>Last 24 hours</option>
                   <option>Last 7 days</option>
                   <option>Last 30 days</option>
@@ -466,7 +466,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                 {chartData.map((height, i) => (
                   <div
                     key={i}
-                    className="flex-1 bg-cyan-100 dark:bg-brand-card/50 hover:bg-cyan-200 dark:hover:bg-cyan-800/50 transition-colors rounded-t cursor-pointer"
+                    className="flex-1 bg-cyan-100 dark:bg-brand-card/50 hover:bg-cyan-200 dark:hover:bg-brand-card/50 transition-colors rounded-t cursor-pointer"
                     style={{ height: isMounted ? `${height}%` : '50%' }}
                   />
                 ))}
@@ -485,3 +485,4 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     </>
   );
 }
+

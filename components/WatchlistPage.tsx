@@ -119,14 +119,14 @@ export default function WatchlistPage() {
             {loading ? (<div className="text-center py-12 text-brand-muted">LOADING DATABASE...</div>
             ) : suspects.length === 0 ? (
               <div className="text-center py-20 border border-dashed border-brand-border/40 rounded-lg text-brand-muted">
-                <AlertTriangle size={32} className="mx-auto mb-4 text-cyan-800" />No suspects registered
+                <AlertTriangle size={32} className="mx-auto mb-4 text-brand-muted" />No suspects registered
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {suspects.map((s) => (
                   <div key={s.id} className="border border-brand-border/40 bg-brand-card rounded-lg p-4 relative group hover:border-brand-red/30 transition-colors">
-                    <button onClick={() => handleDeleteFace(s.id)} className="absolute top-2 right-2 p-2 text-cyan-800 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={16} /></button>
-                    <div className="w-full h-40 bg-brand-bg border border-brand-border/30 rounded mb-4 flex items-center justify-center"><Users size={40} className="text-cyan-900" /></div>
+                    <button onClick={() => handleDeleteFace(s.id)} className="absolute top-2 right-2 p-2 text-brand-muted hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={16} /></button>
+                    <div className="w-full h-40 bg-brand-bg border border-brand-border/30 rounded mb-4 flex items-center justify-center"><Users size={40} className="text-brand-muted" /></div>
                     <h3 className="font-bold text-lg text-brand-text truncate">{s.name}</h3>
                     <div className="flex justify-between items-center text-xs mt-2">
                       <span className={`px-2 py-1 rounded font-bold ${s.threat_level === 'HIGH' ? 'bg-red-950 text-red-500 border border-red-900/50' : s.threat_level === 'MEDIUM' ? 'bg-amber-950 text-amber-500 border border-amber-900/50' : 'bg-brand-bg text-brand-red border border-brand-border/50'}`}>{s.threat_level}</span>
@@ -149,7 +149,7 @@ export default function WatchlistPage() {
             {loading ? (<div className="text-center py-12 text-brand-muted">LOADING DATABASE...</div>
             ) : plates.length === 0 ? (
               <div className="text-center py-20 border border-dashed border-brand-border/40 rounded-lg text-brand-muted">
-                <AlertTriangle size={32} className="mx-auto mb-4 text-cyan-800" />No plates flagged
+                <AlertTriangle size={32} className="mx-auto mb-4 text-brand-muted" />No plates flagged
               </div>
             ) : (
               <div className="overflow-x-auto border border-brand-border/40 rounded-lg bg-brand-card">
@@ -220,4 +220,5 @@ export default function WatchlistPage() {
     </div>
   );
 }
+
 

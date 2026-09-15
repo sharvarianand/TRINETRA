@@ -75,7 +75,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
     const getDensityColor = (density: number) => {
         if (density > 70) return 'text-red-600';
         if (density > 40) return 'text-amber-600';
-        return 'text-cyan-600';
+        return 'text-brand-muted';
     };
 
     return (
@@ -102,8 +102,8 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                 </div>
                 {isConnected && (
                     <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-cyan-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 animate-pulse"></span>
-                        <span className="text-[10px] text-cyan-700 font-semibold">LIVE</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
+                        <span className="text-[10px] text-brand-muted font-semibold">LIVE</span>
                     </div>
                 )}
             </div>
@@ -111,7 +111,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
             {/* Stats Overlay */}
             <div className="absolute top-3 right-3 z-30 flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-zinc-200 shadow-sm">
-                    <Users className="w-4 h-4 text-cyan-600" />
+                    <Users className="w-4 h-4 text-brand-muted" />
                     <span className="text-sm font-semibold text-zinc-900">{data.people.length}</span>
                     <span className="text-[10px] text-zinc-500">detected</span>
                 </div>
@@ -136,13 +136,13 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                     >
                         {/* Outer pulse ring */}
                         <div 
-                            className="absolute w-12 h-12 rounded-full bg-cyan-600/15 animate-ping"
+                            className="absolute w-12 h-12 rounded-full bg-brand-red/15 animate-ping"
                             style={{ animationDuration: '1.5s' }}
                         />
                         {/* Middle glow */}
-                        <div className="absolute w-6 h-6 rounded-full bg-cyan-600/25 blur-[2px]" />
+                        <div className="absolute w-6 h-6 rounded-full bg-brand-red/25 blur-[2px]" />
                         {/* Main dot */}
-                        <div className="absolute w-3 h-3 rounded-full bg-cyan-600 border border-cyan-400 shadow-[0_0_10px_rgba(5,150,105,0.6)]" />
+                        <div className="absolute w-3 h-3 rounded-full bg-brand-red border border-cyan-400 shadow-[0_0_10px_rgba(5,150,105,0.6)]" />
                         {/* Center highlight */}
                         <div className="absolute w-1 h-1 rounded-full bg-white" />
                     </div>
@@ -150,15 +150,15 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
             </div>
 
             {/* Corner Frame Markers */}
-            <div className="absolute top-6 left-6 w-8 h-8 border-t-2 border-l-2 border-cyan-600/50 rounded-tl z-10"></div>
-            <div className="absolute top-6 right-6 w-8 h-8 border-t-2 border-r-2 border-cyan-600/50 rounded-tr z-10"></div>
-            <div className="absolute bottom-12 left-6 w-8 h-8 border-b-2 border-l-2 border-cyan-600/50 rounded-bl z-10"></div>
-            <div className="absolute bottom-12 right-6 w-8 h-8 border-b-2 border-r-2 border-cyan-600/50 rounded-br z-10"></div>
+            <div className="absolute top-6 left-6 w-8 h-8 border-t-2 border-l-2 border-brand-red/50 rounded-tl z-10"></div>
+            <div className="absolute top-6 right-6 w-8 h-8 border-t-2 border-r-2 border-brand-red/50 rounded-tr z-10"></div>
+            <div className="absolute bottom-12 left-6 w-8 h-8 border-b-2 border-l-2 border-brand-red/50 rounded-bl z-10"></div>
+            <div className="absolute bottom-12 right-6 w-8 h-8 border-b-2 border-r-2 border-brand-red/50 rounded-br z-10"></div>
 
             {/* Bottom Info Bar */}
             <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-white border-t border-zinc-200 flex justify-between items-center z-30">
                 <div className="flex items-center gap-4">
-                    <span className="text-[10px] text-cyan-600 font-mono font-semibold">CAM-01</span>
+                    <span className="text-[10px] text-brand-muted font-mono font-semibold">CAM-01</span>
                     <span className="text-[10px] text-zinc-300">|</span>
                     <span className="text-[10px] text-zinc-600">
                         {data.people.length} {data.people.length === 1 ? 'person' : 'people'} in frame

@@ -21,7 +21,7 @@ export default function StatsCard({
   className = '' 
 }: StatsCardProps) {
   const colorStyles = {
-    cyan: { bg: 'bg-cyan-50', text: 'text-cyan-600' },
+    cyan: { bg: 'bg-cyan-50', text: 'text-brand-muted' },
     blue: { bg: 'bg-blue-50', text: 'text-blue-600' },
     amber: { bg: 'bg-amber-50', text: 'text-amber-600' },
     red: { bg: 'bg-red-50', text: 'text-red-600' },
@@ -38,7 +38,7 @@ export default function StatsCard({
         </div>
         {change && (
           <span className={`text-xs font-medium px-2 py-1 rounded-full ${
-            change.startsWith('+') ? 'bg-cyan-50 text-cyan-700' : 
+            change.startsWith('+') ? 'bg-cyan-50 text-brand-muted' : 
             change.startsWith('-') ? 'bg-red-50 text-red-700' : 
             'bg-zinc-100 text-zinc-600'
           }`}>
@@ -51,3 +51,4 @@ export default function StatsCard({
     </div>
   );
 }
+

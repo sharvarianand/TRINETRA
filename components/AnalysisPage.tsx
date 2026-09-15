@@ -428,7 +428,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                                     <div className="w-full bg-zinc-200 dark:bg-zinc-600 rounded-full h-2">
                                                         <div
                                                             className={`h-2 rounded-full ${zone.avgOccupancy > 70 ? 'bg-red-500' :
-                                                                zone.avgOccupancy > 50 ? 'bg-amber-500' : 'bg-cyan-500'
+                                                                zone.avgOccupancy > 50 ? 'bg-amber-500' : 'bg-brand-red'
                                                                 }`}
                                                             style={{ width: `${zone.avgOccupancy}%` }}
                                                         ></div>
@@ -455,7 +455,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Based on historical data, crowd density is expected to reach 85% by 16:00.</p>
                                 </div>
-                                <div className="p-4 bg-cyan-50 dark:bg-brand-card/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
+                                <div className="p-4 bg-cyan-50 dark:bg-brand-card/20 rounded-lg border border-cyan-200 dark:border-brand-border">
                                     <div className="flex items-center gap-3 mb-2">
                                         <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                                         <span className="text-sm font-medium text-brand-muted dark:text-cyan-300">Visitor Surge Predicted</span>
@@ -517,7 +517,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 {/* Footer Status */}
                 <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
+                        <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Analytics Engine Active</span>
                     </div>
                     <div className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -528,3 +528,4 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+

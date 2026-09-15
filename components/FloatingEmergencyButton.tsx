@@ -108,7 +108,7 @@ export default function FloatingEmergencyButton({
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className={`p-5 ${isTriggered ? 'bg-cyan-600' : 'bg-red-600'} relative`}>
+                        <div className={`p-5 ${isTriggered ? 'bg-brand-red' : 'bg-red-600'} relative`}>
                             <button
                                 onClick={handleClose}
                                 className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
@@ -117,7 +117,7 @@ export default function FloatingEmergencyButton({
                                 <X className="w-6 h-6" />
                             </button>
                             <div className="flex items-center gap-3">
-                                <div className={`w-12 h-12 rounded-full ${isTriggered ? 'bg-cyan-500' : 'bg-red-500'} flex items-center justify-center`}>
+                                <div className={`w-12 h-12 rounded-full ${isTriggered ? 'bg-brand-red' : 'bg-red-500'} flex items-center justify-center`}>
                                     {isTriggered ? (
                                         <CheckCircle className="w-7 h-7 text-white" />
                                     ) : (
@@ -139,13 +139,13 @@ export default function FloatingEmergencyButton({
                         <div className="p-5">
                             {isTriggered ? (
                                 <div className="text-center py-4">
-                                    <div className="w-16 h-16 mx-auto bg-cyan-100 dark:bg-cyan-900/30 rounded-full flex items-center justify-center mb-4">
-                                        <CheckCircle className="w-10 h-10 text-cyan-600" />
+                                    <div className="w-16 h-16 mx-auto bg-cyan-100 dark:bg-brand-card/30 rounded-full flex items-center justify-center mb-4">
+                                        <CheckCircle className="w-10 h-10 text-brand-muted" />
                                     </div>
                                     <p className="text-zinc-700 dark:text-zinc-300 mb-4">
                                         Emergency alert has been triggered successfully.
                                     </p>
-                                    <div className="bg-cyan-50 dark:bg-cyan-900/30 border border-cyan-200 dark:border-cyan-700 rounded-lg p-3 text-sm text-cyan-800 dark:text-cyan-200">
+                                    <div className="bg-cyan-50 dark:bg-brand-card/30 border border-cyan-200 dark:border-brand-border rounded-lg p-3 text-sm text-brand-muted dark:text-cyan-200">
                                         <strong>✅ WhatsApp Alert Sent!</strong> Security personnel have been notified via WhatsApp. Alert also logged to dashboard.
                                     </div>
                                 </div>
@@ -267,3 +267,4 @@ export default function FloatingEmergencyButton({
         </>
     );
 }
+

@@ -61,15 +61,15 @@ export default function VideoBox({
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 z-20 px-4 py-3 bg-white/95 backdrop-blur-sm border-b border-zinc-100 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Camera className="w-4 h-4 text-cyan-600" />
+          <Camera className="w-4 h-4 text-brand-muted" />
           <span className="text-sm font-semibold text-zinc-900">{cameraName}</span>
           <span className="text-xs text-zinc-400 font-mono">({cameraId})</span>
         </div>
         <div className="flex items-center gap-2">
           {isConnected ? (
             <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-cyan-200">
-              <span className="w-1.5 h-1.5 bg-cyan-600 rounded-full animate-pulse"></span>
-              <span className="text-[10px] text-cyan-700 font-semibold">LIVE</span>
+              <span className="w-1.5 h-1.5 bg-brand-red rounded-full animate-pulse"></span>
+              <span className="text-[10px] text-brand-muted font-semibold">LIVE</span>
             </div>
           ) : (
             <div className="flex items-center gap-1 px-2 py-1 bg-red-50 rounded-full border border-red-200">
@@ -79,7 +79,7 @@ export default function VideoBox({
           )}
           <button 
             onClick={toggleFullscreen}
-            className="p-1.5 text-zinc-500 hover:text-cyan-600 hover:bg-zinc-100 rounded-lg transition-colors"
+            className="p-1.5 text-zinc-500 hover:text-brand-muted hover:bg-zinc-100 rounded-lg transition-colors"
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
@@ -90,7 +90,7 @@ export default function VideoBox({
       <div className="aspect-video pt-12 bg-zinc-50">
         {isLoading ? (
           <div className="w-full h-full flex items-center justify-center">
-            <RefreshCw className="w-8 h-8 text-cyan-600 animate-spin" />
+            <RefreshCw className="w-8 h-8 text-brand-muted animate-spin" />
           </div>
         ) : isConnected ? (
           <img 
@@ -112,7 +112,7 @@ export default function VideoBox({
         <span className="text-[10px] text-zinc-500 font-mono">
           {new Date().toLocaleTimeString()}
         </span>
-        <button className="p-1 text-zinc-400 hover:text-cyan-600 transition-colors">
+        <button className="p-1 text-zinc-400 hover:text-brand-muted transition-colors">
           <Settings className="w-3.5 h-3.5" />
         </button>
       </div>
