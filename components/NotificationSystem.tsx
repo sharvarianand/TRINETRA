@@ -39,7 +39,7 @@ export default function NotificationSystem({ notifications = [], onDismiss }: No
 
   const getStyles = (type: Notification['type']) => {
     switch (type) {
-      case 'success': return 'bg-cyan-50 border-brand-border';
+      case 'success': return 'bg-brand-card border-brand-border';
       case 'warning': return 'bg-amber-50 border-amber-200';
       case 'error': return 'bg-red-50 border-red-200';
       default: return 'bg-blue-50 border-blue-200';
@@ -75,5 +75,6 @@ export default function NotificationSystem({ notifications = [], onDismiss }: No
     </div>
   );
 }
+
 
 

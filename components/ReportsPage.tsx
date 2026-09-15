@@ -577,7 +577,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                             e.stopPropagation();
                                                             handlePrintIncident(incident);
                                                         }}
-                                                        className="mt-4 flex items-center gap-2 text-sm text-brand-muted dark:text-brand-text hover:text-brand-muted dark:hover:text-cyan-300 transition-colors"
+                                                        className="mt-4 flex items-center gap-2 text-sm text-brand-muted dark:text-brand-text hover:text-brand-muted dark:hover:text-brand-red transition-colors"
                                                     >
                                                         <Printer className="w-4 h-4" />
                                                         Print Report
@@ -844,5 +844,6 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 

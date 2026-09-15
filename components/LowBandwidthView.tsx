@@ -101,7 +101,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                     LOW BANDWIDTH
                 </div>
                 {isConnected && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-brand-border">
+                    <div className="flex items-center gap-1 px-2 py-1 bg-brand-card rounded-full border border-brand-border">
                         <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
                         <span className="text-[10px] text-brand-muted font-semibold">LIVE</span>
                     </div>
@@ -142,7 +142,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                         {/* Middle glow */}
                         <div className="absolute w-6 h-6 rounded-full bg-brand-red/25 blur-[2px]" />
                         {/* Main dot */}
-                        <div className="absolute w-3 h-3 rounded-full bg-brand-red border border-cyan-400 shadow-[0_0_10px_rgba(5,150,105,0.6)]" />
+                        <div className="absolute w-3 h-3 rounded-full bg-brand-red border border-brand-red shadow-[0_0_10px_rgba(5,150,105,0.6)]" />
                         {/* Center highlight */}
                         <div className="absolute w-1 h-1 rounded-full bg-white" />
                     </div>
@@ -180,4 +180,5 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
         </div>
     );
 }
+
 

@@ -176,7 +176,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
         <div className="fixed inset-0 bg-black/60 dark:bg-black/80 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-zinc-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto shadow-2xl">
                 {/* Header */}
-                <div className="p-6 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-cyan-500 to-cyan-600 rounded-t-2xl">
+                <div className="p-6 border-b border-zinc-200 dark:border-zinc-700 bg-gradient-to-r from-brand-red to-brand-red-dark rounded-t-2xl">
                     <div className="flex items-center gap-3 mb-2">
                         <div className="bg-white/20 p-2 rounded-lg">
                             <Shield className="w-6 h-6 text-white" />
@@ -439,5 +439,6 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
         </div>
     );
 }
+
 
 

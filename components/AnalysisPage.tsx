@@ -348,7 +348,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 {hourlyData.map((data, index) => (
                                     <div key={index} className="flex-1 flex flex-col items-center gap-2">
                                         <div
-                                            className="w-full bg-linear-to-t from-cyan-600 to-cyan-400 dark:from-cyan-700 dark:to-cyan-500 rounded-t-sm transition-all duration-500 hover:from-cyan-500 hover:to-cyan-300"
+                                            className="w-full bg-linear-to-t from-brand-red to-brand-red-dark dark:from-brand-red dark:to-brand-red-dark rounded-t-sm transition-all duration-500 hover:from-brand-red hover:to-brand-red-dark"
                                             style={{ height: `${(data.count / maxHourlyCount) * 100}%` }}
                                             title={`${data.count} visitors`}
                                         ></div>
@@ -458,7 +458,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 <div className="p-4 bg-brand-card/10 dark:bg-brand-card/20 rounded-lg border border-brand-border dark:border-brand-border">
                                     <div className="flex items-center gap-3 mb-2">
                                         <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
-                                        <span className="text-sm font-medium text-brand-muted dark:text-cyan-300">Visitor Surge Predicted</span>
+                                        <span className="text-sm font-medium text-brand-muted dark:text-brand-red">Visitor Surge Predicted</span>
                                     </div>
                                     <p className="text-xs text-brand-muted dark:text-brand-text/80">Weather conditions favorable. Expected 15% increase in visitors.</p>
                                 </div>
@@ -496,7 +496,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Entry rate dropped by 60% for 5 minutes.</p>
                                     <div className="mt-2 flex gap-2">
-                                        <span className="px-2 py-1 bg-brand-card/20 dark:bg-brand-card/40 text-brand-muted dark:text-cyan-300 text-xs rounded">Resolved</span>
+                                        <span className="px-2 py-1 bg-brand-card/20 dark:bg-brand-card/40 text-brand-muted dark:text-brand-red text-xs rounded">Resolved</span>
                                     </div>
                                 </div>
                                 <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
@@ -528,5 +528,6 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 

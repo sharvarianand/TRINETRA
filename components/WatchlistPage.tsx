@@ -100,10 +100,10 @@ export default function WatchlistPage() {
       </header>
 
       <div className="flex border-b border-brand-border/40 px-6">
-        <button onClick={() => setActiveTab('FACES')} className={`px-6 py-3 font-semibold flex items-center gap-2 border-b-2 transition-colors ${activeTab === 'FACES' ? 'border-cyan-400 text-brand-text' : 'border-transparent text-brand-muted hover:text-brand-red'}`}>
+        <button onClick={() => setActiveTab('FACES')} className={`px-6 py-3 font-semibold flex items-center gap-2 border-b-2 transition-colors ${activeTab === 'FACES' ? 'border-brand-red text-brand-text' : 'border-transparent text-brand-muted hover:text-brand-red'}`}>
           <Users size={18} /> FACE WATCHLIST
         </button>
-        <button onClick={() => setActiveTab('PLATES')} className={`px-6 py-3 font-semibold flex items-center gap-2 border-b-2 transition-colors ${activeTab === 'PLATES' ? 'border-cyan-400 text-brand-text' : 'border-transparent text-brand-muted hover:text-brand-red'}`}>
+        <button onClick={() => setActiveTab('PLATES')} className={`px-6 py-3 font-semibold flex items-center gap-2 border-b-2 transition-colors ${activeTab === 'PLATES' ? 'border-brand-red text-brand-text' : 'border-transparent text-brand-muted hover:text-brand-red'}`}>
           <Car size={18} /> VEHICLE HOTLIST
         </button>
       </div>
@@ -220,6 +220,7 @@ export default function WatchlistPage() {
     </div>
   );
 }
+
 
 
 

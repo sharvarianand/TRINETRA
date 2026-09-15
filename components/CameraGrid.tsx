@@ -355,7 +355,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
             {showLoadingOverlay && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-zinc-900/90 backdrop-blur-sm">
                 <div className="relative">
-                  <div className="w-12 h-12 border-4 border-brand-red/20 border-t-cyan-500 rounded-full animate-spin"></div>
+                  <div className="w-12 h-12 border-4 border-brand-red/20 border-t-brand-red rounded-full animate-spin"></div>
                   <Activity className="absolute inset-0 m-auto w-5 h-5 text-brand-red animate-pulse" />
                 </div>
                 <p className="mt-4 text-[10px] font-bold text-brand-red/80 animate-pulse tracking-widest uppercase">Initializing Stream...</p>
@@ -460,5 +460,6 @@ function OfflineCameraPlaceholder({ camera }: { camera: CameraConfig }) {
     </div>
   );
 }
+
 
 
