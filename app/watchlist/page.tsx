@@ -18,5 +18,6 @@ export default async function WatchlistPagePageWrapper() {
         lastName: user.user_metadata?.last_name || '',
     };
 
-    return <WatchlistPage user={userData} />;
+    return <WatchlistPage />;
 }
+
