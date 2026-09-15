@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Share_Tech_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import GlobalClientComponents from "@/components/GlobalClientComponents";
 
-const techMono = Share_Tech_Mono({ weight: "400", subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" });
+const jetBrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: "TRINETRA - Intelligent Border Video Analytics Platform",
@@ -18,25 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  document.documentElement.classList.add('dark');
-                  localStorage.setItem('TRINETRA-theme', 'dark');
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
-      <body className={`${techMono.className} bg-black text-cyan-500 antialiased bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem]`}>
+      <body className={\ \ font-sans bg-black antialiased}>
         <ThemeProvider>
-          <GlobalClientComponents>
-            {children}
-          </GlobalClientComponents>
+          <GlobalClientComponents />
+          {children}
         </ThemeProvider>
       </body>
     </html>

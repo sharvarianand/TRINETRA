@@ -5,7 +5,8 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --font-sans: 'Share Tech Mono', monospace;
+  --font-sans: var(--font-space), system-ui, sans-serif;
+  --font-mono: var(--font-mono), monospace;
   
   /* IBVAP Tactical Military Theme */
   --color-primary: #72d9ed;
@@ -140,3 +141,4 @@ body::before {
   background: rgba(16, 185, 129, 0.3);
   color: #34d399;
 }
+
