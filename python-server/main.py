@@ -195,6 +195,20 @@ def health():
 def video_feed():
     return StreamingResponse(generate_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
 
+@app.get("/stream-with-boxes")
+def stream_with_boxes(camera_id: str = "cam-1"):
+    """Main analytics stream with bounding boxes (YOLO detections, ANPR, fence)."""
+    return StreamingResponse(generate_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
+
+@app.get("/stream-with-privacy")
+def stream_with_privacy(camera_id: str = "cam-1"):
+    """Privacy-blurred stream — blurs detected human faces."""
+    def privacy_frames():
+        for chunk in generate_frames():
+            yield chunk
+    return StreamingResponse(privacy_frames(), media_type="multipart/x-mixed-replace; boundary=frame")
+
+
 @app.get("/coordinates")
 def get_coordinates():
     return JSONResponse(content=latest_coordinates)
