@@ -183,14 +183,14 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                         </div>
                         <h2 className="text-xl font-bold text-white">Welcome to TRINETRA</h2>
                     </div>
-                    <p className="text-cyan-100 text-sm">Let's set up your DroidCam cameras for crowd monitoring</p>
+                    <p className="text-brand-text text-sm">Let's set up your DroidCam cameras for crowd monitoring</p>
                 </div>
 
                 {/* Step 1: Camera Count */}
                 {step === 1 && (
                     <div className="p-6">
                         <div className="text-center mb-8">
-                            <Camera className="w-16 h-16 mx-auto text-cyan-500 mb-4" />
+                            <Camera className="w-16 h-16 mx-auto text-brand-red mb-4" />
                             <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">
                                 How many cameras do you want to use?
                             </h3>
@@ -207,7 +207,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                             >
                                 <Minus className="w-5 h-5" />
                             </button>
-                            <div className="text-5xl font-bold text-cyan-500 w-20 text-center">
+                            <div className="text-5xl font-bold text-brand-red w-20 text-center">
                                 {cameraCount}
                             </div>
                             <button
@@ -221,7 +221,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
 
                         <button
                             onClick={() => setStep(2)}
-                            className="w-full py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-xl transition-colors"
+                            className="w-full py-3 bg-cyan-500 hover:bg-brand-red text-white font-medium rounded-xl transition-colors"
                         >
                             Continue
                         </button>
@@ -278,7 +278,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                     value={camera.url}
                                                     onChange={(e) => updateCamera(index, 'url', e.target.value)}
                                                     placeholder="192.168.1.100"
-                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-cyan-500 font-mono"
+                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-brand-red font-mono"
                                                 />
                                             </div>
                                             <div>
@@ -300,7 +300,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                             }}
                                                             placeholder="New..."
                                                             autoFocus
-                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-cyan-500 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none"
+                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-brand-red rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none"
                                                         />
                                                     </div>
                                                 ) : (
@@ -308,7 +308,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                         <select
                                                             value={camera.zone}
                                                             onChange={(e) => updateCamera(index, 'zone', e.target.value)}
-                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-cyan-500"
+                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none focus:border-brand-red"
                                                         >
                                                             {allZones.map((zone: string) => (
                                                                 <option key={zone} value={zone}>{zone}</option>
@@ -329,7 +329,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                         {/* Area Factor Configuration */}
                                         <div className="p-3 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-600">
                                             <div className="flex items-center gap-2 mb-2 text-zinc-700 dark:text-zinc-300 font-medium text-xs">
-                                                <Calculator className="w-3 h-3 text-cyan-500" />
+                                                <Calculator className="w-3 h-3 text-brand-red" />
                                                 Area & Density Factors
                                             </div>
                                             <div className="grid grid-cols-3 gap-2">
@@ -371,7 +371,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                             <div className="mt-3 pt-3 border-t border-zinc-200 dark:border-zinc-600 flex items-center justify-between">
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-[10px] text-zinc-500 dark:text-zinc-400">Calculated Max Capacity:</span>
-                                                    <span className="text-sm font-bold text-cyan-500">
+                                                    <span className="text-sm font-bold text-brand-red">
                                                         {calculateCapacity(camera.area, camera.areaUnit, camera.densityLevel)}
                                                     </span>
                                                 </div>
@@ -381,7 +381,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                             type="checkbox"
                                                             checked={camera.useManualCapacity}
                                                             onChange={(e) => updateCamera(index, 'useManualCapacity', e.target.checked)}
-                                                            className="rounded border-zinc-300 dark:border-zinc-600 text-cyan-500 focus:ring-cyan-500"
+                                                            className="rounded border-zinc-300 dark:border-zinc-600 text-brand-red focus:ring-cyan-500"
                                                         />
                                                         Manual Override
                                                     </label>
@@ -395,7 +395,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                                                         min="0"
                                                         value={camera.maxCapacity}
                                                         onChange={(e) => updateCamera(index, 'maxCapacity', parseInt(e.target.value) || 0)}
-                                                        className="w-full bg-zinc-50 dark:bg-zinc-700 border border-cyan-500/50 rounded-lg px-3 py-1.5 text-sm font-bold text-cyan-600 focus:outline-none"
+                                                        className="w-full bg-zinc-50 dark:bg-zinc-700 border border-brand-red/50 rounded-lg px-3 py-1.5 text-sm font-bold text-brand-muted focus:outline-none"
                                                     />
                                                     {camera.maxCapacity === 0 && (
                                                         <span className="text-[10px] font-bold text-red-500 whitespace-nowrap">🚫 NO ENTRY</span>
@@ -418,7 +418,7 @@ export default function CameraSetupWizard({ onComplete, baseUrl }: CameraSetupWi
                             <button
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
-                                className="flex-1 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                                className="flex-1 py-3 bg-cyan-500 hover:bg-brand-red text-white font-medium rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                             >
                                 {isSubmitting ? (
                                     <>

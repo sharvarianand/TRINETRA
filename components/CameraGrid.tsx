@@ -48,9 +48,9 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
       level: 'low',
       percentage: 0,
       message: 'Restricted (Clear)',
-      color: 'text-cyan-500',
+      color: 'text-brand-red',
       bgColor: 'bg-cyan-500',
-      borderColor: 'border-cyan-500'
+      borderColor: 'border-brand-red'
     };
   }
 
@@ -88,9 +88,9 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
       level: 'low',
       percentage,
       message: 'Safe capacity',
-      color: 'text-cyan-500',
+      color: 'text-brand-red',
       bgColor: 'bg-cyan-500',
-      borderColor: 'border-cyan-500'
+      borderColor: 'border-brand-red'
     };
   }
 }
@@ -134,7 +134,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
   if (!isMounted) {
     return (
       <div className={`bg-white dark:bg-zinc-800 rounded-xl border border-zinc-100 dark:border-zinc-700 shadow-sm p-8 flex items-center justify-center transition-colors duration-200 ${className}`}>
-        <RefreshCw className="w-6 h-6 text-cyan-600 dark:text-cyan-400 animate-spin" />
+        <RefreshCw className="w-6 h-6 text-brand-muted dark:text-brand-text animate-spin" />
       </div>
     );
   }
@@ -146,7 +146,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
     <div className={`bg-white dark:bg-zinc-800 rounded-xl border border-zinc-100 dark:border-zinc-700 shadow-sm overflow-hidden transition-colors duration-200 ${className}`}>
       <div className="px-5 py-4 border-b border-zinc-100 dark:border-zinc-700 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Camera className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+          <Camera className="w-5 h-5 text-brand-muted dark:text-brand-text" />
           <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Live Cameras</h2>
           <span className="text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-700 px-2 py-0.5 rounded-full">
             {liveCameras.length} active
@@ -154,9 +154,9 @@ export default function CameraGrid({ className = '', settings }: { className?: s
         </div>
         <div className="flex items-center gap-2">
           {serverConnected ? (
-            <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 dark:bg-cyan-900/30 rounded-full border border-cyan-200 dark:border-cyan-700">
-              <span className="w-2 h-2 bg-cyan-600 dark:bg-cyan-400 rounded-full animate-pulse"></span>
-              <span className="text-xs text-cyan-700 dark:text-cyan-400 font-medium">Live</span>
+            <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 dark:bg-brand-card/30 rounded-full border border-cyan-200 dark:border-brand-border">
+              <span className="w-2 h-2 bg-brand-red dark:bg-cyan-400 rounded-full animate-pulse"></span>
+              <span className="text-xs text-brand-muted dark:text-brand-text font-medium">Live</span>
             </div>
           ) : (
             <div className="flex items-center gap-1 px-2 py-1 bg-red-50 dark:bg-red-900/30 rounded-full border border-red-200 dark:border-red-700">
@@ -319,7 +319,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
   const showLoadingOverlay = isLoading && !hasFirstFrame && !hasData;
 
   return (
-    <div className="relative group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-cyan-500/50 transition-all duration-300 shadow-lg">
+    <div className="relative group bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-brand-red/50 transition-all duration-300 shadow-lg">
       <div className="aspect-video relative overflow-hidden bg-zinc-950">
         {lowBandwidth ? (
           <div className="w-full h-full bg-zinc-900 flex items-center justify-center">
@@ -355,10 +355,10 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
             {showLoadingOverlay && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-zinc-900/90 backdrop-blur-sm">
                 <div className="relative">
-                  <div className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin"></div>
-                  <Activity className="absolute inset-0 m-auto w-5 h-5 text-cyan-500 animate-pulse" />
+                  <div className="w-12 h-12 border-4 border-brand-red/20 border-t-cyan-500 rounded-full animate-spin"></div>
+                  <Activity className="absolute inset-0 m-auto w-5 h-5 text-brand-red animate-pulse" />
                 </div>
-                <p className="mt-4 text-[10px] font-bold text-cyan-500/80 animate-pulse tracking-widest uppercase">Initializing Stream...</p>
+                <p className="mt-4 text-[10px] font-bold text-brand-red/80 animate-pulse tracking-widest uppercase">Initializing Stream...</p>
               </div>
             )}
           </>
@@ -366,7 +366,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
           <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-800 text-zinc-400 p-4 text-center">
             <WifiOff className="w-8 h-8 mb-2 opacity-50" />
             <span className="text-xs font-semibold">Feed Connection Lost</span>
-            <button onClick={handleRetry} className="mt-2 px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white rounded-md text-[10px] uppercase font-bold transition-colors">
+            <button onClick={handleRetry} className="mt-2 px-3 py-1 bg-brand-red hover:bg-cyan-700 text-white rounded-md text-[10px] uppercase font-bold transition-colors">
               Retry
             </button>
           </div>
@@ -391,7 +391,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
 
             <div className="absolute bottom-0 left-0 right-0 z-20">
               {alertTriggered && (
-                <div className="px-2 py-1 bg-cyan-600 flex items-center justify-center gap-2 animate-bounce">
+                <div className="px-2 py-1 bg-brand-red flex items-center justify-center gap-2 animate-bounce">
                   <span className="text-[9px] font-black text-white italic">WhatsApp Alert Dispatched!</span>
                 </div>
               )}

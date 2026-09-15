@@ -168,7 +168,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         switch (level) {
             case 'high': return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30';
             case 'medium': return 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30';
-            default: return 'text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/30';
+            default: return 'text-brand-muted dark:text-brand-text bg-cyan-50 dark:bg-brand-card/30';
         }
     };
 
@@ -205,7 +205,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 key={item.id}
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                                    ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 font-medium'
+                                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
@@ -224,7 +224,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 <header className="bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-6 py-4 flex items-center justify-between transition-colors duration-200">
                     <div>
                         <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                            <BarChart3 className="w-6 h-6 text-cyan-500" />
+                            <BarChart3 className="w-6 h-6 text-brand-red" />
                             Intelligence Analysis
                         </h1>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">Sector activity, movement patterns & operational insights</p>
@@ -237,8 +237,8 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     key={range}
                                     onClick={() => setSelectedTimeRange(range)}
                                     className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${selectedTimeRange === range
-                                        ? 'bg-white dark:bg-zinc-600 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                                        : 'text-zinc-600 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400'
+                                        ? 'bg-white dark:bg-zinc-600 text-brand-muted dark:text-brand-text shadow-sm'
+                                        : 'text-zinc-600 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text'
                                         }`}
                                 >
                                     {range.charAt(0).toUpperCase() + range.slice(1)}
@@ -248,17 +248,17 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
                         >
                             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
-                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <div className="relative">
-                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center border border-cyan-200 dark:border-cyan-700 hover:border-cyan-400 transition-colors cursor-pointer">
-                                <span className="text-cyan-600 dark:text-cyan-400 font-medium text-sm">{getUserInitials()}</span>
+                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 transition-colors cursor-pointer">
+                                <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
                                 <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50">
@@ -287,8 +287,8 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                     <div className="grid grid-cols-6 gap-4 mb-6">
                         <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
                             <div className="flex items-center justify-between mb-2">
-                                <Users className="w-5 h-5 text-cyan-500" />
-                                <span className="text-xs text-cyan-600 dark:text-cyan-400 flex items-center gap-1">
+                                <Users className="w-5 h-5 text-brand-red" />
+                                <span className="text-xs text-brand-muted dark:text-brand-text flex items-center gap-1">
                                     <ArrowUpRight className="w-3 h-3" /> 12.5%
                                 </span>
                             </div>
@@ -314,7 +314,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
                             <div className="flex items-center justify-between mb-2">
                                 <AlertTriangle className="w-5 h-5 text-red-500" />
-                                <span className="text-xs text-cyan-600 dark:text-cyan-400 flex items-center gap-1">
+                                <span className="text-xs text-brand-muted dark:text-brand-text flex items-center gap-1">
                                     <ArrowDownRight className="w-3 h-3" /> -15%
                                 </span>
                             </div>
@@ -323,9 +323,9 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         </div>
                         <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
                             <div className="flex items-center justify-between mb-2">
-                                <Target className="w-5 h-5 text-cyan-500" />
+                                <Target className="w-5 h-5 text-brand-red" />
                             </div>
-                            <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">{analyticsData.safetyScore}%</div>
+                            <div className="text-2xl font-bold text-brand-muted dark:text-brand-text">{analyticsData.safetyScore}%</div>
                             <div className="text-xs text-zinc-500 dark:text-zinc-400">Sector Readiness</div>
                         </div>
                         <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
@@ -341,7 +341,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         {/* Hourly Footfall Chart */}
                         <div className="col-span-8 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
                             <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
-                                <TrendingUp className="w-5 h-5 text-cyan-500" />
+                                <TrendingUp className="w-5 h-5 text-brand-red" />
                                 Hourly Footfall Analysis
                             </h3>
                             <div className="flex items-end gap-2 h-64">
@@ -377,7 +377,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                             <div className="text-sm text-zinc-500 dark:text-zinc-400">{trend.label}</div>
                                             <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{trend.value.toLocaleString()}</div>
                                         </div>
-                                        <div className={`flex items-center gap-1 text-sm ${trend.trend === 'up' ? 'text-cyan-600 dark:text-cyan-400' : 'text-red-600 dark:text-red-400'}`}>
+                                        <div className={`flex items-center gap-1 text-sm ${trend.trend === 'up' ? 'text-brand-muted dark:text-brand-text' : 'text-red-600 dark:text-red-400'}`}>
                                             {trend.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
                                             {Math.abs(trend.change)}%
                                         </div>
@@ -389,7 +389,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         {/* Zone Analysis */}
                         <div className="col-span-12 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
                             <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
-                                <Map className="w-5 h-5 text-cyan-500" />
+                                <Map className="w-5 h-5 text-brand-red" />
                                 Zone-wise Analysis
                             </h3>
                             <div className="overflow-x-auto">
@@ -409,7 +409,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                             <tr key={index} className="border-b border-zinc-100 dark:border-zinc-700/50 hover:bg-zinc-50 dark:hover:bg-zinc-700/30 transition-colors">
                                                 <td className="py-3 px-4 text-sm font-medium text-zinc-900 dark:text-zinc-100">{zone.zone}</td>
                                                 <td className="py-3 px-4 text-center">
-                                                    <span className="text-sm text-cyan-600 dark:text-cyan-400">{zone.avgOccupancy}%</span>
+                                                    <span className="text-sm text-brand-muted dark:text-brand-text">{zone.avgOccupancy}%</span>
                                                 </td>
                                                 <td className="py-3 px-4 text-center">
                                                     <span className="text-sm text-amber-600 dark:text-amber-400">{zone.peakOccupancy}%</span>
@@ -420,7 +420,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                                     </span>
                                                 </td>
                                                 <td className="py-3 px-4 text-center">
-                                                    <span className={`text-sm ${zone.incidents > 0 ? 'text-red-600 dark:text-red-400' : 'text-cyan-600 dark:text-cyan-400'}`}>
+                                                    <span className={`text-sm ${zone.incidents > 0 ? 'text-red-600 dark:text-red-400' : 'text-brand-muted dark:text-brand-text'}`}>
                                                         {zone.incidents}
                                                     </span>
                                                 </td>
@@ -455,12 +455,12 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Based on historical data, crowd density is expected to reach 85% by 16:00.</p>
                                 </div>
-                                <div className="p-4 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
+                                <div className="p-4 bg-cyan-50 dark:bg-brand-card/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <TrendingUp className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-                                        <span className="text-sm font-medium text-cyan-700 dark:text-cyan-300">Visitor Surge Predicted</span>
+                                        <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
+                                        <span className="text-sm font-medium text-brand-muted dark:text-cyan-300">Visitor Surge Predicted</span>
                                     </div>
-                                    <p className="text-xs text-cyan-600 dark:text-cyan-400/80">Weather conditions favorable. Expected 15% increase in visitors.</p>
+                                    <p className="text-xs text-brand-muted dark:text-brand-text/80">Weather conditions favorable. Expected 15% increase in visitors.</p>
                                 </div>
                                 <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                                     <div className="flex items-center gap-3 mb-2">
@@ -496,7 +496,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Entry rate dropped by 60% for 5 minutes.</p>
                                     <div className="mt-2 flex gap-2">
-                                        <span className="px-2 py-1 bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300 text-xs rounded">Resolved</span>
+                                        <span className="px-2 py-1 bg-cyan-100 dark:bg-brand-card/40 text-brand-muted dark:text-cyan-300 text-xs rounded">Resolved</span>
                                     </div>
                                 </div>
                                 <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
@@ -518,7 +518,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
-                        <span className="text-xs font-medium text-cyan-600 dark:text-cyan-400">Analytics Engine Active</span>
+                        <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Analytics Engine Active</span>
                     </div>
                     <div className="text-xs text-zinc-500 dark:text-zinc-400">
                         Last updated: {lastUpdated || '--:--:--'}

@@ -246,7 +246,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'resolved': return 'text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-900/30';
+            case 'resolved': return 'text-brand-muted dark:text-brand-text bg-cyan-50 dark:bg-brand-card/30';
             case 'pending': return 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30';
             default: return 'text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30';
         }
@@ -296,7 +296,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                 key={item.id}
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                                    ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 font-medium'
+                                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
@@ -315,7 +315,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                 <header className="bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-6 py-4 flex items-center justify-between transition-colors duration-200 no-print">
                     <div>
                         <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                            <FileText className="w-6 h-6 text-cyan-500" />
+                            <FileText className="w-6 h-6 text-brand-red" />
                             Reports
                         </h1>
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">Incident reports and daily summaries</p>
@@ -323,7 +323,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                     <div className="flex items-center gap-4">
                         <button
                             onClick={handleExportReport}
-                            className="flex items-center gap-2 px-4 py-2 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 rounded-lg border border-cyan-200 dark:border-cyan-700 hover:bg-cyan-100 dark:hover:bg-cyan-900/50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text rounded-lg border border-cyan-200 dark:border-brand-border hover:bg-cyan-100 dark:hover:bg-brand-card/50 transition-colors"
                         >
                             <Download className="w-4 h-4" />
                             Export
@@ -331,17 +331,17 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
                         >
                             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
-                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <div className="relative">
-                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center border border-cyan-200 dark:border-cyan-700 hover:border-cyan-400 transition-colors cursor-pointer">
-                                <span className="text-cyan-600 dark:text-cyan-400 font-medium text-sm">{getUserInitials()}</span>
+                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 transition-colors cursor-pointer">
+                                <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
                                 <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50">
@@ -388,7 +388,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                     type="date"
                                     value={selectedDate}
                                     onChange={(e) => setSelectedDate(e.target.value)}
-                                    className="bg-zinc-50 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-cyan-500"
+                                    className="bg-zinc-50 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
                                 />
                             </div>
                             {dailyReport && (
@@ -410,7 +410,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                         <div className="text-xs text-zinc-500 dark:text-zinc-400">Info</div>
                                     </div>
                                     <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-lg p-4 border border-zinc-100 dark:border-zinc-600">
-                                        <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">{dailyReport.avgResponseTime}m</div>
+                                        <div className="text-2xl font-bold text-brand-muted dark:text-brand-text">{dailyReport.avgResponseTime}m</div>
                                         <div className="text-xs text-zinc-500 dark:text-zinc-400">Avg Response</div>
                                     </div>
                                     <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-lg p-4 border border-zinc-100 dark:border-zinc-600">
@@ -418,7 +418,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                         <div className="text-xs text-zinc-500 dark:text-zinc-400">Peak Density</div>
                                     </div>
                                     <div className="bg-zinc-50 dark:bg-zinc-700/50 rounded-lg p-4 border border-zinc-100 dark:border-zinc-600">
-                                        <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">{dailyReport.totalVisitors.toLocaleString()}</div>
+                                        <div className="text-2xl font-bold text-brand-muted dark:text-brand-text">{dailyReport.totalVisitors.toLocaleString()}</div>
                                         <div className="text-xs text-zinc-500 dark:text-zinc-400">Total Visitors</div>
                                     </div>
                                 </div>
@@ -435,7 +435,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                     placeholder="Search incidents..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-cyan-500"
+                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg pl-10 pr-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-brand-red"
                                 />
                             </div>
 
@@ -445,7 +445,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                 <select
                                     value={filterType}
                                     onChange={(e) => setFilterType(e.target.value as 'all' | 'critical' | 'warning' | 'info')}
-                                    className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-cyan-500"
+                                    className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
                                 >
                                     <option value="all">All Types</option>
                                     <option value="critical">Critical</option>
@@ -458,7 +458,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                             <select
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value as 'all' | 'resolved' | 'pending' | 'investigating')}
-                                className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-cyan-500"
+                                className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
                             >
                                 <option value="all">All Statuses</option>
                                 <option value="resolved">Resolved</option>
@@ -524,7 +524,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                     <ul className="space-y-1">
                                                         {incident.actions.map((action, i) => (
                                                             <li key={i} className="text-sm text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
-                                                                <CheckCircle className="w-3 h-3 text-cyan-500" />
+                                                                <CheckCircle className="w-3 h-3 text-brand-red" />
                                                                 {action}
                                                             </li>
                                                         ))}
@@ -536,22 +536,22 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                     <h4 className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2">INCIDENT DETAILS</h4>
                                                     <div className="space-y-2">
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <MapPin className="w-4 h-4 text-cyan-500" />
+                                                            <MapPin className="w-4 h-4 text-brand-red" />
                                                             <span className="text-zinc-500 dark:text-zinc-400">Zone:</span>
                                                             <span className="text-zinc-900 dark:text-zinc-100">{incident.zone}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <Camera className="w-4 h-4 text-cyan-500" />
+                                                            <Camera className="w-4 h-4 text-brand-red" />
                                                             <span className="text-zinc-500 dark:text-zinc-400">Camera:</span>
                                                             <span className="text-zinc-900 dark:text-zinc-100">{incident.cameraId}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <Users className="w-4 h-4 text-cyan-500" />
+                                                            <Users className="w-4 h-4 text-brand-red" />
                                                             <span className="text-zinc-500 dark:text-zinc-400">Crowd:</span>
                                                             <span className="text-zinc-900 dark:text-zinc-100">{incident.crowdCount} people</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-sm">
-                                                            <Clock className="w-4 h-4 text-cyan-500" />
+                                                            <Clock className="w-4 h-4 text-brand-red" />
                                                             <span className="text-zinc-500 dark:text-zinc-400">Duration:</span>
                                                             <span className="text-zinc-900 dark:text-zinc-100">{incident.duration} min</span>
                                                         </div>
@@ -564,8 +564,8 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                     <div className="space-y-2">
                                                         {incident.responders.map((responder, i) => (
                                                             <div key={i} className="flex items-center gap-2">
-                                                                <div className="w-6 h-6 rounded-full bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center border border-cyan-200 dark:border-cyan-700">
-                                                                    <span className="text-cyan-600 dark:text-cyan-400 text-xs font-medium">{responder.charAt(0)}</span>
+                                                                <div className="w-6 h-6 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border">
+                                                                    <span className="text-brand-muted dark:text-brand-text text-xs font-medium">{responder.charAt(0)}</span>
                                                                 </div>
                                                                 <span className="text-sm text-zinc-700 dark:text-zinc-300">{responder}</span>
                                                             </div>
@@ -577,7 +577,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                             e.stopPropagation();
                                                             handlePrintIncident(incident);
                                                         }}
-                                                        className="mt-4 flex items-center gap-2 text-sm text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors"
+                                                        className="mt-4 flex items-center gap-2 text-sm text-brand-muted dark:text-brand-text hover:text-brand-muted dark:hover:text-cyan-300 transition-colors"
                                                     >
                                                         <Printer className="w-4 h-4" />
                                                         Print Report
@@ -604,7 +604,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                 <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200 no-print">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></div>
-                        <span className="text-xs font-medium text-cyan-600 dark:text-cyan-400">Reporting System Active</span>
+                        <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Reporting System Active</span>
                     </div>
                     <div className="text-xs text-zinc-500 dark:text-zinc-400">
                         Last updated: {generatedTime || '--'}
@@ -622,7 +622,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={printIncidentReport}
-                                    className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors"
+                                    className="flex items-center gap-2 px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-cyan-700 transition-colors"
                                 >
                                     <Printer className="w-4 h-4" />
                                     Print
@@ -644,7 +644,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                             {/* Report Header */}
                             <div className="text-center mb-8 border-b-2 border-gray-300 pb-6">
                                 <div className="flex items-center justify-center gap-3 mb-2">
-                                    <Shield className="w-10 h-10 text-cyan-600 print:text-gray-800" />
+                                    <Shield className="w-10 h-10 text-brand-muted print:text-gray-800" />
                                     <h1 className="text-2xl font-bold">TRINETRA</h1>
                                 </div>
                                 <h2 className="text-xl font-semibold text-gray-700">INCIDENT REPORT</h2>

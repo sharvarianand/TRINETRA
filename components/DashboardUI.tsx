@@ -163,7 +163,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
       case 'warning':
         return { bg: 'bg-amber-50 dark:bg-amber-900/30', border: 'border-amber-200 dark:border-amber-700', text: 'text-amber-700 dark:text-amber-400', icon: AlertTriangle };
       case 'success':
-        return { bg: 'bg-cyan-50 dark:bg-cyan-900/30', border: 'border-cyan-200 dark:border-cyan-700', text: 'text-cyan-700 dark:text-cyan-400', icon: CheckCircle };
+        return { bg: 'bg-cyan-50 dark:bg-brand-card/30', border: 'border-cyan-200 dark:border-brand-border', text: 'text-brand-muted dark:text-brand-text', icon: CheckCircle };
       case 'error':
         return { bg: 'bg-red-50 dark:bg-red-900/30', border: 'border-red-200 dark:border-red-700', text: 'text-red-700 dark:text-red-400', icon: AlertCircle };
       case 'info':
@@ -308,7 +308,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                   key={item.id}
                   href={item.href}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                    ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 font-medium'
+                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                     }`}
                 >
@@ -334,7 +334,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
-                className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? (
@@ -343,7 +343,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                   <Moon className="w-5 h-5" />
                 )}
               </button>
-              <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+              <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
@@ -351,9 +351,9 @@ export default function DashboardUI({ user }: DashboardUIProps) {
               <div className="relative">
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center border border-cyan-200 dark:border-cyan-700 hover:border-cyan-400 dark:hover:border-cyan-500 transition-colors cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 dark:hover:border-brand-red transition-colors cursor-pointer"
                 >
-                  <span className="text-cyan-600 dark:text-cyan-400 font-medium text-sm">{getUserInitials()}</span>
+                  <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                 </button>
                 {showProfileMenu && (
                   <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50">
@@ -388,16 +388,16 @@ export default function DashboardUI({ user }: DashboardUIProps) {
               {stats.map((stat, idx) => (
                 <div key={idx} className="bg-white dark:bg-zinc-800 rounded-xl p-5 border border-zinc-100 dark:border-zinc-700 shadow-sm transition-colors duration-200">
                   <div className="flex items-start justify-between mb-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stat.color === 'cyan' ? 'bg-cyan-50 dark:bg-cyan-900/30' :
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stat.color === 'cyan' ? 'bg-cyan-50 dark:bg-brand-card/30' :
                       stat.color === 'blue' ? 'bg-blue-50 dark:bg-blue-900/30' :
                         stat.color === 'amber' ? 'bg-amber-50 dark:bg-amber-900/30' : 'bg-red-50 dark:bg-red-900/30'
                       }`}>
-                      <stat.icon className={`w-5 h-5 ${stat.color === 'cyan' ? 'text-cyan-600 dark:text-cyan-400' :
+                      <stat.icon className={`w-5 h-5 ${stat.color === 'cyan' ? 'text-brand-muted dark:text-brand-text' :
                         stat.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
                           stat.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
                         }`} />
                     </div>
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.startsWith('+') ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400' : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300'
+                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.startsWith('+') ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text' : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300'
                       }`}>
                       {stat.change}
                     </span>
@@ -453,10 +453,10 @@ export default function DashboardUI({ user }: DashboardUIProps) {
             <div className="mt-6 bg-white dark:bg-zinc-800 rounded-xl border border-zinc-100 dark:border-zinc-700 shadow-sm p-5 transition-colors duration-200">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                  <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                   <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Crowd Activity</h2>
                 </div>
-                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-600 dark:focus:ring-cyan-500 focus:border-cyan-600 dark:focus:border-cyan-500">
+                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-600 dark:focus:ring-cyan-500 focus:border-cyan-600 dark:focus:border-brand-red">
                   <option>Last 24 hours</option>
                   <option>Last 7 days</option>
                   <option>Last 30 days</option>
@@ -466,7 +466,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                 {chartData.map((height, i) => (
                   <div
                     key={i}
-                    className="flex-1 bg-cyan-100 dark:bg-cyan-900/50 hover:bg-cyan-200 dark:hover:bg-cyan-800/50 transition-colors rounded-t cursor-pointer"
+                    className="flex-1 bg-cyan-100 dark:bg-brand-card/50 hover:bg-cyan-200 dark:hover:bg-cyan-800/50 transition-colors rounded-t cursor-pointer"
                     style={{ height: isMounted ? `${height}%` : '50%' }}
                   />
                 ))}
