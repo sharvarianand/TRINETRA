@@ -99,7 +99,7 @@ export default function LandingPage() {
         
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.86fr_1.14fr]">
           <div className="z-10">
-            <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-brand-red md:text-7xl">
+            <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-brand-text md:text-7xl">
               A shared picture.<br />A faster response.
             </h1>
             <p className="mt-7 max-w-lg text-base leading-7 text-brand-muted">
@@ -283,6 +283,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
