@@ -21,7 +21,7 @@ export default function StatsCard({
   className = '' 
 }: StatsCardProps) {
   const colorStyles = {
-    cyan: { bg: 'bg-brand-card', text: 'text-brand-muted' },
+    red: { bg: 'bg-brand-red/10', text: 'text-brand-red' },
     blue: { bg: 'bg-blue-50', text: 'text-blue-600' },
     amber: { bg: 'bg-amber-50', text: 'text-amber-600' },
     red: { bg: 'bg-red-50', text: 'text-red-600' },
@@ -51,6 +51,7 @@ export default function StatsCard({
     </div>
   );
 }
+
 
 
 

@@ -121,7 +121,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                 </div>
             </div>
 
-            {/* People Dots - cyan-600 theme */}
+            {/* People Dots - brand-red theme */}
             <div className="absolute inset-0 z-20 pointer-events-none">
                 {data.people.map((person) => (
                     <div
@@ -180,5 +180,6 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
         </div>
     );
 }
+
 
 
