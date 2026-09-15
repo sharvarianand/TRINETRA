@@ -43,6 +43,70 @@ The platform ingests live video streams from standard IP-based CCTV cameras and 
 
 
 
+
+## 🏗️ System Architecture
+
+`mermaid
+graph TD
+    subgraph "Border Out Post (Edge Node)"
+        CCTV["CCTV / IP Camera Streams"] --> |Video Frames| EdgeProcessing["Python FastAPI Edge Server"]
+        
+        subgraph "AI Video Analytics Pipeline"
+            EdgeProcessing --> YOLO["YOLOv8 Detection"]
+            EdgeProcessing --> FRS["OpenCV Face Recognition"]
+            EdgeProcessing --> ANPR["EasyOCR Plate Reading"]
+            
+            YOLO --> Track["Tracking & Loitering Timer"]
+            FRS --> Watchlist["Local Watchlist Matching"]
+            ANPR --> Hotlist["Vehicle Hotlist Verification"]
+        end
+        
+        Track --> AlertGen["Alert Engine"]
+        Watchlist --> AlertGen
+        Hotlist --> AlertGen
+    end
+
+    subgraph "Cybersecurity & Blockchain Layer"
+        AlertGen --> HashEngine["SHA-256 Cryptographic Hashing"]
+        HashEngine --> ImmutableLog[("Immutable Audit Ledger")]
+    end
+
+    subgraph "Central Command (Cloud / HQ)"
+        Auth["Supabase Authentication"] -.-> |JWT Route Protection| Frontend["Next.js Command Center"]
+        Frontend <--> |REST API| EdgeProcessing
+        ImmutableLog --> |Tamper-Proof Logs| Frontend
+        AlertGen --> |Twilio API| QRT["Quick Reaction Team (SOS)"]
+    end
+`
+
+## 🔄 User & Data Flow
+
+`mermaid
+sequenceDiagram
+    participant Commander as Base Commander
+    participant Auth as Supabase Auth
+    participant UI as Next.js Dashboard
+    participant Edge as Edge AI Node
+    participant CCTV as Border Camera
+
+    Commander->>Auth: Secure Login (Email/Password)
+    Auth-->>Commander: Issue AES-256 JWT Session
+    Commander->>UI: Access TRINETRA Command Post
+    
+    UI->>Edge: Initialize Camera Grid
+    Edge->>CCTV: Connect via IP/RTSP
+    CCTV-->>Edge: Raw Video Feed
+    
+    Note over Edge: Run YOLOv8, Face Matching & ANPR
+    Edge-->>UI: Stream MJPEG with Tactical Overlays
+    
+    Note over CCTV,Edge: Threat Detected (e.g. Watchlist Match)
+    Edge->>Edge: Generate SHA-256 Immutable Incident Hash
+    Edge->>UI: Push Priority Alert to HUD
+    
+    UI-->>Commander: Trigger Visual Red Alert & AI Advice
+    Commander->>UI: Acknowledge Threat & Deploy Unit
+`
 ## 💻 Technical Architecture & Stack
 
 ### Edge AI Analytics (Backend)
@@ -80,6 +144,70 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 
 
 
+
+## 🏗️ System Architecture
+
+`mermaid
+graph TD
+    subgraph "Border Out Post (Edge Node)"
+        CCTV["CCTV / IP Camera Streams"] --> |Video Frames| EdgeProcessing["Python FastAPI Edge Server"]
+        
+        subgraph "AI Video Analytics Pipeline"
+            EdgeProcessing --> YOLO["YOLOv8 Detection"]
+            EdgeProcessing --> FRS["OpenCV Face Recognition"]
+            EdgeProcessing --> ANPR["EasyOCR Plate Reading"]
+            
+            YOLO --> Track["Tracking & Loitering Timer"]
+            FRS --> Watchlist["Local Watchlist Matching"]
+            ANPR --> Hotlist["Vehicle Hotlist Verification"]
+        end
+        
+        Track --> AlertGen["Alert Engine"]
+        Watchlist --> AlertGen
+        Hotlist --> AlertGen
+    end
+
+    subgraph "Cybersecurity & Blockchain Layer"
+        AlertGen --> HashEngine["SHA-256 Cryptographic Hashing"]
+        HashEngine --> ImmutableLog[("Immutable Audit Ledger")]
+    end
+
+    subgraph "Central Command (Cloud / HQ)"
+        Auth["Supabase Authentication"] -.-> |JWT Route Protection| Frontend["Next.js Command Center"]
+        Frontend <--> |REST API| EdgeProcessing
+        ImmutableLog --> |Tamper-Proof Logs| Frontend
+        AlertGen --> |Twilio API| QRT["Quick Reaction Team (SOS)"]
+    end
+`
+
+## 🔄 User & Data Flow
+
+`mermaid
+sequenceDiagram
+    participant Commander as Base Commander
+    participant Auth as Supabase Auth
+    participant UI as Next.js Dashboard
+    participant Edge as Edge AI Node
+    participant CCTV as Border Camera
+
+    Commander->>Auth: Secure Login (Email/Password)
+    Auth-->>Commander: Issue AES-256 JWT Session
+    Commander->>UI: Access TRINETRA Command Post
+    
+    UI->>Edge: Initialize Camera Grid
+    Edge->>CCTV: Connect via IP/RTSP
+    CCTV-->>Edge: Raw Video Feed
+    
+    Note over Edge: Run YOLOv8, Face Matching & ANPR
+    Edge-->>UI: Stream MJPEG with Tactical Overlays
+    
+    Note over CCTV,Edge: Threat Detected (e.g. Watchlist Match)
+    Edge->>Edge: Generate SHA-256 Immutable Incident Hash
+    Edge->>UI: Push Priority Alert to HUD
+    
+    UI-->>Commander: Trigger Visual Red Alert & AI Advice
+    Commander->>UI: Acknowledge Threat & Deploy Unit
+`
 ## 💻 Technical Architecture & Stack
 
 ### Edge AI Analytics (Backend)
@@ -111,6 +239,70 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 
 
 
+
+## 🏗️ System Architecture
+
+`mermaid
+graph TD
+    subgraph "Border Out Post (Edge Node)"
+        CCTV["CCTV / IP Camera Streams"] --> |Video Frames| EdgeProcessing["Python FastAPI Edge Server"]
+        
+        subgraph "AI Video Analytics Pipeline"
+            EdgeProcessing --> YOLO["YOLOv8 Detection"]
+            EdgeProcessing --> FRS["OpenCV Face Recognition"]
+            EdgeProcessing --> ANPR["EasyOCR Plate Reading"]
+            
+            YOLO --> Track["Tracking & Loitering Timer"]
+            FRS --> Watchlist["Local Watchlist Matching"]
+            ANPR --> Hotlist["Vehicle Hotlist Verification"]
+        end
+        
+        Track --> AlertGen["Alert Engine"]
+        Watchlist --> AlertGen
+        Hotlist --> AlertGen
+    end
+
+    subgraph "Cybersecurity & Blockchain Layer"
+        AlertGen --> HashEngine["SHA-256 Cryptographic Hashing"]
+        HashEngine --> ImmutableLog[("Immutable Audit Ledger")]
+    end
+
+    subgraph "Central Command (Cloud / HQ)"
+        Auth["Supabase Authentication"] -.-> |JWT Route Protection| Frontend["Next.js Command Center"]
+        Frontend <--> |REST API| EdgeProcessing
+        ImmutableLog --> |Tamper-Proof Logs| Frontend
+        AlertGen --> |Twilio API| QRT["Quick Reaction Team (SOS)"]
+    end
+`
+
+## 🔄 User & Data Flow
+
+`mermaid
+sequenceDiagram
+    participant Commander as Base Commander
+    participant Auth as Supabase Auth
+    participant UI as Next.js Dashboard
+    participant Edge as Edge AI Node
+    participant CCTV as Border Camera
+
+    Commander->>Auth: Secure Login (Email/Password)
+    Auth-->>Commander: Issue AES-256 JWT Session
+    Commander->>UI: Access TRINETRA Command Post
+    
+    UI->>Edge: Initialize Camera Grid
+    Edge->>CCTV: Connect via IP/RTSP
+    CCTV-->>Edge: Raw Video Feed
+    
+    Note over Edge: Run YOLOv8, Face Matching & ANPR
+    Edge-->>UI: Stream MJPEG with Tactical Overlays
+    
+    Note over CCTV,Edge: Threat Detected (e.g. Watchlist Match)
+    Edge->>Edge: Generate SHA-256 Immutable Incident Hash
+    Edge->>UI: Push Priority Alert to HUD
+    
+    UI-->>Commander: Trigger Visual Red Alert & AI Advice
+    Commander->>UI: Acknowledge Threat & Deploy Unit
+`
 ## 💻 Technical Architecture & Stack
 
 ### Edge AI Analytics (Backend)
@@ -181,6 +373,7 @@ python -m uvicorn yolo_bounding_boxes:app --host 0.0.0.0 --port 8000
 ```
 
 Access the Command Center at `http://localhost:3000`
+
 
 
 
