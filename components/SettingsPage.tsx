@@ -351,8 +351,10 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
             area: camera.area || 100,
             areaUnit: camera.areaUnit || 'sqm',
             densityLevel: camera.densityLevel || 'medium',
-            useManualCapacity: camera.useManualCapacity || false,
-            manualCapacity: camera.capacity !== undefined ? camera.capacity : calculatedCap
+            useManualCapacity: isManual,
+            manualCapacity: camera.capacity !== undefined ? camera.capacity : calculatedCap,
+            sourceType: 'stream',
+            videoFile: null
         });
     };
 
