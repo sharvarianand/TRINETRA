@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import DashboardUI from './DashboardUI';
 import AdminVerify from './AdminVerify';
-import { Shield } from 'lucide-react';
+import Logo from '@/components/Logo';
 
 interface User {
     id: string;
@@ -24,11 +24,11 @@ export default function AdminVerifyWrapper({ user }: { user: User }) {
     // Show loading state while checking
     if (isVerified === null) {
         return (
-            <div className="flex h-screen w-full flex-col items-center justify-center bg-white dark:bg-zinc-900 transition-colors duration-200">
-                <div className="w-16 h-16 rounded-2xl bg-cyan-600 flex items-center justify-center mb-4 animate-pulse">
-                    <Shield className="w-8 h-8 text-white" />
+            <div className="flex h-screen w-full flex-col items-center justify-center bg-brand-bg transition-colors duration-200">
+                <div className="scale-150 mb-6 animate-pulse">
+                    <Logo size="md" showText={false} />
                 </div>
-                <p className="text-zinc-500 dark:text-zinc-400">Checking access...</p>
+                <p className="text-brand-muted tracking-widest font-mono text-xs uppercase animate-pulse">Establishing secure uplink...</p>
             </div>
         );
     }
