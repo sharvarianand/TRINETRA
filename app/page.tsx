@@ -83,7 +83,7 @@ export default function LandingPage() {
           <a href="/tour" className="hover:text-brand-text transition-colors">PROTOTYPE TOUR</a>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={() => router.push('/dashboard')} className="rounded-full border border-brand-red bg-[brand-red]/10 px-5 py-2.5 text-[11px] font-bold tracking-widest text-[brand-red] hover:bg-[brand-red] hover:text-black transition-all shadow-[0_0_15px_rgba(255,48,72,0.2)]">
+          <button onClick={() => router.push('/dashboard')} className="rounded-full border border-brand-red bg-brand-red/10 px-5 py-2.5 text-[11px] font-bold tracking-widest text-brand-red hover:bg-brand-red hover:text-white transition-all shadow-[0_0_15px_rgba(255,48,72,0.2)]">
             COMMAND CENTER
           </button>
         </div>
@@ -106,7 +106,7 @@ export default function LandingPage() {
               TRINETRA brings video, thermal, radar and field assets into one operational view—so commanders can recognize, verify and coordinate a response without switching systems.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <button onClick={() => router.push('/dashboard')} className="flex items-center justify-center gap-2 rounded-full bg-[brand-red] px-8 py-4 text-sm font-bold tracking-widest text-black hover:bg-[brand-red-glow] transition-all">
+              <button onClick={() => router.push('/dashboard')} className="flex items-center justify-center gap-2 rounded-full bg-brand-red px-8 py-4 text-sm font-bold tracking-widest text-black hover:bg-[brand-red-glow] transition-all">
                 ACCESS SYSTEM <ArrowRight className="h-4 w-4" />
               </button>
               <button onClick={() => router.push('/tour')} className="rounded-full border border-white/20 bg-brand-bg px-8 py-4 text-sm font-bold tracking-widest text-brand-text hover:bg-white/10 transition-all">
@@ -117,7 +117,7 @@ export default function LandingPage() {
           
           <div className="relative min-h-[430px] border border-brand-border bg-brand-card/90 p-3 shadow-[0_0_70px_rgba(0,0,0,0.8)] backdrop-blur">
             <div className="flex justify-between border-b border-brand-border px-2 pb-3 text-[10px] font-bold tracking-widest text-brand-muted">
-              <span>SECTOR VIEW // NORTH RIDGE</span><span className="text-[brand-red]">● PRIORITY WATCH</span>
+              <span>SECTOR VIEW // NORTH RIDGE</span><span className="text-brand-red">● PRIORITY WATCH</span>
             </div>
             
             <div className="relative mt-3 h-[370px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_40%,rgba(239,51,72,0.15),transparent_40%),radial-gradient(ellipse_at_22%_82%,rgba(201,35,60,0.1),transparent_35%),linear-gradient(140deg,#0d0b20,#030315_47%,#0d0b20_48%,#030315)]">
@@ -126,12 +126,12 @@ export default function LandingPage() {
               <div className="absolute left-[45%] top-[40%] animate-tracking z-10 w-0 h-0">
                 <div className="absolute -left-14 -top-14 h-28 w-28 rounded-full border border-dashed border-white/30">
                   <div className="absolute inset-3 rounded-full border border-white/20" />
-                  <div className="absolute left-1/2 top-1/2 h-px w-30 origin-left -rotate-25 bg-[brand-red] shadow-[0_0_13px_brand-red]" />
+                  <div className="absolute left-1/2 top-1/2 h-px w-30 origin-left -rotate-25 bg-brand-red shadow-[0_0_13px_brand-red]" />
                 </div>
-                <div className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full border-2 border-[brand-red] bg-[brand-red-dark]/80 p-1 text-[brand-red-glow] shadow-[0_0_40px_var(--color-brand-red)]">
+                <div className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full border-2 border-brand-red bg-brand-red-dark/80 p-1 text-brand-red-glow shadow-[0_0_40px_var(--color-brand-red)]">
                   <Crosshair className="h-4 w-4" />
                 </div>
-                <p className="absolute left-6 -top-3 w-40 text-[10px] font-bold tracking-widest text-[brand-red-glow]">
+                <p className="absolute left-6 -top-3 w-40 text-[10px] font-bold tracking-widest text-brand-red-glow">
                   TRACK 042<br /><span className="font-normal text-brand-muted">CONFIDENCE 87%</span>
                 </p>
               </div>
@@ -156,7 +156,7 @@ export default function LandingPage() {
             
             {/* Left Side: Static Text */}
             <div className="h-fit py-10 lg:py-0">
-              <div className="inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-[brand-red]/10 px-3 py-1 mb-6 text-[10px] font-bold tracking-widest text-[brand-red]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-3 py-1 mb-6 text-[10px] font-bold tracking-widest text-brand-red">
                 {allFeatures[activeIndex].isXFactor ? '🔥 X-FACTOR FEATURE' : 'CORE CAPABILITIES'}
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-brand-text mb-6 leading-tight transition-all duration-700">
@@ -169,7 +169,7 @@ export default function LandingPage() {
               {/* Progress Dots */}
               <div className="mt-12 flex gap-2 flex-wrap max-w-[200px]">
                 {allFeatures.map((_, i) => (
-                  <div key={i} className={`h-1 rounded-full transition-all duration-300 ${i === activeIndex ? 'w-6 bg-[brand-red]' : 'w-2 bg-zinc-800'}`} />
+                  <div key={i} className={`h-1 rounded-full transition-all duration-300 ${i === activeIndex ? 'w-6 bg-brand-red' : 'w-2 bg-zinc-800'}`} />
                 ))}
               </div>
             </div>
@@ -187,7 +187,7 @@ export default function LandingPage() {
                     className={`absolute inset-0 w-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : isPast ? 'opacity-0 -translate-y-12 pointer-events-none' : 'opacity-0 translate-y-12 pointer-events-none'}`}
                   >
                     <div className="w-full h-full p-10 md:p-12 rounded-3xl border border-brand-red/30 bg-brand-card shadow-[0_0_50px_rgba(255,48,72,0.04)] backdrop-blur-xl flex flex-col justify-center">
-                      <div className="flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-[brand-red]/15 text-[brand-red] border border-brand-red/20">
+                      <div className="flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-brand-red/15 text-brand-red border border-brand-red/20">
                         <Icon className="w-7 h-7" />
                       </div>
                       <h3 className="text-3xl font-bold text-brand-text tracking-wide mb-4">{f.title}</h3>
@@ -219,12 +219,12 @@ export default function LandingPage() {
             <div>
               <h4 className="text-brand-text text-lg font-bold mb-6 font-sans">Platform</h4>
               <ul className="space-y-3 text-sm text-brand-muted">
-                <li><a href="#overview" className="hover:text-[brand-red] transition-colors">Overview</a></li>
-                <li><a href="#features" className="hover:text-[brand-red] transition-colors">Core Capabilities</a></li>
-                <li><a href="/dashboard" className="hover:text-[brand-red] transition-colors">Command Center</a></li>
+                <li><a href="#overview" className="hover:text-brand-red transition-colors">Overview</a></li>
+                <li><a href="#features" className="hover:text-brand-red transition-colors">Core Capabilities</a></li>
+                <li><a href="/dashboard" className="hover:text-brand-red transition-colors">Command Center</a></li>
                 <li className="relative inline-block">
-                  <a href="/tour" className="hover:text-[brand-red] transition-colors">Interactive Tour</a>
-                  <span className="absolute top-1 right-[-12px] w-1.5 h-1.5 rounded-full bg-[brand-red] animate-pulse"></span>
+                  <a href="/tour" className="hover:text-brand-red transition-colors">Interactive Tour</a>
+                  <span className="absolute top-1 right-[-12px] w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
                 </li>
               </ul>
             </div>
@@ -232,18 +232,18 @@ export default function LandingPage() {
             <div>
               <h4 className="text-brand-text text-lg font-bold mb-6 font-sans">Resources</h4>
               <ul className="space-y-3 text-sm text-brand-muted">
-                <li><a href="#" className="hover:text-[brand-red] transition-colors">Architecture Diagram</a></li>
-                <li><a href="#" className="hover:text-[brand-red] transition-colors">API Documentation</a></li>
-                <li><a href="#" className="hover:text-[brand-red] transition-colors">Security Whitepaper</a></li>
+                <li><a href="#" className="hover:text-brand-red transition-colors">Architecture Diagram</a></li>
+                <li><a href="#" className="hover:text-brand-red transition-colors">API Documentation</a></li>
+                <li><a href="#" className="hover:text-brand-red transition-colors">Security Whitepaper</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="text-brand-text text-lg font-bold mb-6 font-sans">Contact HQ</h4>
               <ul className="space-y-4 text-sm text-brand-muted">
-                <li className="flex items-center space-x-3"><Mail size={16} className="text-[brand-red]" /><span>command@trinetra.mil</span></li>
-                <li className="flex items-center space-x-3"><Phone size={16} className="text-[brand-red]" /><span>+91 SECURE LINE</span></li>
-                <li className="flex items-center space-x-3"><MapPin size={16} className="text-[brand-red]" /><span>New Delhi, India</span></li>
+                <li className="flex items-center space-x-3"><Mail size={16} className="text-brand-red" /><span>command@trinetra.mil</span></li>
+                <li className="flex items-center space-x-3"><Phone size={16} className="text-brand-red" /><span>+91 SECURE LINE</span></li>
+                <li className="flex items-center space-x-3"><MapPin size={16} className="text-brand-red" /><span>New Delhi, India</span></li>
               </ul>
             </div>
          </div>
@@ -252,8 +252,8 @@ export default function LandingPage() {
            <hr className="border-t border-brand-border mb-6" />
            <div className="flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-brand-muted">
              <div className="flex space-x-6 mb-4 md:mb-0">
-               <a href="#" className="hover:text-[brand-red] transition-colors"><Globe size={18} /></a>
-               <a href="#" className="hover:text-[brand-red] transition-colors"><Twitter size={18} /></a>
+               <a href="#" className="hover:text-brand-red transition-colors"><Globe size={18} /></a>
+               <a href="#" className="hover:text-brand-red transition-colors"><Twitter size={18} /></a>
              </div>
              <p>© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
            </div>
@@ -283,6 +283,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
