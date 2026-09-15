@@ -80,7 +80,7 @@ export default function LandingPage() {
         <Logo size="sm" showText={true} />
         <div className="hidden md:flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-brand-muted">
           <a href="#features" className="hover:text-brand-text transition-colors">CAPABILITIES</a>
-          <a href="/tour" className="hover:text-brand-text transition-colors">PROTOTYPE TOUR</a>
+          <a href="/tour" className="hover:text-brand-text transition-colors">SYSTEM WALKTHROUGH</a>
         </div>
         <div className="flex items-center gap-4">
           <button onClick={() => router.push('/dashboard')} className="rounded-full border border-brand-red bg-brand-red/10 px-5 py-2.5 text-[11px] font-bold tracking-widest text-brand-red hover:bg-brand-red hover:text-white transition-all shadow-[0_0_15px_rgba(255,48,72,0.2)]">
@@ -201,6 +201,39 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      
+      {/* Final Call To Action */}
+      <section className="relative w-full py-40 flex flex-col items-center justify-center bg-brand-bg overflow-hidden">
+        {/* Background Ambient Glow */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(239,51,72,0.15),transparent_60%)]" />
+        
+        {/* Tactical Grid Overlay */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:40px_40px] mask-image:linear-gradient(to_bottom,transparent,black,transparent)" />
+        
+        <div className="relative z-10 text-center max-w-3xl px-6 flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-1.5 mb-8 text-xs font-bold tracking-widest text-brand-red shadow-[0_0_15px_rgba(239,51,72,0.2)]">
+            <ShieldAlert size={14} /> DEPLOYMENT READY
+          </div>
+          
+          <h2 className="text-4xl md:text-6xl font-black text-brand-text tracking-tighter mb-6">
+            Ready to secure the perimeter?
+          </h2>
+          
+          <p className="text-lg md:text-xl text-brand-muted font-light mb-12 max-w-2xl">
+            Launch the Command Center to experience autonomous threat detection, cryptographic audit logging, and real-time alerts.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto">
+            <button onClick={() => router.push('/dashboard')} className="w-full sm:w-auto flex items-center justify-center gap-3 rounded-full bg-brand-red px-8 py-4 text-sm font-bold tracking-widest text-white hover:bg-white hover:text-brand-red transition-all shadow-[0_0_30px_rgba(239,51,72,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
+              LAUNCH COMMAND CENTER <ArrowRight size={18} />
+            </button>
+            
+            <button className="w-full sm:w-auto flex items-center justify-center gap-3 rounded-full border border-brand-border bg-brand-card px-8 py-4 text-sm font-bold tracking-widest text-brand-text hover:border-brand-red hover:text-brand-red hover:shadow-[0_0_20px_rgba(239,51,72,0.2)] transition-all">
+              <Network size={18} /> VIEW ARCHITECTURE
+            </button>
+          </div>
+        </div>
+      </section>
 
       </main>
 
@@ -212,7 +245,7 @@ export default function LandingPage() {
             <div>
               <Logo size="sm" showText={true} />
               <p className="mt-4 text-brand-muted text-sm leading-relaxed">
-                TRINETRA is a modern AI-based intelligent video analytics platform designed for the MHA & SSB border surveillance hackathon.
+                TRINETRA is a modern AI-based intelligent video analytics platform designed for the Ministry of Home Affairs (MHA) & Sashastra Seema Bal (SSB) border outposts.
               </p>
             </div>
             
@@ -283,6 +316,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
