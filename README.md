@@ -46,6 +46,21 @@ The platform ingests live video streams from standard IP-based CCTV cameras and 
 
 ---
 
+## 🔥 The "X-Factor" Features
+
+To ensure maximum security and reliability in harsh border environments, TRINETRA includes three standout features:
+
+1. **Blockchain Immutable Audit Logs (Cybersecurity Theme)**
+   All critical alerts (Intrusions, ANPR hits, Watchlist Matches) are cryptographically hashed using SHA-256 and chained to previous events. This ensures that logs cannot be tampered with, deleted, or altered by corrupt insiders, creating a verifiable and immutable audit trail.
+
+2. **Edge-to-Cloud Architecture (Zero-Internet Capability)**
+   BOPs often have poor internet connectivity. TRINETRA processes the heavy AI video analytics locally at the Edge (using JSON flat-files and local image assets) and only transmits lightweight metadata to the central Supabase PostgreSQL cluster when a connection is available.
+
+3. **Military-Grade Tactical UI**
+   A specialized dark-mode Command Center dashboard utilizing cyan/red color coding, reducing eye strain for night-shift operators while highlighting high-priority threats immediately.
+
+---
+
 ## 🏗️ System Architecture
 
 ```mermaid
@@ -131,21 +146,6 @@ sequenceDiagram
 - **Route Protection:** Next.js Edge Middleware with JWT verification
 - **Data Security:** AES-256 encrypted session cookies and environment-level isolation
 - **Blockchain Ledger:** Cryptographic SHA-256 Hash Chaining. Every incident alert is uniquely hashed with the previous event's signature, creating a tamper-evident, immutable audit trail that prevents log manipulation by internal or external threats.
-
----
-
-## 🔥 The "X-Factor" Features
-
-To ensure maximum security and reliability in harsh border environments, TRINETRA includes three standout features:
-
-1. **Blockchain Immutable Audit Logs (Cybersecurity Theme)**
-   All critical alerts (Intrusions, ANPR hits, Watchlist Matches) are cryptographically hashed using SHA-256 and chained to previous events. This ensures that logs cannot be tampered with, deleted, or altered by corrupt insiders, creating a verifiable and immutable audit trail.
-
-2. **Edge-to-Cloud Architecture (Zero-Internet Capability)**
-   BOPs often have poor internet connectivity. TRINETRA processes the heavy AI video analytics locally at the Edge (using JSON flat-files and local image assets) and only transmits lightweight metadata to the central Supabase PostgreSQL cluster when a connection is available.
-
-3. **Military-Grade Tactical UI**
-   A specialized dark-mode Command Center dashboard utilizing cyan/red color coding, reducing eye strain for night-shift operators while highlighting high-priority threats immediately.
 
 ---
 
