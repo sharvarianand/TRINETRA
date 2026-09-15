@@ -14,6 +14,7 @@ import {
 import Logo from './Logo';
 import CameraGrid from './CameraGrid';
 import CameraSetupWizard from './CameraSetupWizard';
+import AICopilot from './AICopilot';
 import { useTheme } from '@/lib/ThemeContext';
 
 interface User {
@@ -476,9 +477,12 @@ export default function DashboardUI({ user }: DashboardUIProps) {
           </main>
         </div>
       </div>
+      <AICopilot />
     </>
   );
 }
+
+
 
 
 
