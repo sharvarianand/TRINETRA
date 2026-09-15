@@ -136,10 +136,10 @@ export default function DashboardUI({ user }: DashboardUIProps) {
 
   // Derived stats for the UI
   const stats = [
-    { icon: Users, label: 'Live Occupants', value: (globalData.current_count || 0).toLocaleString(), change: 'Now', color: 'cyan' },
+    { icon: Users, label: 'Live Occupants', value: (globalData.current_count || 0).toLocaleString(), change: 'Now', color: 'red' },
     { icon: Camera, label: 'Active Cameras', value: globalData.active_cameras.toString(), change: 'Online', color: 'blue' },
     { icon: Activity, label: 'Peak Hour', value: globalData.peak_hour, change: `${globalData.peak_count} peak`, color: 'amber' },
-    { icon: CheckCircle, label: 'Incidents Resolved', value: '3', change: 'Today', color: 'cyan' },
+    { icon: CheckCircle, label: 'Incidents Resolved', value: '3', change: 'Today', color: 'red' },
   ];
 
   // Derived alerts for the UI
@@ -163,7 +163,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
       case 'warning':
         return { bg: 'bg-amber-50 dark:bg-amber-900/30', border: 'border-amber-200 dark:border-amber-700', text: 'text-amber-700 dark:text-amber-400', icon: AlertTriangle };
       case 'success':
-        return { bg: 'bg-cyan-50 dark:bg-brand-card/30', border: 'border-cyan-200 dark:border-brand-border', text: 'text-brand-muted dark:text-brand-text', icon: CheckCircle };
+        return { bg: 'bg-brand-card/10 dark:bg-brand-card/30', border: 'border-brand-border dark:border-brand-border', text: 'text-brand-muted dark:text-brand-text', icon: CheckCircle };
       case 'error':
         return { bg: 'bg-red-50 dark:bg-red-900/30', border: 'border-red-200 dark:border-red-700', text: 'text-red-700 dark:text-red-400', icon: AlertCircle };
       case 'info':
@@ -308,7 +308,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                   key={item.id}
                   href={item.href}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
+                    ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                     }`}
                 >
@@ -351,7 +351,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
               <div className="relative">
                 <button
                   onClick={() => setShowProfileMenu(!showProfileMenu)}
-                  className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 dark:hover:border-brand-red transition-colors cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-brand-card/10 dark:bg-brand-card/30 flex items-center justify-center border border-brand-border dark:border-brand-border hover:border-brand-red dark:hover:border-brand-red transition-colors cursor-pointer"
                 >
                   <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                 </button>
@@ -388,16 +388,16 @@ export default function DashboardUI({ user }: DashboardUIProps) {
               {stats.map((stat, idx) => (
                 <div key={idx} className="bg-white dark:bg-zinc-800 rounded-xl p-5 border border-zinc-100 dark:border-zinc-700 shadow-sm transition-colors duration-200">
                   <div className="flex items-start justify-between mb-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stat.color === 'cyan' ? 'bg-cyan-50 dark:bg-brand-card/30' :
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${stat.color === 'red' ? 'bg-brand-card/10 dark:bg-brand-card/30' :
                       stat.color === 'blue' ? 'bg-blue-50 dark:bg-blue-900/30' :
                         stat.color === 'amber' ? 'bg-amber-50 dark:bg-amber-900/30' : 'bg-red-50 dark:bg-red-900/30'
                       }`}>
-                      <stat.icon className={`w-5 h-5 ${stat.color === 'cyan' ? 'text-brand-muted dark:text-brand-text' :
+                      <stat.icon className={`w-5 h-5 ${stat.color === 'red' ? 'text-brand-muted dark:text-brand-text' :
                         stat.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
                           stat.color === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
                         }`} />
                     </div>
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.startsWith('+') ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text' : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300'
+                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${stat.change.startsWith('+') ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text' : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300'
                       }`}>
                       {stat.change}
                     </span>
@@ -456,7 +456,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                   <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                   <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Crowd Activity</h2>
                 </div>
-                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-cyan-600 dark:focus:ring-brand-red focus:border-brand-red dark:focus:border-brand-red">
+                <select className="text-sm border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 rounded-lg px-3 py-1.5 text-zinc-600 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-brand-red dark:focus:ring-brand-red focus:border-brand-red dark:focus:border-brand-red">
                   <option>Last 24 hours</option>
                   <option>Last 7 days</option>
                   <option>Last 30 days</option>
@@ -466,7 +466,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
                 {chartData.map((height, i) => (
                   <div
                     key={i}
-                    className="flex-1 bg-cyan-100 dark:bg-brand-card/50 hover:bg-cyan-200 dark:hover:bg-brand-card/50 transition-colors rounded-t cursor-pointer"
+                    className="flex-1 bg-brand-card/20 dark:bg-brand-card/50 hover:bg-brand-border dark:hover:bg-brand-card/50 transition-colors rounded-t cursor-pointer"
                     style={{ height: isMounted ? `${height}%` : '50%' }}
                   />
                 ))}
@@ -485,4 +485,5 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     </>
   );
 }
+
 

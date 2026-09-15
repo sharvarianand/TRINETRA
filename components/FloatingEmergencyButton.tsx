@@ -139,13 +139,13 @@ export default function FloatingEmergencyButton({
                         <div className="p-5">
                             {isTriggered ? (
                                 <div className="text-center py-4">
-                                    <div className="w-16 h-16 mx-auto bg-cyan-100 dark:bg-brand-card/30 rounded-full flex items-center justify-center mb-4">
+                                    <div className="w-16 h-16 mx-auto bg-brand-card/20 dark:bg-brand-card/30 rounded-full flex items-center justify-center mb-4">
                                         <CheckCircle className="w-10 h-10 text-brand-muted" />
                                     </div>
                                     <p className="text-zinc-700 dark:text-zinc-300 mb-4">
                                         Emergency alert has been triggered successfully.
                                     </p>
-                                    <div className="bg-cyan-50 dark:bg-brand-card/30 border border-cyan-200 dark:border-brand-border rounded-lg p-3 text-sm text-brand-muted dark:text-cyan-200">
+                                    <div className="bg-brand-card/10 dark:bg-brand-card/30 border border-brand-border dark:border-brand-border rounded-lg p-3 text-sm text-brand-muted dark:text-cyan-200">
                                         <strong>✅ WhatsApp Alert Sent!</strong> Security personnel have been notified via WhatsApp. Alert also logged to dashboard.
                                     </div>
                                 </div>
@@ -267,4 +267,5 @@ export default function FloatingEmergencyButton({
         </>
     );
 }
+
 

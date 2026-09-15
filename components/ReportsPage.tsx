@@ -246,7 +246,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'resolved': return 'text-brand-muted dark:text-brand-text bg-cyan-50 dark:bg-brand-card/30';
+            case 'resolved': return 'text-brand-muted dark:text-brand-text bg-brand-card/10 dark:bg-brand-card/30';
             case 'pending': return 'text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30';
             default: return 'text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30';
         }
@@ -296,7 +296,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                 key={item.id}
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
+                                    ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
@@ -323,7 +323,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                     <div className="flex items-center gap-4">
                         <button
                             onClick={handleExportReport}
-                            className="flex items-center gap-2 px-4 py-2 bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text rounded-lg border border-cyan-200 dark:border-brand-border hover:bg-cyan-100 dark:hover:bg-brand-card/50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text rounded-lg border border-brand-border dark:border-brand-border hover:bg-brand-card/20 dark:hover:bg-brand-card/50 transition-colors"
                         >
                             <Download className="w-4 h-4" />
                             Export
@@ -340,7 +340,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <div className="relative">
-                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 transition-colors cursor-pointer">
+                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-brand-card/10 dark:bg-brand-card/30 flex items-center justify-center border border-brand-border dark:border-brand-border hover:border-brand-red transition-colors cursor-pointer">
                                 <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
@@ -564,7 +564,7 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                                                     <div className="space-y-2">
                                                         {incident.responders.map((responder, i) => (
                                                             <div key={i} className="flex items-center gap-2">
-                                                                <div className="w-6 h-6 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border">
+                                                                <div className="w-6 h-6 rounded-full bg-brand-card/10 dark:bg-brand-card/30 flex items-center justify-center border border-brand-border dark:border-brand-border">
                                                                     <span className="text-brand-muted dark:text-brand-text text-xs font-medium">{responder.charAt(0)}</span>
                                                                 </div>
                                                                 <span className="text-sm text-zinc-700 dark:text-zinc-300">{responder}</span>
@@ -844,4 +844,5 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 

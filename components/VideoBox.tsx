@@ -67,7 +67,7 @@ export default function VideoBox({
         </div>
         <div className="flex items-center gap-2">
           {isConnected ? (
-            <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-cyan-200">
+            <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-brand-border">
               <span className="w-1.5 h-1.5 bg-brand-red rounded-full animate-pulse"></span>
               <span className="text-[10px] text-brand-muted font-semibold">LIVE</span>
             </div>
@@ -119,3 +119,4 @@ export default function VideoBox({
     </div>
   );
 }
+

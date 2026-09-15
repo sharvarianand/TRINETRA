@@ -8,7 +8,7 @@ interface StatsCardProps {
   value: string | number;
   change?: string;
   icon: LucideIcon;
-  color?: 'cyan' | 'blue' | 'amber' | 'red' | 'zinc';
+  color?: 'red' | 'blue' | 'amber' | 'red' | 'zinc';
   className?: string;
 }
 
@@ -17,7 +17,7 @@ export default function StatsCard({
   value, 
   change, 
   icon: Icon, 
-  color = 'cyan',
+  color = 'red',
   className = '' 
 }: StatsCardProps) {
   const colorStyles = {
@@ -51,4 +51,5 @@ export default function StatsCard({
     </div>
   );
 }
+
 

@@ -168,7 +168,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         switch (level) {
             case 'high': return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30';
             case 'medium': return 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30';
-            default: return 'text-brand-muted dark:text-brand-text bg-cyan-50 dark:bg-brand-card/30';
+            default: return 'text-brand-muted dark:text-brand-text bg-brand-card/10 dark:bg-brand-card/30';
         }
     };
 
@@ -205,7 +205,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 key={item.id}
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
+                                    ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
@@ -257,7 +257,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <div className="relative">
-                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 transition-colors cursor-pointer">
+                            <button onClick={() => setShowProfileMenu(!showProfileMenu)} className="w-9 h-9 rounded-full bg-brand-card/10 dark:bg-brand-card/30 flex items-center justify-center border border-brand-border dark:border-brand-border hover:border-brand-red transition-colors cursor-pointer">
                                 <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
@@ -455,7 +455,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Based on historical data, crowd density is expected to reach 85% by 16:00.</p>
                                 </div>
-                                <div className="p-4 bg-cyan-50 dark:bg-brand-card/20 rounded-lg border border-cyan-200 dark:border-brand-border">
+                                <div className="p-4 bg-brand-card/10 dark:bg-brand-card/20 rounded-lg border border-brand-border dark:border-brand-border">
                                     <div className="flex items-center gap-3 mb-2">
                                         <TrendingUp className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                                         <span className="text-sm font-medium text-brand-muted dark:text-cyan-300">Visitor Surge Predicted</span>
@@ -496,7 +496,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Entry rate dropped by 60% for 5 minutes.</p>
                                     <div className="mt-2 flex gap-2">
-                                        <span className="px-2 py-1 bg-cyan-100 dark:bg-brand-card/40 text-brand-muted dark:text-cyan-300 text-xs rounded">Resolved</span>
+                                        <span className="px-2 py-1 bg-brand-card/20 dark:bg-brand-card/40 text-brand-muted dark:text-cyan-300 text-xs rounded">Resolved</span>
                                     </div>
                                 </div>
                                 <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
@@ -528,4 +528,5 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 

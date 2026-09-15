@@ -101,7 +101,7 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
                     LOW BANDWIDTH
                 </div>
                 {isConnected && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-cyan-200">
+                    <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 rounded-full border border-brand-border">
                         <span className="w-1.5 h-1.5 rounded-full bg-brand-red animate-pulse"></span>
                         <span className="text-[10px] text-brand-muted font-semibold">LIVE</span>
                     </div>
@@ -180,3 +180,4 @@ export default function LowBandwidthView({ className = '', isPaused = false }: L
         </div>
     );
 }
+

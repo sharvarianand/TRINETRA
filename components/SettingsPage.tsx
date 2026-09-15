@@ -396,7 +396,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 key={item.id}
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
-                                    ? 'bg-cyan-50 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
+                                    ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
                                     : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
                                     }`}
                             >
@@ -433,7 +433,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                             disabled={!hasChanges}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${hasChanges
                                 ? 'bg-brand-red text-white hover:bg-brand-red-dark'
-                                : 'bg-cyan-100 dark:bg-brand-card/30 text-brand-text dark:text-brand-muted cursor-not-allowed'
+                                : 'bg-brand-card/20 dark:bg-brand-card/30 text-brand-text dark:text-brand-muted cursor-not-allowed'
                                 }`}
                         >
                             {saved ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />}
@@ -454,7 +454,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                         <div className="relative">
                             <button
                                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                                className="w-9 h-9 rounded-full bg-cyan-50 dark:bg-brand-card/30 flex items-center justify-center border border-cyan-200 dark:border-brand-border hover:border-cyan-400 dark:hover:border-brand-red transition-colors cursor-pointer"
+                                className="w-9 h-9 rounded-full bg-brand-card/10 dark:bg-brand-card/30 flex items-center justify-center border border-brand-border dark:border-brand-border hover:border-brand-red dark:hover:border-brand-red transition-colors cursor-pointer"
                             >
                                 <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
@@ -499,7 +499,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                     <div className="flex items-center gap-2">
                                         <button
                                             onClick={fetchCameras}
-                                            className="p-2 text-brand-muted dark:text-brand-text hover:bg-cyan-50 dark:hover:bg-brand-card/30 rounded-lg transition-colors"
+                                            className="p-2 text-brand-muted dark:text-brand-text hover:bg-brand-card/10 dark:hover:bg-brand-card/30 rounded-lg transition-colors"
                                             title="Refresh cameras"
                                         >
                                             <RefreshCw className={`w-4 h-4 ${cameraLoading ? 'animate-spin' : ''}`} />
@@ -1201,4 +1201,5 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 

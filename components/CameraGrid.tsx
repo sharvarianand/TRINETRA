@@ -154,7 +154,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
         </div>
         <div className="flex items-center gap-2">
           {serverConnected ? (
-            <div className="flex items-center gap-1 px-2 py-1 bg-cyan-50 dark:bg-brand-card/30 rounded-full border border-cyan-200 dark:border-brand-border">
+            <div className="flex items-center gap-1 px-2 py-1 bg-brand-card/10 dark:bg-brand-card/30 rounded-full border border-brand-border dark:border-brand-border">
               <span className="w-2 h-2 bg-brand-red dark:bg-brand-red rounded-full animate-pulse"></span>
               <span className="text-xs text-brand-muted dark:text-brand-text font-medium">Live</span>
             </div>
@@ -412,7 +412,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
                           <span className="text-xl font-black text-white leading-none">{cameraStats.count}</span>
                           <span className="text-[10px] text-white/40 font-bold">/ {capacity === 0 ? '🚫' : capacity}</span>
                         </div>
-                        <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded ${risk.bgColor}/20 border border-${risk.level === 'low' ? 'cyan' : risk.level === 'medium' ? 'amber' : 'red'}-500/30`}>
+                        <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded ${risk.bgColor}/20 border border-${risk.level === 'low' ? 'red' : risk.level === 'medium' ? 'amber' : 'red'}-500/30`}>
                           <span className={`text-[8px] font-black uppercase ${risk.color}`}>
                             {isNoEntryZone && cameraStats.count > 0 ? 'BREACH' : isNoEntryZone ? 'SECURE' : risk.level}
                           </span>
@@ -460,4 +460,5 @@ function OfflineCameraPlaceholder({ camera }: { camera: CameraConfig }) {
     </div>
   );
 }
+
 
