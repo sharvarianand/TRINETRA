@@ -42,7 +42,7 @@ export default function AdminVerify({ user }: AdminVerifyProps) {
 
     const getUserInitials = () => {
         if (user?.firstName && user?.lastName) {
-            return \\.toUpperCase();
+            return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
         }
         if (user?.email) {
             return user.email.substring(0, 2).toUpperCase();
