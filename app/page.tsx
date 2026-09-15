@@ -59,7 +59,7 @@ export default function LandingPage() {
   }, [allFeatures.length]);
   
   return (
-    <div className="bg-[#020202] text-zinc-100 font-sans"><main className="relative z-10 w-full min-h-screen bg-black flex flex-col mb-[550px] border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[#ff5258] selection:text-black">
+    <div className="bg-[#05060A] text-slate-100 font-sans"><main className="relative z-10 w-full min-h-screen bg-[#090A0F] flex flex-col mb-[550px] border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[#ff5258] selection:text-black">
       
       <style>{`
         @keyframes tracking {
@@ -76,9 +76,9 @@ export default function LandingPage() {
       `}</style>
 
       {/* Floating Glassmorphism Navbar */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 flex items-center justify-between rounded-full border border-white/10 bg-black/70 px-6 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 flex items-center justify-between rounded-full border border-white/10 bg-[#090A0F]/70 px-6 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
         <Logo size="sm" showText={true} />
-        <div className="hidden md:flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-zinc-500">
+        <div className="hidden md:flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-slate-500">
           <a href="#features" className="hover:text-white transition-colors">CAPABILITIES</a>
           <a href="/tour" className="hover:text-white transition-colors">PROTOTYPE TOUR</a>
         </div>
@@ -102,21 +102,21 @@ export default function LandingPage() {
             <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-white md:text-7xl">
               A shared picture.<br /><span className="text-[#ff6168]">A faster response.</span>
             </h1>
-            <p className="mt-7 max-w-lg text-base leading-7 text-zinc-400">
+            <p className="mt-7 max-w-lg text-base leading-7 text-slate-400">
               TRINETRA brings video, thermal, radar and field assets into one operational view—so commanders can recognize, verify and coordinate a response without switching systems.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
               <button onClick={() => router.push('/dashboard')} className="flex items-center justify-center gap-2 rounded-full bg-[#ff5258] px-8 py-4 text-sm font-bold tracking-widest text-black hover:bg-[#ff7a7e] transition-all">
                 ACCESS SYSTEM <ArrowRight className="h-4 w-4" />
               </button>
-              <button onClick={() => router.push('/tour')} className="rounded-full border border-white/20 bg-black px-8 py-4 text-sm font-bold tracking-widest text-zinc-300 hover:bg-white/10 transition-all">
+              <button onClick={() => router.push('/tour')} className="rounded-full border border-white/20 bg-[#090A0F] px-8 py-4 text-sm font-bold tracking-widest text-slate-300 hover:bg-white/10 transition-all">
                 TAKE THE TOUR
               </button>
             </div>
           </div>
           
-          <div className="relative min-h-[430px] border border-white/10 bg-[#050505]/90 p-3 shadow-[0_0_70px_rgba(0,0,0,0.8)] backdrop-blur">
-            <div className="flex justify-between border-b border-white/10 px-2 pb-3 text-[10px] font-bold tracking-widest text-zinc-400">
+          <div className="relative min-h-[430px] border border-white/10 bg-[#0D1017]/90 p-3 shadow-[0_0_70px_rgba(0,0,0,0.8)] backdrop-blur">
+            <div className="flex justify-between border-b border-white/10 px-2 pb-3 text-[10px] font-bold tracking-widest text-slate-400">
               <span>SECTOR VIEW // NORTH RIDGE</span><span className="text-[#ff777c]">● PRIORITY WATCH</span>
             </div>
             
@@ -132,12 +132,12 @@ export default function LandingPage() {
                   <Crosshair className="h-4 w-4" />
                 </div>
                 <p className="absolute left-6 -top-3 w-40 text-[10px] font-bold tracking-widest text-[#ffc1c3]">
-                  TRACK 042<br /><span className="font-normal text-zinc-400">CONFIDENCE 87%</span>
+                  TRACK 042<br /><span className="font-normal text-slate-400">CONFIDENCE 87%</span>
                 </p>
               </div>
 
-              <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[10px] tracking-widest text-zinc-400"><Radio className="h-4 w-4 text-zinc-500" /> RADAR-02: LINKED</div>
-              <div className="absolute bottom-5 right-5 flex items-center gap-2 text-[10px] tracking-widest text-zinc-400"><ScanLine className="h-4 w-4 text-zinc-500" /> THERMAL-04: ACTIVE</div>
+              <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[10px] tracking-widest text-slate-400"><Radio className="h-4 w-4 text-slate-500" /> RADAR-02: LINKED</div>
+              <div className="absolute bottom-5 right-5 flex items-center gap-2 text-[10px] tracking-widest text-slate-400"><ScanLine className="h-4 w-4 text-slate-500" /> THERMAL-04: ACTIVE</div>
             </div>
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function LandingPage() {
               <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight transition-all duration-700">
                 Unrivaled intelligence at the edge.
               </h2>
-              <p className="text-zinc-400 text-lg font-light">
+              <p className="text-slate-400 text-lg font-light">
                 Designed specifically for remote border environments, TRINETRA processes heavy AI models locally, requiring zero constant internet dependency.
               </p>
               
@@ -186,12 +186,12 @@ export default function LandingPage() {
                     key={i} 
                     className={`absolute inset-0 w-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : isPast ? 'opacity-0 -translate-y-12 pointer-events-none' : 'opacity-0 translate-y-12 pointer-events-none'}`}
                   >
-                    <div className="w-full h-full p-10 md:p-12 rounded-3xl border border-[#ff5258]/30 bg-[#0a0203] shadow-[0_0_50px_rgba(255,82,88,0.04)] backdrop-blur-xl flex flex-col justify-center">
+                    <div className="w-full h-full p-10 md:p-12 rounded-3xl border border-[#ff5258]/30 bg-[#110D12] shadow-[0_0_50px_rgba(255,82,88,0.04)] backdrop-blur-xl flex flex-col justify-center">
                       <div className="flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-[#ff5258]/15 text-[#ff5258] border border-[#ff5258]/20">
                         <Icon className="w-7 h-7" />
                       </div>
                       <h3 className="text-3xl font-bold text-white tracking-wide mb-4">{f.title}</h3>
-                      <p className="text-lg text-zinc-400 leading-relaxed font-light">{f.desc}</p>
+                      <p className="text-lg text-slate-400 leading-relaxed font-light">{f.desc}</p>
                     </div>
                   </div>
                 );
@@ -205,20 +205,20 @@ export default function LandingPage() {
       </main>
 
             {/* Cinematic Reveal Footer (Rich Layout) */}
-      <footer className="fixed bottom-0 left-0 w-full h-[550px] z-0 bg-[#020202] flex flex-col justify-end pb-8 overflow-hidden">
+      <footer className="fixed bottom-0 left-0 w-full h-[550px] z-0 bg-[#05060A] flex flex-col justify-end pb-8 overflow-hidden">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,82,88,0.05),transparent_60%)] pointer-events-none" />
          
          <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
             <div>
               <Logo size="sm" showText={true} />
-              <p className="mt-4 text-zinc-500 text-sm leading-relaxed">
+              <p className="mt-4 text-slate-500 text-sm leading-relaxed">
                 TRINETRA is a modern AI-based intelligent video analytics platform designed for the MHA & SSB border surveillance hackathon.
               </p>
             </div>
             
             <div>
               <h4 className="text-white text-lg font-bold mb-6 font-sans">Platform</h4>
-              <ul className="space-y-3 text-sm text-zinc-400">
+              <ul className="space-y-3 text-sm text-slate-400">
                 <li><a href="#overview" className="hover:text-[#ff5258] transition-colors">Overview</a></li>
                 <li><a href="#features" className="hover:text-[#ff5258] transition-colors">Core Capabilities</a></li>
                 <li><a href="/dashboard" className="hover:text-[#ff5258] transition-colors">Command Center</a></li>
@@ -231,7 +231,7 @@ export default function LandingPage() {
             
             <div>
               <h4 className="text-white text-lg font-bold mb-6 font-sans">Resources</h4>
-              <ul className="space-y-3 text-sm text-zinc-400">
+              <ul className="space-y-3 text-sm text-slate-400">
                 <li><a href="#" className="hover:text-[#ff5258] transition-colors">Architecture Diagram</a></li>
                 <li><a href="#" className="hover:text-[#ff5258] transition-colors">API Documentation</a></li>
                 <li><a href="#" className="hover:text-[#ff5258] transition-colors">Security Whitepaper</a></li>
@@ -240,7 +240,7 @@ export default function LandingPage() {
             
             <div>
               <h4 className="text-white text-lg font-bold mb-6 font-sans">Contact HQ</h4>
-              <ul className="space-y-4 text-sm text-zinc-400">
+              <ul className="space-y-4 text-sm text-slate-400">
                 <li className="flex items-center space-x-3"><Mail size={16} className="text-[#ff5258]" /><span>command@trinetra.mil</span></li>
                 <li className="flex items-center space-x-3"><Phone size={16} className="text-[#ff5258]" /><span>+91 SECURE LINE</span></li>
                 <li className="flex items-center space-x-3"><MapPin size={16} className="text-[#ff5258]" /><span>New Delhi, India</span></li>
@@ -250,7 +250,7 @@ export default function LandingPage() {
          
          <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
            <hr className="border-t border-white/5 mb-6" />
-           <div className="flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-zinc-600">
+           <div className="flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-slate-600">
              <div className="flex space-x-6 mb-4 md:mb-0">
                <a href="#" className="hover:text-[#ff5258] transition-colors"><Globe size={18} /></a>
                <a href="#" className="hover:text-[#ff5258] transition-colors"><Twitter size={18} /></a>
@@ -261,6 +261,20 @@ export default function LandingPage() {
 
                   {/* Giant Background Text Hover Effect */}
          <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-full text-center z-0">
+           <style>{`
+             .giant-text {
+               -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+               color: transparent;
+               opacity: 0.4;
+               transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+             }
+             .giant-text:hover {
+               -webkit-text-stroke: 1px rgba(255, 82, 88, 0.4);
+               color: rgba(255, 82, 88, 0.05);
+               opacity: 1;
+               text-shadow: 0 0 80px rgba(255, 82, 88, 0.3);
+             }
+           `}</style>
            <h1 className="giant-text text-[22vw] font-black whitespace-nowrap tracking-tighter select-none cursor-crosshair">
              TRINETRA
            </h1>
@@ -269,6 +283,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
