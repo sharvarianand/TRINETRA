@@ -1,26 +1,18 @@
 <div align="center">
-  <br />
   <a href="https://github.com/sharvarianand/TRINETRA">
-    <img src="./app/icon.svg" width="160" alt="TRINETRA Logo" />
+    <img src="./app/icon.svg" width="130" alt="TRINETRA Logo" />
   </a>
-  <br />
-  <br />
-  
-  <h1 style="border-bottom: none; margin-bottom: 0;"><b>T R I N E T R A</b></h1>
-  
-  <p>
-    <b>Intelligent Border Video Analytics Platform</b> <br />
+  <h1 style="border-bottom: none; margin-bottom: 0; margin-top: 10px;"><b>T R I N E T R A</b></h1>
+  <p style="margin-top: 0;">
+    <b>Intelligent Border Video Analytics Platform</b><br />
     <i>Developed for the Ministry of Home Affairs, Sashastra Seema Bal (SSB), Police II Division</i>
   </p>
-
   <p>
     <img src="https://img.shields.io/badge/Category-Software-06b6d4?style=for-the-badge" alt="Software" />
     <img src="https://img.shields.io/badge/Theme-Cybersecurity_&_Blockchain-ff5258?style=for-the-badge" alt="Cybersecurity" />
     <img src="https://img.shields.io/badge/Build-Prototype_Ready-10b981?style=for-the-badge" alt="Prototype Ready" />
   </p>
 </div>
-
-<br />
 
 ## 📖 Background
 
@@ -173,3 +165,4 @@ npm run dev
 The Command Center will be available at `http://localhost:3001`.
 
 ---
+
