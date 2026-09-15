@@ -63,12 +63,19 @@ def get_camera():
     global camera_capture, current_camera_url
     
     cameras = load_cameras()
-    target_url = "http://10.180.217.71:4747/video"
+    target_url = None
     
     for cam in cameras.get("cameras", []):
         if cam.get("enabled") and cam.get("url"):
             target_url = cam["url"]
             break
+            
+    if target_url is None:
+        if camera_capture is not None:
+            camera_capture.release()
+            camera_capture = None
+        current_camera_url = None
+        return None
             
     if camera_capture is None or not camera_capture.isOpened() or current_camera_url != target_url:
         print(f"Switching camera to: {target_url}")
@@ -77,11 +84,6 @@ def get_camera():
             
         camera_capture = cv2.VideoCapture(int(target_url) if str(target_url).isdigit() else target_url)
         current_camera_url = target_url
-        
-        if not camera_capture.isOpened():
-            print("Failed, trying webcam (index 0)...")
-            camera_capture = cv2.VideoCapture(0)
-            current_camera_url = 0
             
     return camera_capture
 
@@ -277,6 +279,25 @@ def delete_camera(camera_id: str):
         return {"status": "deleted"}
     return {"status": "not_found"}
 
+@app.put("/cameras/{camera_id}")
+async def update_camera(camera_id: str, updates: dict):
+    config_path = Path(__file__).parent / "cameras.json"
+    cameras_data = load_cameras()
+    if "cameras" not in cameras_data: return {"status": "not_found"}
+    
+    found = False
+    for i, c in enumerate(cameras_data["cameras"]):
+        if c.get("id") == camera_id:
+            cameras_data["cameras"][i].update(updates)
+            found = True
+            break
+            
+    if found:
+        with open(config_path, "w") as f:
+            json.dump(cameras_data, f, indent=4)
+        return {"status": "success"}
+    return {"status": "not_found"}
+
 @app.post("/cameras/upload")
 async def upload_video(camera_id: str = Form(...), file: UploadFile = File(...)):
     file_extension = file.filename.split(".")[-1]
@@ -396,6 +417,8 @@ async def update_settings(settings: dict):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
 
 
 
