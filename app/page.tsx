@@ -59,7 +59,7 @@ export default function LandingPage() {
   }, [allFeatures.length]);
   
   return (
-    <main className="min-h-screen bg-black text-zinc-100 font-sans selection:bg-[#ff5258] selection:text-black">
+    <div className="bg-[#020202] text-zinc-100 font-sans"><main className="relative z-10 w-full min-h-screen bg-black flex flex-col mb-[300px] border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[#ff5258] selection:text-black">
       
       <style>{`
         @keyframes tracking {
@@ -202,21 +202,25 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 bg-black py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3 opacity-50 hover:opacity-100 transition-opacity">
+      </main>
+
+      {/* Cinematic Reveal Footer */}
+      <footer className="fixed bottom-0 left-0 w-full h-[300px] z-0 bg-[#020202] flex flex-col items-center justify-center">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,82,88,0.03),transparent_70%)] pointer-events-none" />
+        <div className="w-full max-w-7xl px-6 flex flex-col items-center justify-center gap-10">
+          <div className="opacity-70 hover:opacity-100 transition-opacity scale-125 cursor-default">
             <Logo size="sm" showText={true} />
           </div>
-          <div className="text-center md:text-right text-[10px] font-mono tracking-widest text-zinc-600">
-            <p>DEVELOPED FOR MHA & SSB HACKATHON</p>
-            <p className="mt-1">© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
+          <div className="text-center text-[10px] font-mono tracking-[0.2em] text-zinc-500">
+            <p className="mb-2 text-zinc-400">DEVELOPED FOR MHA & SSB HACKATHON</p>
+            <p className="opacity-50">© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
+
 
 
 
