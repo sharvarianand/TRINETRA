@@ -151,7 +151,7 @@ export default function CameraSetupWizard({ onComplete, onClose, baseUrl }: Came
                     });
                     const uploadData = await uploadResponse.json();
                     if (!uploadResponse.ok) {
-                        throw new Error(uploadData.detail || `Failed to upload ${camera.videoFile.name}`);
+                        throw new Error((typeof uploadData.detail === 'string' ? uploadData.detail : JSON.stringify(uploadData.detail)) || `Failed to upload ${camera.videoFile.name}`);
                     }
                     url = uploadData.url;
                 } else {
@@ -187,7 +187,7 @@ export default function CameraSetupWizard({ onComplete, onClose, baseUrl }: Came
 
                 if (!response.ok) {
                     const errData = await response.json();
-                    throw new Error(errData.detail || `Failed to add ${camera.name}`);
+                    throw new Error((typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail)) || `Failed to add ${camera.name}`);
                 }
             }
 
@@ -495,6 +495,7 @@ export default function CameraSetupWizard({ onComplete, onClose, baseUrl }: Came
         </div>
     );
 }
+
 
 
 

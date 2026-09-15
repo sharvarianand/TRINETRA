@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, Bot, User, Sparkles } from 'lucide-react';
+import { X, Send, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 
@@ -11,6 +11,17 @@ interface Message {
   content: string;
   timestamp: Date;
 }
+
+const TacticalBotIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polygon points="5 7 19 7 21 13 17 21 7 21 3 13 5 7" />
+    <path d="M2 11h20" />
+    <rect x="7" y="11" width="3" height="2" fill="currentColor" stroke="none" />
+    <rect x="14" y="11" width="3" height="2" fill="currentColor" stroke="none" />
+    <path d="M9 17h6" />
+    <path d="M12 17v4" />
+  </svg>
+);
 
 export default function AICopilot() {
   const router = useRouter();
@@ -125,7 +136,7 @@ export default function AICopilot() {
         className={`fixed bottom-6 right-6 p-4 rounded-full bg-brand-red text-white shadow-[0_0_20px_rgba(239,51,72,0.4)] hover:bg-brand-red-dark transition-all transform hover:scale-110 z-40 flex items-center justify-center ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         title="Ask TRINETRA AI"
       >
-        <Sparkles className="w-6 h-6" />
+        <TacticalBotIcon className="w-6 h-6" />
       </button>
 
       <div className={`fixed bottom-6 right-6 w-[360px] sm:w-[400px] h-[550px] max-h-[85vh] bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border rounded-2xl shadow-2xl flex flex-col z-50 transition-all duration-300 transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
@@ -133,7 +144,7 @@ export default function AICopilot() {
         <div className="p-4 border-b border-gray-100 dark:border-brand-border bg-gradient-to-r from-brand-red to-brand-red-dark rounded-t-2xl flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
+              <TacticalBotIcon className="w-5 h-5 text-white" />
             </div>
             <div>
               <h3 className="text-white font-bold text-sm">TRINETRA AI</h3>
@@ -156,7 +167,7 @@ export default function AICopilot() {
           {messages.map(msg => (
             <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
               <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${msg.role === 'user' ? 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300' : 'bg-brand-red/10 text-brand-red border border-brand-red/20'}`}>
-                {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                {msg.role === 'user' ? <User className="w-4 h-4" /> : <TacticalBotIcon className="w-4 h-4" />}
               </div>
               <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'bg-brand-red text-white rounded-tr-sm' : 'bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border text-gray-800 dark:text-brand-text rounded-tl-sm shadow-sm'}`}>
                 {msg.content}
@@ -167,7 +178,7 @@ export default function AICopilot() {
           {isTyping && (
             <div className="flex gap-3">
               <div className="w-8 h-8 rounded-full bg-brand-red/10 text-brand-red border border-brand-red/20 flex items-center justify-center">
-                <Bot className="w-4 h-4" />
+                <TacticalBotIcon className="w-4 h-4" />
               </div>
               <div className="bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border rounded-2xl rounded-tl-sm px-4 py-3.5 shadow-sm flex gap-1.5 items-center">
                 <span className="w-1.5 h-1.5 bg-brand-red/60 rounded-full animate-bounce"></span>
@@ -202,3 +213,4 @@ export default function AICopilot() {
     </>
   );
 }
+
