@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="./app/icon.svg" width="120" alt="TRINETRA Logo" />
+</div>
+
 # TRINETRA 🛡️
 **Intelligent Border Video Analytics Platform**
 
@@ -103,3 +107,4 @@ python -m uvicorn yolo_bounding_boxes:app --host 0.0.0.0 --port 8000
 ```
 
 Access the Command Center at `http://localhost:3000`
+
