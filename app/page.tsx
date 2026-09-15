@@ -94,7 +94,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:54px_54px]" />
         <div className="absolute left-0 top-[46%] h-px w-full bg-[brand-red-glow]/40 shadow-[0_0_20px_#ff3038]" />
         
-        <div className="absolute -right-30 top-[-20%] h-[850px] w-[850px] rounded-full border border-brand-border bg-[radial-gradient(circle_at_45%_45%,rgba(20,20,20,.8),rgba(5,5,5,.9)_44%,transparent_66%)]" />
+        <div className="absolute -right-30 top-[-20%] h-[850px] w-[850px] rounded-full border border-brand-border bg-[radial-gradient(circle_at_45%_45%,rgba(201,35,60,0.15),rgba(13,11,32,0.9)_44%,transparent_66%)]" />
         <div className="absolute right-[14%] top-[14%] h-110 w-110 rounded-full border border-brand-border opacity-80"><div className="absolute inset-8 rounded-full border border-dashed border-brand-border" /><div className="absolute left-1/2 top-0 h-1/2 w-px origin-bottom rotate-[62deg] bg-[brand-red-glow] shadow-[0_0_12px_brand-red-glow]" /></div>
         
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.86fr_1.14fr]">
@@ -120,7 +120,7 @@ export default function LandingPage() {
               <span>SECTOR VIEW // NORTH RIDGE</span><span className="text-[brand-red]">● PRIORITY WATCH</span>
             </div>
             
-            <div className="relative mt-3 h-[370px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_40%,rgba(40,40,40,.4),transparent_27%),radial-gradient(ellipse_at_22%_82%,rgba(20,20,20,.6),transparent_26%),linear-gradient(140deg,#0a0a0a,#050505_47%,#111_48%,#000)]">
+            <div className="relative mt-3 h-[370px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_40%,rgba(239,51,72,0.15),transparent_40%),radial-gradient(ellipse_at_22%_82%,rgba(201,35,60,0.1),transparent_35%),linear-gradient(140deg,#0d0b20,#030315_47%,#0d0b20_48%,#030315)]">
               <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.15)_1px,transparent_1px)] [background-size:38px_38px]" />
               
               <div className="absolute left-[45%] top-[40%] animate-tracking z-10 w-0 h-0">
@@ -150,7 +150,7 @@ export default function LandingPage() {
         <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
           
           <div className="absolute inset-0 opacity-10 pointer-events-none [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:54px_54px]" />
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,rgba(255,48,72,0.08),transparent_50%)]" />
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,rgba(239,51,72,0.2),transparent_60%)]" />
           
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-16 lg:gap-24 w-full">
             
@@ -206,7 +206,7 @@ export default function LandingPage() {
 
             {/* Cinematic Reveal Footer (Rich Layout) */}
       <footer className="fixed bottom-0 left-0 w-full h-[550px] z-0 bg-brand-bg flex flex-col justify-end pb-8 overflow-hidden">
-         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,48,72,0.05),transparent_60%)] pointer-events-none" />
+         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(239,51,72,0.15),transparent_70%)] pointer-events-none" />
          
          <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
             <div>
@@ -283,6 +283,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
