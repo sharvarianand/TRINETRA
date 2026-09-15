@@ -92,15 +92,15 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section id="overview" className="relative min-h-screen flex items-center px-5 py-32 md:px-10">
         <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:54px_54px]" />
-        <div className="absolute left-0 top-[46%] h-px w-full bg-[brand-red-glow]/40 shadow-[0_0_20px_#ff3038]" />
+        <div className="absolute left-0 top-[46%] h-px w-full bg-brand-red-glow/80 shadow-[0_0_40px_var(--color-brand-red)]" />
         
         <div className="absolute -right-30 top-[-20%] h-[850px] w-[850px] rounded-full border border-brand-border bg-[radial-gradient(circle_at_45%_45%,rgba(201,35,60,0.15),rgba(13,11,32,0.9)_44%,transparent_66%)]" />
         <div className="absolute right-[14%] top-[14%] h-110 w-110 rounded-full border border-brand-border opacity-80"><div className="absolute inset-8 rounded-full border border-dashed border-brand-border" /><div className="absolute left-1/2 top-0 h-1/2 w-px origin-bottom rotate-[62deg] bg-[brand-red-glow] shadow-[0_0_12px_brand-red-glow]" /></div>
         
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.86fr_1.14fr]">
           <div className="z-10">
-            <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-brand-text md:text-7xl">
-              A shared picture.<br /><span className="text-[brand-red]">A faster response.</span>
+            <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-brand-red md:text-7xl">
+              A shared picture.<br />A faster response.
             </h1>
             <p className="mt-7 max-w-lg text-base leading-7 text-brand-muted">
               TRINETRA brings video, thermal, radar and field assets into one operational view—so commanders can recognize, verify and coordinate a response without switching systems.
@@ -128,7 +128,7 @@ export default function LandingPage() {
                   <div className="absolute inset-3 rounded-full border border-white/20" />
                   <div className="absolute left-1/2 top-1/2 h-px w-30 origin-left -rotate-25 bg-[brand-red] shadow-[0_0_13px_brand-red]" />
                 </div>
-                <div className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full border-2 border-[brand-red] bg-[brand-red-dark]/80 p-1 text-[brand-red-glow] shadow-[0_0_20px_#ff4d54]">
+                <div className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full border-2 border-[brand-red] bg-[brand-red-dark]/80 p-1 text-[brand-red-glow] shadow-[0_0_40px_var(--color-brand-red)]">
                   <Crosshair className="h-4 w-4" />
                 </div>
                 <p className="absolute left-6 -top-3 w-40 text-[10px] font-bold tracking-widest text-[brand-red-glow]">
@@ -283,6 +283,8 @@ export default function LandingPage() {
     </div>
   );
 }
+
+
 
 
 
