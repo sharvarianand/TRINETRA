@@ -1,31 +1,222 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Crosshair, Radio, ScanLine, ShieldAlert } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Network, Search, Crosshair, Radio, ScanLine, ShieldAlert, User, Car, Users, Type, Map, Clock, Moon, Bell, Lock, WifiOff, Database, Video } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 export default function LandingPage() {
   const router = useRouter();
+
+  const allFeatures = [
+    { icon: User, title: 'Human Detection & Tracking', desc: 'Real-time identification and persistent tracking across frames.' },
+    { icon: Car, title: 'Vehicle Detection & Classification', desc: 'Differentiate between civilian, military, and transport vehicles.' },
+    { icon: Users, title: 'Face Watchlist Matching', desc: 'Compares detected faces against a local database using histogram correlations to identify known suspects.' },
+    { icon: Type, title: 'ANPR Hotlist System', desc: 'Extracts vehicle registration plates and flags stolen/wanted vehicles instantly.' },
+    { icon: Network, title: 'Multi-Camera Tracking', desc: 'Seamlessly tracks suspects or vehicles across multiple camera feeds, linking their path across the entire border network.' },
+    { icon: Search, title: 'Natural Language Querying', desc: 'Incident metadata is logged naturally. Commanders can ask questions like "Show me a red truck at Post 4" to instantly retrieve threats.' },
+    { icon: Map, title: 'Virtual Fence Intrusion Detection', desc: 'Draw digital boundaries that trigger alerts upon breach.' },
+    { icon: Clock, title: 'Loitering & Suspicious Activity', desc: 'Tracks object dwell-time and triggers alerts if subjects remain in restricted areas for >15 seconds.' },
+    { icon: Moon, title: 'Night-Time Vision Enhancement', desc: 'Automatically applies CLAHE (Contrast Limited Adaptive Histogram Equalization) during night hours for low-light conditions.' },
+    { icon: Bell, title: 'Real-Time Alerts & Event Logging', desc: 'Instant tactical alerts pushed to the Command Center via WebSocket and WhatsApp.' },
+    { icon: Lock, title: 'Blockchain Immutable Audit Logs', desc: 'All critical alerts (Intrusions, ANPR hits, Watchlist Matches) are cryptographically hashed using SHA-256 and chained to previous events. Logs cannot be tampered with by corrupt insiders.', isXFactor: true },
+    { icon: WifiOff, title: 'Low-Bandwidth Metadata Alerts', desc: 'Designed for areas with poor connectivity. The system detects people and movement locally, transmitting only lightweight alert data without needing to send complete heavy video footage.', isXFactor: true },
+    { icon: Database, title: 'Centralized Watchlist Sync', desc: 'Upload profiles of wanted persons and stolen vehicles to the central database, instantly syncing across all border edge nodes to match and alert automatically.', isXFactor: true }
+  ];
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollRef.current) return;
+      const { top, height } = scrollRef.current.getBoundingClientRect();
+      const scrollY = window.scrollY;
+      const offsetTop = top + scrollY; // Absolute top of the container
+      
+      // Calculate how far we have scrolled into the container
+      const scrolledIntoContainer = scrollY - offsetTop;
+      const scrollableHeight = height - window.innerHeight;
+      
+      if (scrolledIntoContainer < 0) {
+        setActiveIndex(0);
+        return;
+      }
+      
+      if (scrolledIntoContainer > scrollableHeight) {
+        setActiveIndex(allFeatures.length - 1);
+        return;
+      }
+
+      const progress = scrolledIntoContainer / scrollableHeight;
+      const currentIndex = Math.floor(progress * allFeatures.length);
+      setActiveIndex(Math.min(currentIndex, allFeatures.length - 1));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Init
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [allFeatures.length]);
+  
   return (
-    <main className="min-h-screen overflow-hidden bg-[#06070c] text-[#e4f3f5]">
-      <nav className="relative z-20 flex items-center justify-between border-b border-cyan-300/20 bg-black/80 px-5 py-3 backdrop-blur md:px-10">
-        <Logo size="md" />
-        <div className="hidden gap-8 text-[11px] font-bold tracking-[.16em] text-cyan-100/70 md:flex"><a href="#overview" className="hover:text-[#ff6268]">OVERVIEW</a><a href="#network" className="hover:text-[#ff6268]">NETWORK</a><a href="/tour" className="text-[#ff777c]">GUIDED TOUR</a></div>
-        <button onClick={() => router.push('/dashboard')} className="border border-[#ff5258] bg-[#ff5258]/10 px-4 py-2 text-[11px] font-bold tracking-widest text-[#ff9094] hover:bg-[#ff5258] hover:text-[#19090a]">COMMAND CENTER</button>
+    <main className="min-h-screen bg-black text-zinc-100 font-sans selection:bg-[#ff5258] selection:text-black">
+      
+      <style>{`
+        @keyframes tracking {
+          0% { transform: translate(0px, 0px); }
+          20% { transform: translate(60px, -30px); }
+          40% { transform: translate(110px, 40px); }
+          60% { transform: translate(40px, 80px); }
+          80% { transform: translate(-30px, 20px); }
+          100% { transform: translate(0px, 0px); }
+        }
+        .animate-tracking {
+          animation: tracking 15s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Floating Glassmorphism Navbar */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 flex items-center justify-between rounded-full border border-white/10 bg-black/70 px-6 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <Logo size="sm" showText={true} />
+        <div className="hidden md:flex items-center gap-8 text-[11px] font-bold tracking-[0.2em] text-zinc-500">
+          <a href="#features" className="hover:text-white transition-colors">CAPABILITIES</a>
+          <a href="/tour" className="hover:text-white transition-colors">PROTOTYPE TOUR</a>
+        </div>
+        <div className="flex items-center gap-4">
+          <button onClick={() => router.push('/dashboard')} className="rounded-full border border-[#ff5258] bg-[#ff5258]/10 px-5 py-2.5 text-[11px] font-bold tracking-widest text-[#ff5258] hover:bg-[#ff5258] hover:text-black transition-all shadow-[0_0_15px_rgba(255,82,88,0.2)]">
+            COMMAND CENTER
+          </button>
+        </div>
       </nav>
 
-      <section id="overview" className="relative min-h-[calc(100vh-65px)] overflow-hidden px-5 py-10 md:px-10 md:py-14">
-        <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(rgba(107,220,238,.14)_1px,transparent_1px),linear-gradient(90deg,rgba(107,220,238,.14)_1px,transparent_1px)] [background-size:54px_54px]" />
-        <div className="absolute left-0 top-[46%] h-px w-full bg-[#ff4e55]/70 shadow-[0_0_20px_#ff3038]" />
-        <div className="absolute -right-30 top-[-20%] h-[850px] w-[850px] rounded-full border border-cyan-300/20 bg-[radial-gradient(circle_at_45%_45%,rgba(90,190,216,.24),rgba(15,25,42,.05)_44%,transparent_66%)]" />
-        <div className="absolute right-[14%] top-[14%] h-110 w-110 rounded-full border border-cyan-200/35 opacity-80"><div className="absolute inset-8 rounded-full border border-dashed border-cyan-100/30" /><div className="absolute left-1/2 top-0 h-1/2 w-px origin-bottom rotate-[62deg] bg-[#ff5c63] shadow-[0_0_12px_#ff5c63]" /></div>
+      {/* Hero Section */}
+      <section id="overview" className="relative min-h-screen flex items-center px-5 py-32 md:px-10">
+        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:54px_54px]" />
+        <div className="absolute left-0 top-[46%] h-px w-full bg-[#ff4e55]/40 shadow-[0_0_20px_#ff3038]" />
+        
+        <div className="absolute -right-30 top-[-20%] h-[850px] w-[850px] rounded-full border border-white/5 bg-[radial-gradient(circle_at_45%_45%,rgba(20,20,20,.8),rgba(5,5,5,.9)_44%,transparent_66%)]" />
+        <div className="absolute right-[14%] top-[14%] h-110 w-110 rounded-full border border-white/10 opacity-80"><div className="absolute inset-8 rounded-full border border-dashed border-white/10" /><div className="absolute left-1/2 top-0 h-1/2 w-px origin-bottom rotate-[62deg] bg-[#ff5c63] shadow-[0_0_12px_#ff5c63]" /></div>
+        
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.86fr_1.14fr]">
-          <div className="z-10"><p className="tactical-kicker mb-5">TRINETRA // INTEGRATED BORDER OPERATIONS</p><h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight md:text-7xl">A shared picture.<br /><span className="text-[#ff6168]">A faster response.</span></h1><p className="mt-7 max-w-lg text-base leading-7 text-cyan-50/65">TRINETRA brings video, thermal, radar and field assets into one operational view—so commanders can recognize, verify and coordinate a response without switching systems.</p><div className="mt-9 flex flex-wrap gap-3"><button onClick={() => router.push('/tour')} className="flex items-center gap-2 bg-[#ff5258] px-5 py-3 text-xs font-bold tracking-wider text-[#18090a] hover:bg-[#ff797d]">TAKE THE GUIDED TOUR <ArrowRight className="h-4 w-4" /></button><button onClick={() => router.push('/dashboard')} className="border border-cyan-200/40 px-5 py-3 text-xs font-bold tracking-wider text-cyan-100 hover:border-[#ff5258]">ACCESS LIVE SYSTEM</button></div><div className="mt-12 grid max-w-md grid-cols-3 gap-5 border-t border-cyan-200/25 pt-5"><div><b className="text-xl text-[#8ee8f4]">04</b><p className="mt-1 text-[9px] tracking-widest text-cyan-50/55">LIVE LAYERS</p></div><div><b className="text-xl text-[#8ee8f4]">12ms</b><p className="mt-1 text-[9px] tracking-widest text-cyan-50/55">SIGNAL DELAY</p></div><div><b className="text-xl text-[#ff858a]">P2</b><p className="mt-1 text-[9px] tracking-widest text-cyan-50/55">ACTIVE EVENT</p></div></div></div>
-          <div className="relative min-h-[430px] border border-cyan-200/30 bg-[#0b101a]/75 p-3 shadow-[0_0_70px_rgba(26,163,187,.12)] backdrop-blur"><div className="flex justify-between border-b border-cyan-200/20 px-2 pb-3 text-[10px] font-bold tracking-widest text-cyan-100/65"><span>SECTOR VIEW // NORTH RIDGE</span><span className="text-[#ff777c]">● PRIORITY WATCH</span></div><div className="relative mt-3 h-[370px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_40%,rgba(33,84,105,.7),transparent_27%),radial-gradient(ellipse_at_22%_82%,rgba(60,87,57,.6),transparent_26%),linear-gradient(140deg,#151c2a,#111a22_47%,#213229_48%,#0b0f15)]"><div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(122,224,238,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(122,224,238,.16)_1px,transparent_1px)] [background-size:38px_38px]" /><div className="absolute left-[49%] top-[43%] h-28 w-28 rounded-full border border-dashed border-cyan-100/55"><div className="absolute inset-3 rounded-full border border-cyan-100/35" /><div className="absolute left-1/2 top-1/2 h-px w-30 origin-left -rotate-25 bg-[#ff555c] shadow-[0_0_13px_#ff555c]" /></div><div className="absolute left-[50%] top-[45%] h-7 w-7 rounded-full border-2 border-[#ff5b62] bg-[#361215]/80 p-1 text-[#ff8d91] shadow-[0_0_20px_#ff4d54]"><Crosshair className="h-4 w-4" /></div><p className="absolute left-[56%] top-[43%] text-[10px] font-bold tracking-widest text-[#ffc1c3]">TRACK 042<br /><span className="font-normal text-cyan-100/70">CONFIDENCE 87%</span></p><div className="absolute bottom-5 left-5 flex items-center gap-2 text-[10px] tracking-widest text-cyan-100"><Radio className="h-4 w-4 text-[#7be1ef]" /> RADAR-02: LINKED</div><div className="absolute bottom-5 right-5 flex items-center gap-2 text-[10px] tracking-widest text-cyan-100"><ScanLine className="h-4 w-4 text-[#7be1ef]" /> THERMAL-04: ACTIVE</div></div></div>
+          <div className="z-10">
+            <h1 className="max-w-xl text-5xl font-bold leading-[.94] tracking-tight text-white md:text-7xl">
+              A shared picture.<br /><span className="text-[#ff6168]">A faster response.</span>
+            </h1>
+            <p className="mt-7 max-w-lg text-base leading-7 text-zinc-400">
+              TRINETRA brings video, thermal, radar and field assets into one operational view—so commanders can recognize, verify and coordinate a response without switching systems.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <button onClick={() => router.push('/dashboard')} className="flex items-center justify-center gap-2 rounded-full bg-[#ff5258] px-8 py-4 text-sm font-bold tracking-widest text-black hover:bg-[#ff7a7e] transition-all">
+                ACCESS SYSTEM <ArrowRight className="h-4 w-4" />
+              </button>
+              <button onClick={() => router.push('/tour')} className="rounded-full border border-white/20 bg-black px-8 py-4 text-sm font-bold tracking-widest text-zinc-300 hover:bg-white/10 transition-all">
+                TAKE THE TOUR
+              </button>
+            </div>
+          </div>
+          
+          <div className="relative min-h-[430px] border border-white/10 bg-[#050505]/90 p-3 shadow-[0_0_70px_rgba(0,0,0,0.8)] backdrop-blur">
+            <div className="flex justify-between border-b border-white/10 px-2 pb-3 text-[10px] font-bold tracking-widest text-zinc-400">
+              <span>SECTOR VIEW // NORTH RIDGE</span><span className="text-[#ff777c]">● PRIORITY WATCH</span>
+            </div>
+            
+            <div className="relative mt-3 h-[370px] overflow-hidden bg-[radial-gradient(ellipse_at_70%_40%,rgba(40,40,40,.4),transparent_27%),radial-gradient(ellipse_at_22%_82%,rgba(20,20,20,.6),transparent_26%),linear-gradient(140deg,#0a0a0a,#050505_47%,#111_48%,#000)]">
+              <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.15)_1px,transparent_1px)] [background-size:38px_38px]" />
+              
+              <div className="absolute left-[45%] top-[40%] animate-tracking z-10 w-0 h-0">
+                <div className="absolute -left-14 -top-14 h-28 w-28 rounded-full border border-dashed border-white/30">
+                  <div className="absolute inset-3 rounded-full border border-white/20" />
+                  <div className="absolute left-1/2 top-1/2 h-px w-30 origin-left -rotate-25 bg-[#ff555c] shadow-[0_0_13px_#ff555c]" />
+                </div>
+                <div className="absolute -left-3.5 -top-3.5 h-7 w-7 rounded-full border-2 border-[#ff5b62] bg-[#361215]/80 p-1 text-[#ff8d91] shadow-[0_0_20px_#ff4d54]">
+                  <Crosshair className="h-4 w-4" />
+                </div>
+                <p className="absolute left-6 -top-3 w-40 text-[10px] font-bold tracking-widest text-[#ffc1c3]">
+                  TRACK 042<br /><span className="font-normal text-zinc-400">CONFIDENCE 87%</span>
+                </p>
+              </div>
+
+              <div className="absolute bottom-5 left-5 flex items-center gap-2 text-[10px] tracking-widest text-zinc-400"><Radio className="h-4 w-4 text-zinc-500" /> RADAR-02: LINKED</div>
+              <div className="absolute bottom-5 right-5 flex items-center gap-2 text-[10px] tracking-widest text-zinc-400"><ScanLine className="h-4 w-4 text-zinc-500" /> THERMAL-04: ACTIVE</div>
+            </div>
+          </div>
         </div>
       </section>
-      <section id="network" className="relative border-y border-cyan-200/20 bg-[#0a0d14] px-5 py-14 md:px-10"><div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[.8fr_1.2fr]"><div><p className="tactical-kicker">Mission architecture</p><h2 className="mt-4 text-3xl font-bold">Designed for the decisions that cannot wait.</h2></div><div className="grid gap-px border border-cyan-200/20 bg-cyan-200/20 sm:grid-cols-3">{[[ShieldAlert, 'DETECT', 'Correlate unusual activity across sensors.'], [ScanLine, 'VERIFY', 'Inspect confidence and live evidence.'], [Radio, 'COORDINATE', 'Task assets and preserve the audit trail.']].map(([Icon, title, text]) => { const ItemIcon = Icon as typeof ShieldAlert; return <div key={title as string} className="bg-[#0a0d14] p-5"><ItemIcon className="h-5 w-5 text-[#ff646a]" /><p className="mt-7 text-sm font-bold tracking-widest">{title as string}</p><p className="mt-2 text-xs leading-5 text-cyan-50/55">{text as string}</p></div>; })}</div></div></section>
+
+      {/* GSAP / ScrollTrigger Mimic Section (Crossfading Features) */}
+      <section id="features" ref={scrollRef} className="relative border-t border-white/10" style={{ height: '500vh' }}>
+        
+        {/* Sticky Stage */}
+        <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+          
+          <div className="absolute inset-0 opacity-10 pointer-events-none [background-image:linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] [background-size:54px_54px]" />
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top_right,rgba(255,82,88,0.08),transparent_50%)]" />
+          
+          <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-16 lg:gap-24 w-full">
+            
+            {/* Left Side: Static Text */}
+            <div className="h-fit py-10 lg:py-0">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#ff5258]/30 bg-[#ff5258]/10 px-3 py-1 mb-6 text-[10px] font-bold tracking-widest text-[#ff5258]">
+                {allFeatures[activeIndex].isXFactor ? '🔥 X-FACTOR FEATURE' : 'CORE CAPABILITIES'}
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight transition-all duration-700">
+                Unrivaled intelligence at the edge.
+              </h2>
+              <p className="text-zinc-400 text-lg font-light">
+                Designed specifically for remote border environments, TRINETRA processes heavy AI models locally, requiring zero constant internet dependency.
+              </p>
+              
+              {/* Progress Dots */}
+              <div className="mt-12 flex gap-2 flex-wrap max-w-[200px]">
+                {allFeatures.map((_, i) => (
+                  <div key={i} className={`h-1 rounded-full transition-all duration-300 ${i === activeIndex ? 'w-6 bg-[#ff5258]' : 'w-2 bg-zinc-800'}`} />
+                ))}
+              </div>
+            </div>
+
+            {/* Right Side: Crossfading Cards */}
+            <div className="relative h-[400px] w-full">
+              {allFeatures.map((f, i) => {
+                const Icon = f.icon;
+                const isActive = i === activeIndex;
+                const isPast = i < activeIndex;
+                
+                return (
+                  <div 
+                    key={i} 
+                    className={`absolute inset-0 w-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : isPast ? 'opacity-0 -translate-y-12 pointer-events-none' : 'opacity-0 translate-y-12 pointer-events-none'}`}
+                  >
+                    <div className={`w-full h-full p-10 md:p-12 rounded-3xl border ${f.isXFactor ? 'border-[#ff5258]/40 bg-[#0a0203]' : 'border-white/10 bg-[#050505]'} shadow-2xl backdrop-blur-xl flex flex-col justify-center`}>
+                      <div className={`flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-[#ff5258]/15 text-[#ff5258] border border-[#ff5258]/20${f.isXFactor ? 'bg-[#ff5258]/20 text-[#ff5258]' : 'bg-zinc-900 border border-zinc-800 text-white'}`}>
+                        <Icon className="w-7 h-7" />
+                      </div>
+                      <h3 className="text-3xl font-bold text-white tracking-wide mb-4">{f.title}</h3>
+                      <p className="text-lg text-zinc-400 leading-relaxed font-light">{f.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-white/10 bg-black py-12 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3 opacity-50 hover:opacity-100 transition-opacity">
+            <Logo size="sm" showText={true} />
+          </div>
+          <div className="text-center md:text-right text-[10px] font-mono tracking-widest text-zinc-600">
+            <p>DEVELOPED FOR MHA & SSB HACKATHON</p>
+            <p className="mt-1">© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
+
+
 
