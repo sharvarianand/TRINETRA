@@ -142,3 +142,16 @@ body::before {
   color: #34d399;
 }
 
+
+.giant-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+  color: transparent;
+  opacity: 0.4;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.giant-text:hover {
+  -webkit-text-stroke: 1px rgba(255, 82, 88, 0.4);
+  color: rgba(255, 82, 88, 0.05);
+  opacity: 1;
+  text-shadow: 0 0 80px rgba(255, 82, 88, 0.3);
+}

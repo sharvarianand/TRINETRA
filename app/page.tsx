@@ -261,20 +261,6 @@ export default function LandingPage() {
 
                   {/* Giant Background Text Hover Effect */}
          <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-full text-center z-0">
-           <style>{
-             .giant-text {
-               -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
-               color: transparent;
-               opacity: 0.4;
-               transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-             }
-             .giant-text:hover {
-               -webkit-text-stroke: 1px rgba(255, 82, 88, 0.4);
-               color: rgba(255, 82, 88, 0.05);
-               opacity: 1;
-               text-shadow: 0 0 80px rgba(255, 82, 88, 0.3);
-             }
-           }</style>
            <h1 className="giant-text text-[22vw] font-black whitespace-nowrap tracking-tighter select-none cursor-crosshair">
              TRINETRA
            </h1>
