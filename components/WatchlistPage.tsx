@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Shield, Users, Car, Plus, Trash2, ArrowLeft, AlertTriangle, X } from 'lucide-react';
+import { Lock, Users, Car, Plus, Trash2, ArrowLeft, AlertTriangle, X } from 'lucide-react';
 
 interface Suspect {
   id: string;
@@ -94,7 +94,7 @@ export default function WatchlistPage() {
       <header className="border-b border-brand-border/50 bg-black/80 px-6 py-4 flex items-center gap-4 sticky top-0 z-10 backdrop-blur">
         <button onClick={() => router.push('/dashboard')} className="p-2 hover:bg-brand-card/20 rounded-lg text-brand-muted"><ArrowLeft className="w-5 h-5" /></button>
         <div>
-          <h1 className="text-xl font-bold tracking-widest text-brand-red flex items-center gap-2"><Shield className="w-5 h-5" /> SUSPECT & VEHICLE WATCHLIST</h1>
+          <h1 className="text-xl font-bold tracking-widest text-brand-red flex items-center gap-2"><Lock className="w-5 h-5" /> SUSPECT & VEHICLE WATCHLIST</h1>
           <p className="text-xs text-brand-muted/70 tracking-widest uppercase mt-1">Face Recognition Database // ANPR Hotlist Management</p>
         </div>
       </header>
@@ -220,6 +220,7 @@ export default function WatchlistPage() {
     </div>
   );
 }
+
 
 
 

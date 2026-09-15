@@ -243,7 +243,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
   const [cameras, setCameras] = useState<CameraConfig[]>([]);
   const [camerasLoaded, setCamerasLoaded] = useState(false);
 
-  const [showSetupWizard, setShowSetupWizard] = useState(false);
+  const [showSetupWizard, setShowSetupWizard] = useState(true);
 
   // Check backend for existing cameras
   useEffect(() => {
@@ -254,10 +254,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
           const data = await response.json();
           setCameras(data.cameras || []);
 
-          // Only show wizard if NO cameras configured
-          if (!data.cameras || data.cameras.length === 0) {
-            setShowSetupWizard(true);
-          }
+          // Automatically showing wizard on mount as requested
         }
       } catch (err) {
         console.error('Dashboard: Failed to check cameras:', err);
@@ -282,10 +279,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     <>
       {/* Camera Setup Wizard - shown on first time */}
       {showSetupWizard && (
-        <CameraSetupWizard
-          onComplete={handleSetupComplete}
-          baseUrl={baseUrl}
-        />
+        <CameraSetupWizard onComplete={handleSetupComplete} onClose={() => setShowSetupWizard(false)} baseUrl={baseUrl} />
       )}
 
       <div className="min-h-screen bg-gray-50 dark:bg-brand-bg flex transition-colors duration-200">
@@ -485,6 +479,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     </>
   );
 }
+
 
 
 

@@ -116,7 +116,7 @@ export default function BlockchainPage() {
                       <span className="text-brand-muted/70 block mb-0.5 flex items-center gap-1">
                         <LinkIcon className="w-3 h-3" /> PREVIOUS HASH
                       </span>
-                      <span className="text-zinc-400 break-all">{alert.previous_hash || '0000000000000000000000000000000000000000000000000000000000000000'}</span>
+                      <span className="text-gray-400 break-all">{alert.previous_hash || '0000000000000000000000000000000000000000000000000000000000000000'}</span>
                     </div>
                     <div>
                       <span className="text-brand-muted/70 block mb-0.5 flex items-center gap-1">
@@ -150,4 +150,5 @@ export default function BlockchainPage() {
     </div>
   );
 }
+
 

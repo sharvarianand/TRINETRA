@@ -374,14 +374,14 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 flex transition-colors duration-200">
+        <div className="min-h-screen bg-gray-50 dark:bg-brand-bg flex transition-colors duration-200">
 
 
             {/* Sidebar */}
-            <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700 transition-all duration-300 flex flex-col`}>
+            <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white dark:bg-brand-card border-r border-gray-200 dark:border-brand-border transition-all duration-300 flex flex-col`}>
                 {/* Logo - Click to toggle sidebar */}
                 <div
-                    className="p-4 border-b border-zinc-100 dark:border-zinc-700 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors"
+                    className="p-4 border-b border-gray-100 dark:border-brand-border cursor-pointer hover:bg-gray-50 dark:hover:bg-brand-bg/50 transition-colors"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                     <Logo size={sidebarOpen ? 'md' : 'sm'} showText={sidebarOpen} />
@@ -397,7 +397,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
                                     ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
-                                    : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
+                                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-brand-bg/50'
                                     }`}
                             >
                                 <item.icon className="w-5 h-5 shrink-0" />
@@ -412,18 +412,18 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
             {/* Main Content */}
             <div className="flex-1 flex flex-col">
                 {/* Top Bar */}
-                <header className="bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-6 py-4 flex items-center justify-between transition-colors duration-200">
+                <header className="bg-white dark:bg-brand-card border-b border-gray-200 dark:border-brand-border px-6 py-4 flex items-center justify-between transition-colors duration-200">
                     <div>
-                        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                        <h1 className="text-xl font-semibold text-gray-900 dark:text-brand-text flex items-center gap-2">
                             <Settings className="w-6 h-6 text-brand-red" />
                             Settings
                         </h1>
-                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Configure your monitoring preferences</p>
+                        <p className="text-sm text-gray-500 dark:text-brand-muted">Configure your monitoring preferences</p>
                     </div>
                     <div className="flex items-center gap-4">
                         <button
                             onClick={resetSettings}
-                            className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-700 text-zinc-600 dark:text-zinc-300 rounded-lg border border-zinc-200 dark:border-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-brand-bg text-gray-600 dark:text-brand-text rounded-lg border border-gray-200 dark:border-brand-border hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                         >
                             <RotateCcw className="w-4 h-4" />
                             Reset
@@ -442,11 +442,11 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                            className="relative p-2 text-gray-500 dark:text-brand-muted hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-brand-bg"
                         >
                             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
-                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors">
+                        <button className="relative p-2 text-gray-500 dark:text-brand-muted hover:text-brand-muted dark:hover:text-brand-text transition-colors">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
@@ -459,11 +459,11 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
-                                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50">
+                                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-brand-card rounded-xl shadow-lg border border-gray-200 dark:border-brand-border py-2 z-50">
                                     {user && (
-                                        <div className="px-4 py-2 border-b border-zinc-100 dark:border-zinc-700">
-                                            <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{user.firstName || 'User'}</p>
-                                            <p className="text-xs text-zinc-500 dark:text-zinc-400">{user.email}</p>
+                                        <div className="px-4 py-2 border-b border-gray-100 dark:border-brand-border">
+                                            <p className="text-sm font-medium text-gray-900 dark:text-brand-text">{user.firstName || 'User'}</p>
+                                            <p className="text-xs text-gray-500 dark:text-brand-muted">{user.email}</p>
                                         </div>
                                     )}
                                     <button
@@ -473,7 +473,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                             await supabase.auth.signOut();
                                             router.push('/');
                                         }}
-                                        className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm w-full text-left"
+                                        className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm w-full text-left"
                                     >
                                         <LogOut className="w-4 h-4" />
                                         Sign Out
@@ -490,9 +490,9 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                         {/* Settings Sections */}
                         <div className="space-y-6">
                             {/* Camera Configuration */}
-                            <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
+                            <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
                                 <div className="flex items-center justify-between mb-1">
-                                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text flex items-center gap-2">
                                         <Video className="w-5 h-5 text-red-500" />
                                         Camera Configuration
                                     </h3>
@@ -513,59 +513,59 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                         </button>
                                     </div>
                                 </div>
-                                <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">Manage video source inputs for crowd monitoring</p>
+                                <p className="text-sm text-gray-500 dark:text-brand-muted mb-6">Manage video source inputs for crowd monitoring</p>
 
                                 {/* Add Camera Form */}
                                 {showAddCamera && (
-                                    <div className="mb-6 p-4 bg-zinc-100 dark:bg-zinc-700/50 rounded-lg border border-brand-red/30">
+                                    <div className="mb-6 p-4 bg-gray-100 dark:bg-brand-bg/50 rounded-lg border border-brand-red/30">
                                         <div className="flex items-center justify-between mb-4">
-                                            <h4 className="font-medium text-zinc-900 dark:text-white">Add New Camera</h4>
+                                            <h4 className="font-medium text-gray-900 dark:text-brand-text">Add New Camera</h4>
                                             <button
                                                 onClick={() => {
                                                     setShowAddCamera(false);
                                                     setNewCamera(defaultNewCamera);
                                                 }}
-                                                className="text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                                                className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
                                             >
                                                 <X className="w-4 h-4" />
                                             </button>
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Camera ID *</label>
+                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Camera ID *</label>
                                                 <input
                                                     type="text"
                                                     value={newCamera.id}
                                                     onChange={(e) => setNewCamera({ ...newCamera, id: e.target.value })}
                                                     placeholder="cam-1"
-                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                    className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                 />
                                             </div>
                                             <div>
-                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Camera Name *</label>
+                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Camera Name *</label>
                                                 <input
                                                     type="text"
                                                     value={newCamera.name}
                                                     onChange={(e) => setNewCamera({ ...newCamera, name: e.target.value })}
                                                     placeholder="Main Plaza Camera"
-                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                    className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                 />
                                             </div>
                                             <div className="col-span-2">
-                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Stream URL * (DroidCam IP)</label>
+                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Stream URL * (DroidCam IP)</label>
                                                 <input
                                                     type="text"
                                                     value={newCamera.url}
                                                     onChange={(e) => setNewCamera({ ...newCamera, url: e.target.value })}
                                                     placeholder="http://192.168.1.100:4747/video"
-                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                    className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                 />
                                                 <p className="text-[10px] text-amber-600 dark:text-amber-400/70 mt-1 flex items-center gap-1">
                                                     ⚠️ Laptop and DroidCam must be on the same local network (same IP range)
                                                 </p>
                                             </div>
                                             <div>
-                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Zone</label>
+                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Zone</label>
                                                 {showAddZoneInput ? (
                                                     <div className="flex gap-2">
                                                         <input
@@ -574,7 +574,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             onChange={(e) => setNewCustomZoneName(e.target.value)}
                                                             placeholder="Enter zone name"
                                                             autoFocus
-                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-brand-red rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none"
+                                                            className="flex-1 bg-white dark:bg-brand-card border border-brand-red rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none"
                                                             onKeyDown={(e) => {
                                                                 if (e.key === 'Enter') {
                                                                     const z = newCustomZoneName.trim();
@@ -596,7 +596,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 setShowAddZoneInput(false);
                                                                 setNewCustomZoneName('');
                                                             }}
-                                                            className="p-2 text-zinc-400 hover:text-zinc-600"
+                                                            className="p-2 text-gray-400 hover:text-gray-600"
                                                         >
                                                             <X className="w-4 h-4" />
                                                         </button>
@@ -606,7 +606,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                         <select
                                                             value={newCamera.zone}
                                                             onChange={(e) => setNewCamera({ ...newCamera, zone: e.target.value })}
-                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                            className="flex-1 bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                         >
                                                             {allZones.map(zone => (
                                                                 <option key={zone} value={zone}>{zone}</option>
@@ -614,7 +614,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                         </select>
                                                         <button
                                                             onClick={(e) => { e.preventDefault(); setShowAddZoneInput(true); }}
-                                                            className="p-2 bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 rounded-lg text-brand-muted dark:text-brand-text transition-colors"
+                                                            className="p-2 bg-gray-100 dark:bg-brand-bg hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-brand-muted dark:text-brand-text transition-colors"
                                                             title="New Zone"
                                                         >
                                                             <Plus className="w-4 h-4" />
@@ -624,42 +624,42 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                             </div>
 
                                             {/* Area Configuration Section */}
-                                            <div className="col-span-2 mt-2 pt-4 border-t border-zinc-300 dark:border-zinc-600">
+                                            <div className="col-span-2 mt-2 pt-4 border-t border-gray-300 dark:border-gray-600">
                                                 <div className="flex items-center gap-2 mb-3">
                                                     <Ruler className="w-4 h-4 text-brand-muted dark:text-brand-text" />
-                                                    <span className="text-sm font-medium text-zinc-900 dark:text-white">Area Configuration</span>
-                                                    <span className="text-[10px] text-zinc-500">(One-time setup for capacity calculation)</span>
+                                                    <span className="text-sm font-medium text-gray-900 dark:text-brand-text">Area Configuration</span>
+                                                    <span className="text-[10px] text-gray-500">(One-time setup for capacity calculation)</span>
                                                 </div>
 
                                                 <div className="grid grid-cols-3 gap-3">
                                                     <div>
-                                                        <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Physical Area *</label>
+                                                        <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Physical Area *</label>
                                                         <input
                                                             type="number"
                                                             min="1"
                                                             value={newCamera.area}
                                                             onChange={(e) => setNewCamera({ ...newCamera, area: parseFloat(e.target.value) || 0 })}
                                                             placeholder="100"
-                                                            className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                            className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                         />
                                                     </div>
                                                     <div>
-                                                        <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Unit</label>
+                                                        <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Unit</label>
                                                         <select
                                                             value={newCamera.areaUnit}
                                                             onChange={(e) => setNewCamera({ ...newCamera, areaUnit: e.target.value as AreaUnit })}
-                                                            className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                            className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                         >
                                                             <option value="sqm">Square Meters (m²)</option>
                                                             <option value="sqft">Square Feet (ft²)</option>
                                                         </select>
                                                     </div>
                                                     <div>
-                                                        <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Crowd Density</label>
+                                                        <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Crowd Density</label>
                                                         <select
                                                             value={newCamera.densityLevel}
                                                             onChange={(e) => setNewCamera({ ...newCamera, densityLevel: e.target.value as DensityLevel })}
-                                                            className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                            className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                         >
                                                             <option value="low">Low - Comfortable</option>
                                                             <option value="medium">Medium - Normal</option>
@@ -668,19 +668,19 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                     </div>
                                                 </div>
 
-                                                <p className="text-[10px] text-zinc-500 mt-2">
+                                                <p className="text-[10px] text-gray-500 mt-2">
                                                     {densityLevelDescriptions[newCamera.densityLevel]}
                                                 </p>
 
                                                 {/* Capacity Section with Auto/Manual Toggle */}
-                                                <div className="mt-3 p-3 bg-white dark:bg-zinc-800 rounded-lg border border-brand-red/30">
+                                                <div className="mt-3 p-3 bg-white dark:bg-brand-card rounded-lg border border-brand-red/30">
                                                     <div className="flex items-center justify-between mb-2">
                                                         <div className="flex items-center gap-2">
                                                             <Calculator className="w-4 h-4 text-brand-red" />
-                                                            <span className="text-xs text-zinc-500 dark:text-zinc-400">Max Capacity:</span>
+                                                            <span className="text-xs text-gray-500 dark:text-brand-muted">Max Capacity:</span>
                                                         </div>
                                                         <div className="flex items-center gap-2">
-                                                            <span className={`text-xs ${!newCamera.useManualCapacity ? 'text-brand-red font-medium' : 'text-zinc-400'}`}>Auto</span>
+                                                            <span className={`text-xs ${!newCamera.useManualCapacity ? 'text-brand-red font-medium' : 'text-gray-400'}`}>Auto</span>
                                                             <button
                                                                 type="button"
                                                                 onClick={() => setNewCamera({ ...newCamera, useManualCapacity: !newCamera.useManualCapacity })}
@@ -688,7 +688,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             >
                                                                 <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${newCamera.useManualCapacity ? 'translate-x-5' : 'translate-x-0.5'}`}></div>
                                                             </button>
-                                                            <span className={`text-xs ${newCamera.useManualCapacity ? 'text-amber-500 font-medium' : 'text-zinc-400'}`}>Manual</span>
+                                                            <span className={`text-xs ${newCamera.useManualCapacity ? 'text-amber-500 font-medium' : 'text-gray-400'}`}>Manual</span>
                                                         </div>
                                                     </div>
 
@@ -699,16 +699,16 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 min="0"
                                                                 value={newCamera.manualCapacity}
                                                                 onChange={(e) => setNewCamera({ ...newCamera, manualCapacity: parseInt(e.target.value) || 0 })}
-                                                                className="flex-1 bg-zinc-50 dark:bg-zinc-700 border border-amber-500/50 rounded-lg px-3 py-2 text-lg font-bold text-amber-500 focus:outline-none focus:border-amber-500"
+                                                                className="flex-1 bg-gray-50 dark:bg-gray-700 border border-amber-500/50 rounded-lg px-3 py-2 text-lg font-bold text-amber-500 focus:outline-none focus:border-amber-500"
                                                             />
-                                                            <span className="text-xs text-zinc-500">people</span>
+                                                            <span className="text-xs text-gray-500">people</span>
                                                             {newCamera.manualCapacity === 0 && (
                                                                 <span className="text-xs text-red-500 font-medium">🚫 NO ENTRY ZONE</span>
                                                             )}
                                                         </div>
                                                     ) : (
                                                         <div className="flex items-center justify-between">
-                                                            <span className="text-xs text-zinc-400">Based on area & density:</span>
+                                                            <span className="text-xs text-gray-400">Based on area & density:</span>
                                                             <span className="text-lg font-bold text-brand-red">
                                                                 {calculateCapacity(newCamera.area, newCamera.areaUnit, newCamera.densityLevel)} people
                                                             </span>
@@ -734,7 +734,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 {/* Camera List */}
                                 <div className="space-y-3">
                                     {cameras.length === 0 ? (
-                                        <div className="text-center py-8 text-zinc-500">
+                                        <div className="text-center py-8 text-gray-500">
                                             <Video className="w-12 h-12 mx-auto mb-3 opacity-30" />
                                             <p>No cameras configured</p>
                                             <p className="text-sm">Click &quot;Add Camera&quot; to get started</p>
@@ -743,7 +743,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                         cameras.map((camera) => (
                                             <div
                                                 key={camera.id}
-                                                className={`p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border transition-colors ${camera.enabled ? 'border-zinc-200 dark:border-zinc-600' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+                                                className={`p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border transition-colors ${camera.enabled ? 'border-gray-200 dark:border-brand-border' : 'border-gray-300 dark:border-gray-700 opacity-60'
                                                     }`}
                                             >
                                                 {editingCameraId === camera.id ? (
@@ -754,23 +754,23 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 <Pencil className="w-4 h-4" />
                                                                 Edit Camera
                                                             </h4>
-                                                            <button onClick={cancelEditing} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
+                                                            <button onClick={cancelEditing} className="text-gray-400 hover:text-gray-900 dark:hover:text-white">
                                                                 <X className="w-4 h-4" />
                                                             </button>
                                                         </div>
 
                                                         <div className="grid grid-cols-2 gap-3">
                                                             <div>
-                                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Camera Name</label>
+                                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Camera Name</label>
                                                                 <input
                                                                     type="text"
                                                                     value={editForm.name}
                                                                     onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                                    className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                                 />
                                                             </div>
                                                             <div>
-                                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Zone</label>
+                                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Zone</label>
                                                                 {showEditZoneInput ? (
                                                                     <div className="flex gap-2">
                                                                         <input
@@ -779,7 +779,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                             onChange={(e) => setNewCustomZoneName(e.target.value)}
                                                                             placeholder="Enter zone name"
                                                                             autoFocus
-                                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-brand-red rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-white focus:outline-none"
+                                                                            className="flex-1 bg-white dark:bg-brand-card border border-brand-red rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none"
                                                                             onKeyDown={(e) => {
                                                                                 if (e.key === 'Enter') {
                                                                                     const z = newCustomZoneName.trim();
@@ -801,7 +801,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                                 setShowEditZoneInput(false);
                                                                                 setNewCustomZoneName('');
                                                                             }}
-                                                                            className="p-2 text-zinc-400 hover:text-zinc-600"
+                                                                            className="p-2 text-gray-400 hover:text-gray-600"
                                                                         >
                                                                             <X className="w-4 h-4" />
                                                                         </button>
@@ -811,7 +811,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                         <select
                                                                             value={editForm.zone}
                                                                             onChange={(e) => setEditForm({ ...editForm, zone: e.target.value })}
-                                                                            className="flex-1 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                                            className="flex-1 bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                                         >
                                                                             {allZones.map(zone => (
                                                                                 <option key={zone} value={zone}>{zone}</option>
@@ -819,7 +819,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                         </select>
                                                                         <button
                                                                             onClick={(e) => { e.preventDefault(); setShowEditZoneInput(true); }}
-                                                                            className="p-2 bg-zinc-100 dark:bg-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-600 rounded-lg text-brand-muted dark:text-brand-text transition-colors"
+                                                                            className="p-2 bg-gray-100 dark:bg-brand-bg hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-brand-muted dark:text-brand-text transition-colors"
                                                                             title="New Zone"
                                                                         >
                                                                             <Plus className="w-4 h-4" />
@@ -828,7 +828,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 )}
                                                             </div>
                                                             <div className="col-span-2">
-                                                                <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 flex items-center gap-1">
+                                                                <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 flex items-center gap-1">
                                                                     <Network className="w-3 h-3" />
                                                                     IP Address / Stream URL
                                                                 </label>
@@ -837,45 +837,45 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                     value={editForm.url}
                                                                     onChange={(e) => setEditForm({ ...editForm, url: e.target.value })}
                                                                     placeholder="http://192.168.1.100:4747/video"
-                                                                    className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red font-mono"
+                                                                    className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red font-mono"
                                                                 />
                                                             </div>
                                                         </div>
 
                                                         {/* Area Configuration */}
-                                                        <div className="pt-3 border-t border-zinc-300 dark:border-zinc-600">
+                                                        <div className="pt-3 border-t border-gray-300 dark:border-gray-600">
                                                             <div className="flex items-center gap-2 mb-3">
                                                                 <Ruler className="w-4 h-4 text-brand-muted dark:text-brand-text" />
-                                                                <span className="text-sm font-medium text-zinc-900 dark:text-white">Area Configuration</span>
+                                                                <span className="text-sm font-medium text-gray-900 dark:text-brand-text">Area Configuration</span>
                                                             </div>
                                                             <div className="grid grid-cols-3 gap-3">
                                                                 <div>
-                                                                    <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Physical Area</label>
+                                                                    <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Physical Area</label>
                                                                     <input
                                                                         type="number"
                                                                         min="1"
                                                                         value={editForm.area}
                                                                         onChange={(e) => setEditForm({ ...editForm, area: parseFloat(e.target.value) || 0 })}
-                                                                        className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                                        className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                                     />
                                                                 </div>
                                                                 <div>
-                                                                    <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Unit</label>
+                                                                    <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Unit</label>
                                                                     <select
                                                                         value={editForm.areaUnit}
                                                                         onChange={(e) => setEditForm({ ...editForm, areaUnit: e.target.value as AreaUnit })}
-                                                                        className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                                        className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                                     >
                                                                         <option value="sqm">m²</option>
                                                                         <option value="sqft">ft²</option>
                                                                     </select>
                                                                 </div>
                                                                 <div>
-                                                                    <label className="text-xs text-zinc-500 dark:text-zinc-400 mb-1 block">Density</label>
+                                                                    <label className="text-xs text-gray-500 dark:text-brand-muted mb-1 block">Density</label>
                                                                     <select
                                                                         value={editForm.densityLevel}
                                                                         onChange={(e) => setEditForm({ ...editForm, densityLevel: e.target.value as DensityLevel })}
-                                                                        className="w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-3 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                                                        className="w-full bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                                                     >
                                                                         <option value="low">Low</option>
                                                                         <option value="medium">Medium</option>
@@ -885,11 +885,11 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             </div>
 
                                                             {/* Capacity Section with Auto/Manual Toggle */}
-                                                            <div className="mt-3 p-2 bg-white dark:bg-zinc-800 rounded-lg border border-brand-red/30">
+                                                            <div className="mt-3 p-2 bg-white dark:bg-brand-card rounded-lg border border-brand-red/30">
                                                                 <div className="flex items-center justify-between mb-2">
-                                                                    <span className="text-xs text-zinc-500 dark:text-zinc-400">Max Capacity:</span>
+                                                                    <span className="text-xs text-gray-500 dark:text-brand-muted">Max Capacity:</span>
                                                                     <div className="flex items-center gap-2">
-                                                                        <span className={`text-[10px] ${!editForm.useManualCapacity ? 'text-brand-red font-medium' : 'text-zinc-400'}`}>Auto</span>
+                                                                        <span className={`text-[10px] ${!editForm.useManualCapacity ? 'text-brand-red font-medium' : 'text-gray-400'}`}>Auto</span>
                                                                         <button
                                                                             type="button"
                                                                             onClick={() => setEditForm({ ...editForm, useManualCapacity: !editForm.useManualCapacity })}
@@ -897,7 +897,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                         >
                                                                             <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full transition-transform ${editForm.useManualCapacity ? 'translate-x-4' : 'translate-x-0.5'}`}></div>
                                                                         </button>
-                                                                        <span className={`text-[10px] ${editForm.useManualCapacity ? 'text-amber-500 font-medium' : 'text-zinc-400'}`}>Manual</span>
+                                                                        <span className={`text-[10px] ${editForm.useManualCapacity ? 'text-amber-500 font-medium' : 'text-gray-400'}`}>Manual</span>
                                                                     </div>
                                                                 </div>
 
@@ -908,16 +908,16 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                             min="0"
                                                                             value={editForm.manualCapacity}
                                                                             onChange={(e) => setEditForm({ ...editForm, manualCapacity: parseInt(e.target.value) || 0 })}
-                                                                            className="flex-1 bg-zinc-50 dark:bg-zinc-700 border border-amber-500/50 rounded px-2 py-1 text-sm font-bold text-amber-500 focus:outline-none"
+                                                                            className="flex-1 bg-gray-50 dark:bg-gray-700 border border-amber-500/50 rounded px-2 py-1 text-sm font-bold text-amber-500 focus:outline-none"
                                                                         />
-                                                                        <span className="text-[10px] text-zinc-500">people</span>
+                                                                        <span className="text-[10px] text-gray-500">people</span>
                                                                         {editForm.manualCapacity === 0 && (
                                                                             <span className="text-[10px] text-red-500 font-medium">🚫</span>
                                                                         )}
                                                                     </div>
                                                                 ) : (
                                                                     <div className="flex items-center justify-between">
-                                                                        <span className="text-[10px] text-zinc-400">Auto:</span>
+                                                                        <span className="text-[10px] text-gray-400">Auto:</span>
                                                                         <span className="text-sm font-bold text-brand-red">
                                                                             {calculateCapacity(editForm.area, editForm.areaUnit, editForm.densityLevel)} people
                                                                         </span>
@@ -938,7 +938,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                             </button>
                                                             <button
                                                                 onClick={cancelEditing}
-                                                                className="px-4 py-2 bg-zinc-200 dark:bg-zinc-600 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-500 transition-colors"
+                                                                className="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
                                                             >
                                                                 Cancel
                                                             </button>
@@ -948,18 +948,18 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                     /* Normal Camera Display */
                                                     <>
                                                         <div className="flex items-center gap-4">
-                                                            <div className={`w-3 h-3 rounded-full ${camera.status === 'online' ? 'bg-brand-red' : camera.status === 'offline' ? 'bg-red-500' : 'bg-zinc-400'
+                                                            <div className={`w-3 h-3 rounded-full ${camera.status === 'online' ? 'bg-brand-red' : camera.status === 'offline' ? 'bg-red-500' : 'bg-gray-400'
                                                                 }`}></div>
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="flex items-center gap-2">
-                                                                    <span className="font-medium text-zinc-900 dark:text-white">{camera.name}</span>
+                                                                    <span className="font-medium text-gray-900 dark:text-brand-text">{camera.name}</span>
                                                                     <span className="text-xs text-brand-muted dark:text-brand-text bg-brand-red/10 px-2 py-0.5 rounded">{camera.zone}</span>
                                                                     <span className={`text-xs px-2 py-0.5 rounded ${camera.status === 'online' ? 'bg-brand-red/10 text-brand-muted dark:text-brand-text' : 'bg-red-500/10 text-red-600 dark:text-red-400'
                                                                         }`}>
                                                                         {camera.status || 'offline'}
                                                                     </span>
                                                                 </div>
-                                                                <div className="text-xs text-zinc-500 truncate mt-1 flex items-center gap-1 font-mono">
+                                                                <div className="text-xs text-gray-500 truncate mt-1 flex items-center gap-1 font-mono">
                                                                     <Network className="w-3 h-3" />
                                                                     {camera.url || 'No URL configured'}
                                                                 </div>
@@ -974,7 +974,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                                 </button>
                                                                 <button
                                                                     onClick={() => toggleCameraEnabled(camera)}
-                                                                    className={`relative w-10 h-5 rounded-full transition-colors ${camera.enabled ? 'bg-brand-red' : 'bg-zinc-400 dark:bg-zinc-600'
+                                                                    className={`relative w-10 h-5 rounded-full transition-colors ${camera.enabled ? 'bg-brand-red' : 'bg-gray-400 dark:bg-gray-600'
                                                                         }`}
                                                                     title={camera.enabled ? 'Disable camera' : 'Enable camera'}
                                                                 >
@@ -992,8 +992,8 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                                         </div>
 
                                                         {/* Area & Capacity Info */}
-                                                        <div className="mt-3 pt-3 border-t border-zinc-200 dark:border-zinc-600 grid grid-cols-3 gap-4 text-xs">
-                                                            <div className="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400">
+                                                        <div className="mt-3 pt-3 border-t border-gray-200 dark:border-brand-border grid grid-cols-3 gap-4 text-xs">
+                                                            <div className="flex items-center gap-1.5 text-gray-500 dark:text-brand-muted">
                                                                 <Ruler className="w-3.5 h-3.5" />
                                                                 <span>Area: {camera.area || 'N/A'} {camera.area ? (camera.areaUnit === 'sqft' ? 'ft²' : 'm²') : ''}</span>
                                                             </div>
@@ -1014,15 +1014,15 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                             </div>
 
                             {/* Network & Performance */}
-                            <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm">
-                                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1 flex items-center gap-2">
+                            <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border shadow-sm">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-brand-text mb-1 flex items-center gap-2">
                                     <Gauge className="w-5 h-5 text-brand-muted dark:text-brand-text" />
                                     Network & Performance
                                 </h3>
-                                <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">Optimize for your network conditions</p>
+                                <p className="text-sm text-gray-500 dark:text-brand-muted mb-6">Optimize for your network conditions</p>
 
                                 {/* Low Bandwidth Mode */}
-                                <div className="flex items-start justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4">
+                                <div className="flex items-start justify-between p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-200 dark:border-brand-border mb-4">
                                     <div className="flex items-start gap-4">
                                         <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.lowBandwidthMode ? 'bg-amber-500/20 border border-amber-500/30' : 'bg-brand-red/10 border border-brand-red/20'
                                             }`}>
@@ -1033,8 +1033,8 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                             )}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-zinc-900 dark:text-white">Low Bandwidth Mode</h4>
-                                            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-md">
+                                            <h4 className="font-medium text-gray-900 dark:text-brand-text">Low Bandwidth Mode</h4>
+                                            <p className="text-sm text-gray-500 dark:text-brand-muted mt-1 max-w-md">
                                                 Disable video streams and show only coordinate data on a map. Reduces bandwidth by ~100x.
                                                 Ideal for areas with poor 5G/LTE connectivity.
                                             </p>
@@ -1048,7 +1048,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <button
                                         onClick={() => updateSetting('lowBandwidthMode', !settings.lowBandwidthMode)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.lowBandwidthMode ? 'bg-amber-500' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.lowBandwidthMode ? 'bg-amber-500' : 'bg-gray-300 dark:bg-gray-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.lowBandwidthMode ? 'translate-x-8' : 'translate-x-1'
@@ -1057,15 +1057,15 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 </div>
 
                                 {/* Auto Refresh Interval */}
-                                <div className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600">
+                                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-200 dark:border-brand-border">
                                     <div>
-                                        <h4 className="font-medium text-zinc-900 dark:text-white">Data Refresh Interval</h4>
-                                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">How often to fetch analytics data</p>
+                                        <h4 className="font-medium text-gray-900 dark:text-brand-text">Data Refresh Interval</h4>
+                                        <p className="text-sm text-gray-500 dark:text-brand-muted mt-1">How often to fetch analytics data</p>
                                     </div>
                                     <select
                                         value={settings.autoRefreshInterval}
                                         onChange={(e) => updateSetting('autoRefreshInterval', parseInt(e.target.value))}
-                                        className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 rounded-lg px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-brand-red"
+                                        className="bg-white dark:bg-brand-card border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm text-gray-900 dark:text-brand-text focus:outline-none focus:border-brand-red"
                                     >
                                         <option value={1000}>1 second</option>
                                         <option value={2000}>2 seconds</option>
@@ -1077,15 +1077,15 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                             </div>
 
                             {/* Privacy & Security */}
-                            <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm">
-                                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1 flex items-center gap-2">
+                            <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border shadow-sm">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-brand-text mb-1 flex items-center gap-2">
                                     <Eye className="w-5 h-5 text-purple-500" />
                                     Privacy & Security
                                 </h3>
-                                <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">GDPR compliance and privacy controls</p>
+                                <p className="text-sm text-gray-500 dark:text-brand-muted mb-6">GDPR compliance and privacy controls</p>
 
                                 {/* Privacy Masking */}
-                                <div className="flex items-start justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4">
+                                <div className="flex items-start justify-between p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-200 dark:border-brand-border mb-4">
                                     <div className="flex items-start gap-4">
                                         <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${settings.privacyMaskingEnabled ? 'bg-purple-500/20 border border-purple-500/30' : 'bg-brand-red/10 border border-brand-red/20'
                                             }`}>
@@ -1096,8 +1096,8 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                             )}
                                         </div>
                                         <div>
-                                            <h4 className="font-medium text-zinc-900 dark:text-white">Privacy Masking (Face Blur)</h4>
-                                            <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1 max-w-md">
+                                            <h4 className="font-medium text-gray-900 dark:text-brand-text">Privacy Masking (Face Blur)</h4>
+                                            <p className="text-sm text-gray-500 dark:text-brand-muted mt-1 max-w-md">
                                                 Use AI to automatically blur faces in real-time video feeds.
                                                 Ensures GDPR/Privacy compliance for public monitoring.
                                             </p>
@@ -1111,7 +1111,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                     </div>
                                     <button
                                         onClick={() => updateSetting('privacyMaskingEnabled', !settings.privacyMaskingEnabled)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.privacyMaskingEnabled ? 'bg-purple-500' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.privacyMaskingEnabled ? 'bg-purple-500' : 'bg-gray-300 dark:bg-gray-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.privacyMaskingEnabled ? 'translate-x-8' : 'translate-x-1'
@@ -1121,22 +1121,22 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                             </div>
 
                             {/* Display Settings */}
-                            <div className="bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700 shadow-sm">
-                                <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1 flex items-center gap-2">
+                            <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border shadow-sm">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-brand-text mb-1 flex items-center gap-2">
                                     <Monitor className="w-5 h-5 text-brand-red" />
                                     Display Settings
                                 </h3>
-                                <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">Customize your dashboard appearance</p>
+                                <p className="text-sm text-gray-500 dark:text-brand-muted mb-6">Customize your dashboard appearance</p>
 
                                 {/* Density Overlay */}
-                                <div className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600 mb-4">
+                                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-200 dark:border-brand-border mb-4">
                                     <div>
-                                        <h4 className="font-medium text-zinc-900 dark:text-white">Show Density Overlay</h4>
-                                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Display crowd density indicators on video feeds</p>
+                                        <h4 className="font-medium text-gray-900 dark:text-brand-text">Show Density Overlay</h4>
+                                        <p className="text-sm text-gray-500 dark:text-brand-muted mt-1">Display crowd density indicators on video feeds</p>
                                     </div>
                                     <button
                                         onClick={() => updateSetting('showDensityOverlay', !settings.showDensityOverlay)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.showDensityOverlay ? 'bg-brand-red' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.showDensityOverlay ? 'bg-brand-red' : 'bg-gray-300 dark:bg-gray-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.showDensityOverlay ? 'translate-x-8' : 'translate-x-1'
@@ -1145,14 +1145,14 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 </div>
 
                                 {/* Alert Sounds */}
-                                <div className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-200 dark:border-zinc-600">
+                                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-200 dark:border-brand-border">
                                     <div>
-                                        <h4 className="font-medium text-zinc-900 dark:text-white">Alert Sounds</h4>
-                                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Play audio notifications for critical alerts</p>
+                                        <h4 className="font-medium text-gray-900 dark:text-brand-text">Alert Sounds</h4>
+                                        <p className="text-sm text-gray-500 dark:text-brand-muted mt-1">Play audio notifications for critical alerts</p>
                                     </div>
                                     <button
                                         onClick={() => updateSetting('alertSoundEnabled', !settings.alertSoundEnabled)}
-                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.alertSoundEnabled ? 'bg-brand-red' : 'bg-zinc-300 dark:bg-zinc-600'
+                                        className={`relative w-14 h-7 rounded-full transition-colors ${settings.alertSoundEnabled ? 'bg-brand-red' : 'bg-gray-300 dark:bg-gray-600'
                                             }`}
                                     >
                                         <div className={`absolute top-1 w-5 h-5 bg-white rounded-full transition-transform ${settings.alertSoundEnabled ? 'translate-x-8' : 'translate-x-1'
@@ -1166,18 +1166,18 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                                 <div className="bg-linear-to-r from-amber-500/10 to-transparent rounded-xl p-6 border border-amber-500/30">
                                     <h3 className="text-lg font-bold text-amber-600 dark:text-amber-400 mb-4">Low Bandwidth Mode Active</h3>
                                     <div className="grid grid-cols-2 gap-6">
-                                        <div className="bg-white/50 dark:bg-zinc-800/50 rounded-lg p-4">
-                                            <div className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Normal Mode</div>
+                                        <div className="bg-white/50 dark:bg-brand-card/50 rounded-lg p-4">
+                                            <div className="text-sm text-gray-500 dark:text-brand-muted mb-1">Normal Mode</div>
                                             <div className="text-2xl font-bold text-red-500">~2-5 MB/s</div>
-                                            <div className="text-xs text-zinc-500">MJPEG video streams</div>
+                                            <div className="text-xs text-gray-500">MJPEG video streams</div>
                                         </div>
-                                        <div className="bg-white/50 dark:bg-zinc-800/50 rounded-lg p-4">
-                                            <div className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">Low Bandwidth</div>
+                                        <div className="bg-white/50 dark:bg-brand-card/50 rounded-lg p-4">
+                                            <div className="text-sm text-gray-500 dark:text-brand-muted mb-1">Low Bandwidth</div>
                                             <div className="text-2xl font-bold text-brand-red">~10-50 KB/s</div>
-                                            <div className="text-xs text-zinc-500">Coordinate data only</div>
+                                            <div className="text-xs text-gray-500">Coordinate data only</div>
                                         </div>
                                     </div>
-                                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-4">
+                                    <p className="text-sm text-gray-500 dark:text-brand-muted mt-4">
                                         Video feeds will be replaced with a real-time dot map showing person positions.
                                         All analytics and alerts remain fully functional.
                                     </p>
@@ -1188,12 +1188,12 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                 </main>
 
                 {/* Footer */}
-                <footer className="h-12 border-t border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-6 flex items-center justify-between">
+                <footer className="h-12 border-t border-gray-200 dark:border-brand-border bg-white dark:bg-brand-card px-6 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-bold text-brand-muted dark:text-brand-red tracking-wider">SETTINGS</span>
                     </div>
-                    <div className="text-xs text-zinc-500">
+                    <div className="text-xs text-gray-500">
                         {hasChanges ? 'Unsaved changes' : 'All changes saved'}
                     </div>
                 </footer>
@@ -1201,5 +1201,6 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 

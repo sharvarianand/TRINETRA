@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 import threading
@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 from typing import Dict, Optional
 import json
+import uuid
 from shapely.geometry import Point, Polygon
 
 try:
@@ -33,6 +34,9 @@ face_cascade = cv2.CascadeClassifier(
 
 # Camera configuration file path
 CAMERAS_CONFIG_FILE = os.path.join(os.path.dirname(__file__), "cameras.json")
+VIDEO_UPLOADS_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+ALLOWED_VIDEO_EXTENSIONS = {".mp4", ".mov", ".avi", ".mkv", ".webm"}
+MAX_VIDEO_UPLOAD_BYTES = 500 * 1024 * 1024
 
 
 # Camera data model
@@ -692,6 +696,42 @@ def add_camera(camera: Camera):
         print(f"Camera {camera.id} added and thread started")
 
     return {"status": "created", "camera": camera.model_dump()}
+
+
+@app.post("/cameras/upload")
+async def upload_camera_video(camera_id: str = Form(...), file: UploadFile = File(...)):
+    """Store a recorded video locally so it can be analysed like a camera source."""
+    extension = os.path.splitext(file.filename or "")[1].lower()
+    if extension not in ALLOWED_VIDEO_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail="Unsupported video format. Upload MP4, MOV, AVI, MKV, or WebM.",
+        )
+
+    os.makedirs(VIDEO_UPLOADS_DIR, exist_ok=True)
+    safe_camera_id = "".join(char for char in camera_id if char.isalnum() or char in "-_") or "camera"
+    upload_path = os.path.join(VIDEO_UPLOADS_DIR, f"{safe_camera_id}_{uuid.uuid4().hex}{extension}")
+    total_bytes = 0
+
+    try:
+        with open(upload_path, "wb") as destination:
+            while chunk := await file.read(1024 * 1024):
+                total_bytes += len(chunk)
+                if total_bytes > MAX_VIDEO_UPLOAD_BYTES:
+                    destination.close()
+                    os.remove(upload_path)
+                    raise HTTPException(status_code=413, detail="Video must be 500 MB or smaller.")
+                destination.write(chunk)
+    except HTTPException:
+        raise
+    except Exception as error:
+        if os.path.exists(upload_path):
+            os.remove(upload_path)
+        raise HTTPException(status_code=500, detail=f"Could not store video: {error}")
+    finally:
+        await file.close()
+
+    return {"status": "uploaded", "url": upload_path, "filename": file.filename}
 
 
 @app.get("/cameras/{camera_id}")
@@ -1640,9 +1680,6 @@ def remove_plate(plate: str):
 
 
 # ============== FACE WATCHLIST ENDPOINTS ==============
-
-from fastapi import UploadFile, File, Form
-import uuid
 
 @app.get("/watchlist/faces")
 def get_face_watchlist():

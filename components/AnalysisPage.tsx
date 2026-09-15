@@ -183,14 +183,14 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
     };
 
     return (
-        <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 flex transition-colors duration-200">
+        <div className="min-h-screen bg-gray-50 dark:bg-brand-bg flex transition-colors duration-200">
 
 
             {/* Sidebar */}
-            <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white dark:bg-zinc-800 border-r border-zinc-200 dark:border-zinc-700 transition-all duration-300 flex flex-col`}>
+            <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white dark:bg-brand-card border-r border-gray-200 dark:border-brand-border transition-all duration-300 flex flex-col`}>
                 {/* Logo - Click to toggle sidebar */}
                 <div
-                    className="p-4 border-b border-zinc-100 dark:border-zinc-700 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700/50 transition-colors"
+                    className="p-4 border-b border-gray-100 dark:border-brand-border cursor-pointer hover:bg-gray-50 dark:hover:bg-brand-bg/50 transition-colors"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                     <Logo size={sidebarOpen ? 'md' : 'sm'} showText={sidebarOpen} />
@@ -206,7 +206,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 href={item.href}
                                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${isActive
                                     ? 'bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text font-medium'
-                                    : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700/50'
+                                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-brand-bg/50'
                                     }`}
                             >
                                 <item.icon className="w-5 h-5 shrink-0" />
@@ -221,24 +221,24 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
             {/* Main Content */}
             <div className="flex-1 flex flex-col">
                 {/* Top Bar */}
-                <header className="bg-white dark:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-700 px-6 py-4 flex items-center justify-between transition-colors duration-200">
+                <header className="bg-white dark:bg-brand-card border-b border-gray-200 dark:border-brand-border px-6 py-4 flex items-center justify-between transition-colors duration-200">
                     <div>
-                        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                        <h1 className="text-xl font-semibold text-gray-900 dark:text-brand-text flex items-center gap-2">
                             <BarChart3 className="w-6 h-6 text-brand-red" />
                             Intelligence Analysis
                         </h1>
-                        <p className="text-sm text-zinc-500 dark:text-zinc-400">Sector activity, movement patterns & operational insights</p>
+                        <p className="text-sm text-gray-500 dark:text-brand-muted">Sector activity, movement patterns & operational insights</p>
                     </div>
                     <div className="flex items-center gap-4">
                         {/* Time Range Selector */}
-                        <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-700 rounded-lg p-1">
+                        <div className="flex items-center gap-1 bg-gray-100 dark:bg-brand-bg rounded-lg p-1">
                             {(['today', 'week', 'month'] as const).map((range) => (
                                 <button
                                     key={range}
                                     onClick={() => setSelectedTimeRange(range)}
                                     className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${selectedTimeRange === range
-                                        ? 'bg-white dark:bg-zinc-600 text-brand-muted dark:text-brand-text shadow-sm'
-                                        : 'text-zinc-600 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text'
+                                        ? 'bg-white dark:bg-gray-600 text-brand-muted dark:text-brand-text shadow-sm'
+                                        : 'text-gray-600 dark:text-gray-400 hover:text-brand-muted dark:hover:text-brand-text'
                                         }`}
                                 >
                                     {range.charAt(0).toUpperCase() + range.slice(1)}
@@ -248,11 +248,11 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                            className="relative p-2 text-gray-500 dark:text-brand-muted hover:text-brand-muted dark:hover:text-brand-text transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-brand-bg"
                         >
                             {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </button>
-                        <button className="relative p-2 text-zinc-500 dark:text-zinc-400 hover:text-brand-muted dark:hover:text-brand-text transition-colors">
+                        <button className="relative p-2 text-gray-500 dark:text-brand-muted hover:text-brand-muted dark:hover:text-brand-text transition-colors">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
@@ -261,8 +261,8 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 <span className="text-brand-muted dark:text-brand-text font-medium text-sm">{getUserInitials()}</span>
                             </button>
                             {showProfileMenu && (
-                                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-zinc-800 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 py-2 z-50">
-                                    {user && (<div className="px-4 py-2 border-b border-zinc-100 dark:border-zinc-700"><p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{user.firstName || 'User'}</p><p className="text-xs text-zinc-500 dark:text-zinc-400">{user.email}</p></div>)}
+                                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-brand-card rounded-xl shadow-lg border border-gray-200 dark:border-brand-border py-2 z-50">
+                                    {user && (<div className="px-4 py-2 border-b border-gray-100 dark:border-brand-border"><p className="text-sm font-medium text-gray-900 dark:text-brand-text">{user.firstName || 'User'}</p><p className="text-xs text-gray-500 dark:text-brand-muted">{user.email}</p></div>)}
                                     <button
                                         onClick={async () => {
                                             localStorage.removeItem('TRINETRA_admin_verified');
@@ -270,7 +270,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                             await supabase.auth.signOut();
                                             router.push('/');
                                         }}
-                                        className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm w-full text-left"
+                                        className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-sm w-full text-left"
                                     >
                                         <LogOut className="w-4 h-4" />
                                         Sign Out
@@ -285,62 +285,62 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 <main className="flex-1 p-6 overflow-auto">
                     {/* Key Metrics */}
                     <div className="grid grid-cols-6 gap-4 mb-6">
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <Users className="w-5 h-5 text-brand-red" />
                                 <span className="text-xs text-brand-muted dark:text-brand-text flex items-center gap-1">
                                     <ArrowUpRight className="w-3 h-3" /> 12.5%
                                 </span>
                             </div>
-                            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{analyticsData.totalVisitors.toLocaleString()}</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Tracked Subjects</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.totalVisitors.toLocaleString()}</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Tracked Subjects</div>
                         </div>
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <Clock className="w-5 h-5 text-purple-500" />
-                                <span className="text-xs text-zinc-500 dark:text-zinc-400">{analyticsData.peakHour}</span>
+                                <span className="text-xs text-gray-500 dark:text-brand-muted">{analyticsData.peakHour}</span>
                             </div>
-                            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{analyticsData.avgDwellTime}m</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Avg Presence Time</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.avgDwellTime}m</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Avg Presence Time</div>
                         </div>
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <Activity className="w-5 h-5 text-amber-500" />
                                 <span className="text-xs text-amber-600 dark:text-amber-400">{analyticsData.crowdDensity}%</span>
                             </div>
-                            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{analyticsData.crowdDensity}%</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Movement Density</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.crowdDensity}%</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Movement Density</div>
                         </div>
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <AlertTriangle className="w-5 h-5 text-red-500" />
                                 <span className="text-xs text-brand-muted dark:text-brand-text flex items-center gap-1">
                                     <ArrowDownRight className="w-3 h-3" /> -15%
                                 </span>
                             </div>
-                            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{analyticsData.incidentCount}</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Incidents Today</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.incidentCount}</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Incidents Today</div>
                         </div>
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <Target className="w-5 h-5 text-brand-red" />
                             </div>
                             <div className="text-2xl font-bold text-brand-muted dark:text-brand-text">{analyticsData.safetyScore}%</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Sector Readiness</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Sector Readiness</div>
                         </div>
-                        <div className="bg-white dark:bg-zinc-800 rounded-xl p-4 border border-zinc-200 dark:border-zinc-700">
+                        <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
                             <div className="flex items-center justify-between mb-2">
                                 <Zap className="w-5 h-5 text-orange-500" />
                             </div>
-                            <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{analyticsData.peakHour}</div>
-                            <div className="text-xs text-zinc-500 dark:text-zinc-400">Peak Hour</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.peakHour}</div>
+                            <div className="text-xs text-gray-500 dark:text-brand-muted">Peak Hour</div>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-12 gap-6">
                         {/* Hourly Footfall Chart */}
-                        <div className="col-span-8 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
-                            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+                        <div className="col-span-8 bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text mb-4 flex items-center gap-2">
                                 <TrendingUp className="w-5 h-5 text-brand-red" />
                                 Hourly Footfall Analysis
                             </h3>
@@ -352,30 +352,30 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                             style={{ height: `${(data.count / maxHourlyCount) * 100}%` }}
                                             title={`${data.count} visitors`}
                                         ></div>
-                                        <span className="text-[10px] text-zinc-500 dark:text-zinc-400 -rotate-45 origin-center">
+                                        <span className="text-[10px] text-gray-500 dark:text-brand-muted -rotate-45 origin-center">
                                             {data.hour}
                                         </span>
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-4 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+                            <div className="mt-4 flex items-center justify-between text-xs text-gray-500 dark:text-brand-muted">
                                 <span>Peak: {hourlyData.reduce((max, d) => d.count > max.count ? d : max, hourlyData[0])?.hour || 'N/A'}</span>
                                 <span>Total: {hourlyData.reduce((sum, d) => sum + d.count, 0).toLocaleString()} visitors</span>
                             </div>
                         </div>
 
                         {/* Trends */}
-                        <div className="col-span-4 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
-                            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+                        <div className="col-span-4 bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text mb-4 flex items-center gap-2">
                                 <Activity className="w-5 h-5 text-purple-500" />
                                 Key Trends
                             </h3>
                             <div className="space-y-4">
                                 {trends.map((trend, index) => (
-                                    <div key={index} className="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-700/50 rounded-lg border border-zinc-100 dark:border-zinc-600">
+                                    <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-100 dark:border-gray-600">
                                         <div>
-                                            <div className="text-sm text-zinc-500 dark:text-zinc-400">{trend.label}</div>
-                                            <div className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{trend.value.toLocaleString()}</div>
+                                            <div className="text-sm text-gray-500 dark:text-brand-muted">{trend.label}</div>
+                                            <div className="text-xl font-bold text-gray-900 dark:text-brand-text">{trend.value.toLocaleString()}</div>
                                         </div>
                                         <div className={`flex items-center gap-1 text-sm ${trend.trend === 'up' ? 'text-brand-muted dark:text-brand-text' : 'text-red-600 dark:text-red-400'}`}>
                                             {trend.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
@@ -387,27 +387,27 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         </div>
 
                         {/* Zone Analysis */}
-                        <div className="col-span-12 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
-                            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+                        <div className="col-span-12 bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text mb-4 flex items-center gap-2">
                                 <Map className="w-5 h-5 text-brand-red" />
                                 Zone-wise Analysis
                             </h3>
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="border-b border-zinc-200 dark:border-zinc-700">
-                                            <th className="text-left py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Zone</th>
-                                            <th className="text-center py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Avg Occupancy</th>
-                                            <th className="text-center py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Peak Occupancy</th>
-                                            <th className="text-center py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Risk Level</th>
-                                            <th className="text-center py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Incidents</th>
-                                            <th className="text-center py-3 px-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">Occupancy Trend</th>
+                                        <tr className="border-b border-gray-200 dark:border-brand-border">
+                                            <th className="text-left py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Zone</th>
+                                            <th className="text-center py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Avg Occupancy</th>
+                                            <th className="text-center py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Peak Occupancy</th>
+                                            <th className="text-center py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Risk Level</th>
+                                            <th className="text-center py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Incidents</th>
+                                            <th className="text-center py-3 px-4 text-sm font-medium text-gray-500 dark:text-brand-muted">Occupancy Trend</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {zoneAnalysis.map((zone, index) => (
-                                            <tr key={index} className="border-b border-zinc-100 dark:border-zinc-700/50 hover:bg-zinc-50 dark:hover:bg-zinc-700/30 transition-colors">
-                                                <td className="py-3 px-4 text-sm font-medium text-zinc-900 dark:text-zinc-100">{zone.zone}</td>
+                                            <tr key={index} className="border-b border-gray-100 dark:border-brand-border/50 hover:bg-gray-50 dark:hover:bg-brand-bg/30 transition-colors">
+                                                <td className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-brand-text">{zone.zone}</td>
                                                 <td className="py-3 px-4 text-center">
                                                     <span className="text-sm text-brand-muted dark:text-brand-text">{zone.avgOccupancy}%</span>
                                                 </td>
@@ -425,7 +425,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                                     </span>
                                                 </td>
                                                 <td className="py-3 px-4">
-                                                    <div className="w-full bg-zinc-200 dark:bg-zinc-600 rounded-full h-2">
+                                                    <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
                                                         <div
                                                             className={`h-2 rounded-full ${zone.avgOccupancy > 70 ? 'bg-red-500' :
                                                                 zone.avgOccupancy > 50 ? 'bg-amber-500' : 'bg-brand-red'
@@ -442,8 +442,8 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         </div>
 
                         {/* AI Predictions */}
-                        <div className="col-span-6 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
-                            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+                        <div className="col-span-6 bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text mb-4 flex items-center gap-2">
                                 <Zap className="w-5 h-5 text-amber-500" />
                                 AI Predictions
                             </h3>
@@ -473,8 +473,8 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                         </div>
 
                         {/* Anomaly Detection */}
-                        <div className="col-span-6 bg-white dark:bg-zinc-800 rounded-xl p-6 border border-zinc-200 dark:border-zinc-700">
-                            <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4 flex items-center gap-2">
+                        <div className="col-span-6 bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text mb-4 flex items-center gap-2">
                                 <AlertTriangle className="w-5 h-5 text-red-500" />
                                 Anomaly Detection
                             </h3>
@@ -482,7 +482,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="text-sm font-medium text-red-700 dark:text-red-300">Unusual Gathering - Zone B</span>
-                                        <span className="text-xs text-zinc-500 dark:text-zinc-400">12:34 PM</span>
+                                        <span className="text-xs text-gray-500 dark:text-brand-muted">12:34 PM</span>
                                     </div>
                                     <p className="text-xs text-red-600 dark:text-red-400/80">Detected 40% higher than normal crowd density in Zone B.</p>
                                     <div className="mt-2 flex gap-2">
@@ -492,7 +492,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="text-sm font-medium text-amber-700 dark:text-amber-300">Flow Disruption - Entry Gate</span>
-                                        <span className="text-xs text-zinc-500 dark:text-zinc-400">11:15 AM</span>
+                                        <span className="text-xs text-gray-500 dark:text-brand-muted">11:15 AM</span>
                                     </div>
                                     <p className="text-xs text-amber-600 dark:text-amber-400/80">Entry rate dropped by 60% for 5 minutes.</p>
                                     <div className="mt-2 flex gap-2">
@@ -502,7 +502,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                 <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
                                     <div className="flex items-center justify-between mb-2">
                                         <span className="text-sm font-medium text-purple-700 dark:text-purple-300">Unusual Movement Pattern</span>
-                                        <span className="text-xs text-zinc-500 dark:text-zinc-400">10:45 AM</span>
+                                        <span className="text-xs text-gray-500 dark:text-brand-muted">10:45 AM</span>
                                     </div>
                                     <p className="text-xs text-purple-600 dark:text-purple-400/80">Detected counter-flow movement in Main Plaza.</p>
                                     <div className="mt-2 flex gap-2">
@@ -515,12 +515,12 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 </main>
 
                 {/* Footer Status */}
-                <footer className="bg-white dark:bg-zinc-800 border-t border-zinc-200 dark:border-zinc-700 px-6 py-3 flex items-center justify-between transition-colors duration-200">
+                <footer className="bg-white dark:bg-brand-card border-t border-gray-200 dark:border-brand-border px-6 py-3 flex items-center justify-between transition-colors duration-200">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse"></div>
                         <span className="text-xs font-medium text-brand-muted dark:text-brand-text">Analytics Engine Active</span>
                     </div>
-                    <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="text-xs text-gray-500 dark:text-brand-muted">
                         Last updated: {lastUpdated || '--:--:--'}
                     </div>
                 </footer>
@@ -528,6 +528,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 
 
