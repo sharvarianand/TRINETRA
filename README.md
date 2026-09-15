@@ -41,6 +41,28 @@ The platform ingests live video streams from standard IP-based CCTV cameras and 
 - 🌙 **Night-Time Vision Enhancement**: Automatically applies CLAHE (Contrast Limited Adaptive Histogram Equalization) during night hours for low-light conditions.
 - 🚨 **Real-Time Alerts & Event Logging**: Instant tactical alerts pushed to the Command Center via WebSocket and WhatsApp.
 
+
+
+## 💻 Technical Architecture & Stack
+
+### Edge AI Analytics (Backend)
+- **Core Engine:** Python 3.13, FastAPI, Uvicorn
+- **Computer Vision:** Ultralytics YOLOv8 (Tracking & Detection), OpenCV, PyTorch
+- **OCR Engine:** EasyOCR (for ANPR / License Plate reading)
+- **Face Recognition:** Local Histogram Correlation algorithms for offline watchlist matching
+- **Communication:** WebSockets, Twilio API (SOS WhatsApp/SMS Alerts)
+
+### Command Center (Frontend)
+- **Framework:** Next.js 14 (App Router), React 18
+- **Styling:** Tailwind CSS (Custom Military Tactical Theme)
+- **Icons & UI:** Lucide React, Radix UI primitives
+
+### Cybersecurity & Blockchain (Hackathon Theme)
+- **Authentication:** Supabase Auth (Email/Password & OTP)
+- **Route Protection:** Next.js Edge Middleware with JWT verification
+- **Data Security:** AES-256 encrypted session cookies and environment-level isolation
+- **Blockchain Ledger:** Cryptographic SHA-256 Hash Chaining. Every incident alert is uniquely hashed with the previous event's signature, creating a tamper-evident, immutable audit trail that prevents log manipulation by internal or external threats.
+
 ---
 
 ## 🌟 The "X-Factor" Features
@@ -56,6 +78,28 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 3. **Military-Grade Tactical UI**
    A specialized dark-mode Command Center dashboard utilizing cyan/red color coding, reducing eye strain for night-shift operators while highlighting high-priority threats immediately.
 
+
+
+## 💻 Technical Architecture & Stack
+
+### Edge AI Analytics (Backend)
+- **Core Engine:** Python 3.13, FastAPI, Uvicorn
+- **Computer Vision:** Ultralytics YOLOv8 (Tracking & Detection), OpenCV, PyTorch
+- **OCR Engine:** EasyOCR (for ANPR / License Plate reading)
+- **Face Recognition:** Local Histogram Correlation algorithms for offline watchlist matching
+- **Communication:** WebSockets, Twilio API (SOS WhatsApp/SMS Alerts)
+
+### Command Center (Frontend)
+- **Framework:** Next.js 14 (App Router), React 18
+- **Styling:** Tailwind CSS (Custom Military Tactical Theme)
+- **Icons & UI:** Lucide React, Radix UI primitives
+
+### Cybersecurity & Blockchain (Hackathon Theme)
+- **Authentication:** Supabase Auth (Email/Password & OTP)
+- **Route Protection:** Next.js Edge Middleware with JWT verification
+- **Data Security:** AES-256 encrypted session cookies and environment-level isolation
+- **Blockchain Ledger:** Cryptographic SHA-256 Hash Chaining. Every incident alert is uniquely hashed with the previous event's signature, creating a tamper-evident, immutable audit trail that prevents log manipulation by internal or external threats.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -64,6 +108,28 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 - **AI Analytics Engine (Backend)**: FastAPI, Python, YOLOv8, OpenCV, EasyOCR
 - **Authentication**: Supabase Auth (Secure JWT)
 - **Database**: Supabase PostgreSQL (Cloud) / Local JSON (Edge)
+
+
+
+## 💻 Technical Architecture & Stack
+
+### Edge AI Analytics (Backend)
+- **Core Engine:** Python 3.13, FastAPI, Uvicorn
+- **Computer Vision:** Ultralytics YOLOv8 (Tracking & Detection), OpenCV, PyTorch
+- **OCR Engine:** EasyOCR (for ANPR / License Plate reading)
+- **Face Recognition:** Local Histogram Correlation algorithms for offline watchlist matching
+- **Communication:** WebSockets, Twilio API (SOS WhatsApp/SMS Alerts)
+
+### Command Center (Frontend)
+- **Framework:** Next.js 14 (App Router), React 18
+- **Styling:** Tailwind CSS (Custom Military Tactical Theme)
+- **Icons & UI:** Lucide React, Radix UI primitives
+
+### Cybersecurity & Blockchain (Hackathon Theme)
+- **Authentication:** Supabase Auth (Email/Password & OTP)
+- **Route Protection:** Next.js Edge Middleware with JWT verification
+- **Data Security:** AES-256 encrypted session cookies and environment-level isolation
+- **Blockchain Ledger:** Cryptographic SHA-256 Hash Chaining. Every incident alert is uniquely hashed with the previous event's signature, creating a tamper-evident, immutable audit trail that prevents log manipulation by internal or external threats.
 
 ---
 
@@ -115,6 +181,7 @@ python -m uvicorn yolo_bounding_boxes:app --host 0.0.0.0 --port 8000
 ```
 
 Access the Command Center at `http://localhost:3000`
+
 
 
 
