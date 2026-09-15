@@ -1,16 +1,24 @@
 <div align="center">
-  <img src="./app/icon.svg" width="120" alt="TRINETRA Logo" />
+  <br />
+  <img src="./app/icon.svg" width="160" alt="TRINETRA Logo" />
+  <br />
+  <br />
+  
+  <h1 style="border-bottom: none; margin-bottom: 0;"><b>T R I N E T R A</b></h1>
+  
+  <p>
+    <b>Intelligent Border Video Analytics Platform</b> <br />
+    <i>Developed for the Ministry of Home Affairs, Sashastra Seema Bal (SSB), Police II Division</i>
+  </p>
+
+  <p>
+    <img src="https://img.shields.io/badge/Category-Software-06b6d4?style=for-the-badge" alt="Software" />
+    <img src="https://img.shields.io/badge/Theme-Cybersecurity_&_Blockchain-ff5258?style=for-the-badge" alt="Cybersecurity" />
+    <img src="https://img.shields.io/badge/Build-Prototype_Ready-10b981?style=for-the-badge" alt="Prototype Ready" />
+  </p>
 </div>
 
-# TRINETRA 🛡️
-**Intelligent Border Video Analytics Platform**
-
-*Developed for the Ministry of Home Affairs, Sashastra Seema Bal (SSB), Police II Division.*
-
-**Category:** Software | **Theme:** Blockchain & Cybersecurity
-
----
-
+<br />
 ## 📖 Background
 
 Border security forces deploy CCTV cameras at Border Out Posts (BOPs), check posts, border roads, and other strategic locations for surveillance and monitoring. However, conventional CCTV systems primarily provide video recording and live monitoring capabilities, requiring continuous human observation. 
@@ -107,4 +115,6 @@ python -m uvicorn yolo_bounding_boxes:app --host 0.0.0.0 --port 8000
 ```
 
 Access the Command Center at `http://localhost:3000`
+
+
 
