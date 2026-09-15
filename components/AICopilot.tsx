@@ -122,13 +122,13 @@ export default function AICopilot() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={ixed bottom-6 right-6 p-4 rounded-full bg-brand-red text-white shadow-[0_0_20px_rgba(239,51,72,0.4)] hover:bg-brand-red-dark transition-all transform hover:scale-110 z-40 flex items-center justify-center }
+        className={`fixed bottom-6 right-6 p-4 rounded-full bg-brand-red text-white shadow-[0_0_20px_rgba(239,51,72,0.4)] hover:bg-brand-red-dark transition-all transform hover:scale-110 z-40 flex items-center justify-center ${isOpen ? 'scale-0 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}
         title="Ask TRINETRA AI"
       >
         <Sparkles className="w-6 h-6" />
       </button>
 
-      <div className={ixed bottom-6 right-6 w-[360px] sm:w-[400px] h-[550px] max-h-[85vh] bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border rounded-2xl shadow-2xl flex flex-col z-50 transition-all duration-300 transform origin-bottom-right }>
+      <div className={`fixed bottom-6 right-6 w-[360px] sm:w-[400px] h-[550px] max-h-[85vh] bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border rounded-2xl shadow-2xl flex flex-col z-50 transition-all duration-300 transform origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'}`}>
         
         <div className="p-4 border-b border-gray-100 dark:border-brand-border bg-gradient-to-r from-brand-red to-brand-red-dark rounded-t-2xl flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
@@ -154,11 +154,11 @@ export default function AICopilot() {
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-brand-bg/50 relative">
           {messages.map(msg => (
-            <div key={msg.id} className={lex gap-3 }>
-              <div className={w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center }>
+            <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+              <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${msg.role === 'user' ? 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300' : 'bg-brand-red/10 text-brand-red border border-brand-red/20'}`}>
                 {msg.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
               </div>
-              <div className={max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed }>
+              <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'bg-brand-red text-white rounded-tr-sm' : 'bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border text-gray-800 dark:text-brand-text rounded-tl-sm shadow-sm'}`}>
                 {msg.content}
               </div>
             </div>
