@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Network, Search, Crosshair, Radio, ScanLine, ShieldAlert, User, Car, Users, Type, Map, Clock, Moon, Bell, Lock, WifiOff, Database, Video } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, Twitter, ArrowRight, Network, Search, Crosshair, Radio, ScanLine, ShieldAlert, User, Car, Users, Type, Map, Clock, Moon, Bell, Lock, WifiOff, Database, Video } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 export default function LandingPage() {
@@ -59,7 +59,7 @@ export default function LandingPage() {
   }, [allFeatures.length]);
   
   return (
-    <div className="bg-[#020202] text-zinc-100 font-sans"><main className="relative z-10 w-full min-h-screen bg-black flex flex-col mb-[300px] border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[#ff5258] selection:text-black">
+    <div className="bg-[#020202] text-zinc-100 font-sans"><main className="relative z-10 w-full min-h-screen bg-black flex flex-col mb-[550px] border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[#ff5258] selection:text-black">
       
       <style>{`
         @keyframes tracking {
@@ -186,8 +186,8 @@ export default function LandingPage() {
                     key={i} 
                     className={`absolute inset-0 w-full transition-all duration-700 ease-in-out ${isActive ? 'opacity-100 translate-y-0 pointer-events-auto' : isPast ? 'opacity-0 -translate-y-12 pointer-events-none' : 'opacity-0 translate-y-12 pointer-events-none'}`}
                   >
-                    <div className={`w-full h-full p-10 md:p-12 rounded-3xl border ${f.isXFactor ? 'border-[#ff5258]/40 bg-[#0a0203]' : 'border-white/10 bg-[#050505]'} shadow-2xl backdrop-blur-xl flex flex-col justify-center`}>
-                      <div className={`flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-[#ff5258]/15 text-[#ff5258] border border-[#ff5258]/20${f.isXFactor ? 'bg-[#ff5258]/20 text-[#ff5258]' : 'bg-zinc-900 border border-zinc-800 text-white'}`}>
+                    <div className="w-full h-full p-10 md:p-12 rounded-3xl border border-[#ff5258]/30 bg-[#0a0203] shadow-[0_0_50px_rgba(255,82,88,0.04)] backdrop-blur-xl flex flex-col justify-center">
+                      <div className="flex items-center justify-center w-14 h-14 rounded-2xl mb-8 bg-[#ff5258]/15 text-[#ff5258] border border-[#ff5258]/20">
                         <Icon className="w-7 h-7" />
                       </div>
                       <h3 className="text-3xl font-bold text-white tracking-wide mb-4">{f.title}</h3>
@@ -204,22 +204,70 @@ export default function LandingPage() {
 
       </main>
 
-      {/* Cinematic Reveal Footer */}
-      <footer className="fixed bottom-0 left-0 w-full h-[300px] z-0 bg-[#020202] flex flex-col items-center justify-center">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,82,88,0.03),transparent_70%)] pointer-events-none" />
-        <div className="w-full max-w-7xl px-6 flex flex-col items-center justify-center gap-10">
-          <div className="opacity-70 hover:opacity-100 transition-opacity scale-125 cursor-default">
-            <Logo size="sm" showText={true} />
-          </div>
-          <div className="text-center text-[10px] font-mono tracking-[0.2em] text-zinc-500">
-            <p className="mb-2 text-zinc-400">DEVELOPED FOR MHA & SSB HACKATHON</p>
-            <p className="opacity-50">© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
-          </div>
-        </div>
+            {/* Cinematic Reveal Footer (Rich Layout) */}
+      <footer className="fixed bottom-0 left-0 w-full h-[550px] z-0 bg-[#020202] flex flex-col justify-end pb-8 overflow-hidden">
+         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(255,82,88,0.05),transparent_60%)] pointer-events-none" />
+         
+         <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 relative z-10">
+            <div>
+              <Logo size="sm" showText={true} />
+              <p className="mt-4 text-zinc-500 text-sm leading-relaxed">
+                TRINETRA is a modern AI-based intelligent video analytics platform designed for the MHA & SSB border surveillance hackathon.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-white text-lg font-bold mb-6 font-sans">Platform</h4>
+              <ul className="space-y-3 text-sm text-zinc-400">
+                <li><a href="#overview" className="hover:text-[#ff5258] transition-colors">Overview</a></li>
+                <li><a href="#features" className="hover:text-[#ff5258] transition-colors">Core Capabilities</a></li>
+                <li><a href="/dashboard" className="hover:text-[#ff5258] transition-colors">Command Center</a></li>
+                <li className="relative inline-block">
+                  <a href="/tour" className="hover:text-[#ff5258] transition-colors">Interactive Tour</a>
+                  <span className="absolute top-1 right-[-12px] w-1.5 h-1.5 rounded-full bg-[#ff5258] animate-pulse"></span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white text-lg font-bold mb-6 font-sans">Resources</h4>
+              <ul className="space-y-3 text-sm text-zinc-400">
+                <li><a href="#" className="hover:text-[#ff5258] transition-colors">Architecture Diagram</a></li>
+                <li><a href="#" className="hover:text-[#ff5258] transition-colors">API Documentation</a></li>
+                <li><a href="#" className="hover:text-[#ff5258] transition-colors">Security Whitepaper</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white text-lg font-bold mb-6 font-sans">Contact HQ</h4>
+              <ul className="space-y-4 text-sm text-zinc-400">
+                <li className="flex items-center space-x-3"><Mail size={16} className="text-[#ff5258]" /><span>command@trinetra.mil</span></li>
+                <li className="flex items-center space-x-3"><Phone size={16} className="text-[#ff5258]" /><span>+91 SECURE LINE</span></li>
+                <li className="flex items-center space-x-3"><MapPin size={16} className="text-[#ff5258]" /><span>New Delhi, India</span></li>
+              </ul>
+            </div>
+         </div>
+         
+         <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
+           <hr className="border-t border-white/5 mb-6" />
+           <div className="flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-zinc-600">
+             <div className="flex space-x-6 mb-4 md:mb-0">
+               <a href="#" className="hover:text-[#ff5258] transition-colors"><Globe size={18} /></a>
+               <a href="#" className="hover:text-[#ff5258] transition-colors"><Twitter size={18} /></a>
+             </div>
+             <p>© 2026 TRINETRA SYSTEMS. ALL RIGHTS RESERVED.</p>
+           </div>
+         </div>
+
+         {/* Giant Background Text Effect */}
+         <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-full text-center pointer-events-none opacity-[0.03]">
+           <h1 className="text-[22vw] font-black text-white whitespace-nowrap tracking-tighter select-none">TRINETRA</h1>
+         </div>
       </footer>
     </div>
   );
 }
+
 
 
 
