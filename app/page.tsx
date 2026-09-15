@@ -59,7 +59,7 @@ export default function LandingPage() {
   }, [allFeatures.length]);
   
   return (
-    <div className="bg-brand-bg text-brand-text font-sans"><main className="relative z-10 w-full min-h-screen bg-brand-bg flex flex-col mb-[550px] border-b border-brand-border shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-[brand-red] selection:text-black">
+    <div className="bg-brand-bg text-brand-text font-sans"><main className="relative z-10 w-full min-h-screen bg-brand-bg flex flex-col mb-[550px] border-b border-brand-border shadow-[0_30px_60px_rgba(0,0,0,1)] rounded-b-[40px] selection:bg-brand-red selection:text-black">
       
       <style>{`
         @keyframes tracking {
@@ -283,6 +283,7 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
 
 
