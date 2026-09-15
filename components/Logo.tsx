@@ -21,7 +21,7 @@ export default function Logo({ size = 'md', showText = true, className = '', var
   return (
     <div className={`flex items-center gap-3 ${className}`}>
       {/* TRINETRA Eye (Ashoka Chakra Pupil) - Matched to ChainSentinel Theme */}
-      <div className={`${s.icon} rounded-md bg-brand-card/80 border border-brand-red/40 flex items-center justify-center shadow-[0_0_15px_var(--color-brand-red-glow)] relative overflow-hidden`}>
+      <div className={`${s.icon} rounded-md bg-gray-900 dark:bg-brand-card/80 border border-brand-red/40 flex items-center justify-center shadow-[0_0_10px_rgba(239,51,72,0.3)] relative overflow-hidden`}>
         
         {/* Main Logo SVG */}
         <svg 
@@ -33,30 +33,30 @@ export default function Logo({ size = 'md', showText = true, className = '', var
           <circle cx="24" cy="24" r="20" stroke="var(--color-brand-red)" strokeWidth="1" strokeDasharray="3 5" opacity="0.4" />
           
           {/* Cyber Eye Shape (TRINETRA) */}
-          <path d="M 4 24 Q 24 8 44 24 Q 24 40 4 24 Z" stroke="var(--color-brand-text)" strokeWidth="2.5" fill="var(--color-brand-red-glow)" fillOpacity="0.08" />
+          <path d="M 4 24 Q 24 8 44 24 Q 24 40 4 24 Z" stroke="white" strokeWidth="2.5" fill="var(--color-brand-red-glow)" fillOpacity="0.08" />
           
-          {/* Inner Iris boundary (Red accent to match the app's alerts) */}
+          {/* Inner Iris boundary */}
           <circle cx="24" cy="24" r="9" stroke="var(--color-brand-red)" strokeWidth="1.5" opacity="0.7" />
           
-          {/* Ashoka Chakra (24 Spokes simulated with strokeDasharray) - Flag Element */}
-          <circle cx="24" cy="24" r="5" stroke="var(--color-brand-text)" strokeWidth="2" strokeDasharray="0.8 1.1" />
+          {/* Ashoka Chakra */}
+          <circle cx="24" cy="24" r="5" stroke="white" strokeWidth="2" strokeDasharray="0.8 1.1" />
           
           {/* Center Bindu/Pupil */}
           <circle cx="24" cy="24" r="2.5" fill="var(--color-brand-red-glow)" className="animate-pulse" />
           
           {/* Crosshair accents */}
-          <path d="M24 10v3 M24 35v3 M10 24h3 M35 24h3" stroke="var(--color-brand-text)" strokeWidth="1.5" opacity="0.6" />
+          <path d="M24 10v3 M24 35v3 M10 24h3 M35 24h3" stroke="white" strokeWidth="1.5" opacity="0.6" />
         </svg>
       </div>
       
       {/* Text */}
       {showText && (
         <div className="flex flex-col">
-          <span className={`${s.text} font-mono font-bold tracking-[0.2em] text-brand-text`}>
+          <span className={`${s.text} font-mono font-bold tracking-[0.2em] text-gray-900 dark:text-brand-text`}>
             TRINETRA
           </span>
           {size === 'lg' && (
-            <span className="text-[0.6rem] text-brand-muted font-mono font-bold tracking-widest uppercase mt-0.5">
+            <span className="text-[0.6rem] text-gray-500 dark:text-brand-muted font-mono font-bold tracking-widest uppercase mt-0.5">
               Border Surveillance Node
             </span>
           )}
