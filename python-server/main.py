@@ -75,7 +75,7 @@ def get_camera():
         if camera_capture is not None:
             camera_capture.release()
             
-        camera_capture = cv2.VideoCapture(target_url)
+        camera_capture = cv2.VideoCapture(int(target_url) if str(target_url).isdigit() else target_url)
         current_camera_url = target_url
         
         if not camera_capture.isOpened():
@@ -373,17 +373,29 @@ def get_global_analytics():
 
 @app.get("/settings")
 def get_settings():
-    return JSONResponse(content={
-        "alertThreshold": 80,
-        "autoRefreshInterval": 3000,
-        "nightVisionEnabled": True,
-        "virtualFenceEnabled": True,
-        "anprEnabled": True,
-        "faceRecognitionEnabled": True,
-        "notificationsEnabled": True,
-        "retentionDays": 30
-    })
+    path = Path(__file__).parent / "settings.json"
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except:
+        return {
+            "lowBandwidthMode": False,
+            "privacyMaskingEnabled": False,
+            "autoRefreshInterval": 2000,
+            "showDensityOverlay": True,
+            "alertSoundEnabled": True
+        }
+
+@app.put("/settings")
+async def update_settings(settings: dict):
+    path = Path(__file__).parent / "settings.json"
+    with open(path, "w") as f:
+        json.dump(settings, f, indent=4)
+    return {"status": "success"}
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+
