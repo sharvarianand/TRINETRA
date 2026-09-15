@@ -1,9 +1,12 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+
 import ReportsPage from '@/components/ReportsPage';
-import { SignInButton } from '@clerk/nextjs';
+
 
 export default async function Reports() {
-    const clerkUser = await currentUser();
+    const supabase = await createClient();
+    const { data: { user: clerkUser } } = await supabase.auth.getUser();
 
     if (!clerkUser) {
         return (
@@ -30,3 +33,4 @@ export default async function Reports() {
 
     return <ReportsPage user={user} />;
 }
+

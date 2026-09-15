@@ -1,9 +1,12 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
+
 import SettingsPage from '@/components/SettingsPage';
-import { SignInButton } from '@clerk/nextjs';
+
 
 export default async function Settings() {
-    const clerkUser = await currentUser();
+    const supabase = await createClient();
+    const { data: { user: clerkUser } } = await supabase.auth.getUser();
 
     if (!clerkUser) {
         return (
@@ -30,3 +33,4 @@ export default async function Settings() {
 
     return <SettingsPage user={user} />;
 }
+

@@ -1,3 +1,5 @@
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -220,3 +222,4 @@ export default function WatchlistPage() {
     </div>
   );
 }
+
