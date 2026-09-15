@@ -235,6 +235,82 @@ async def upload_video(camera_id: str = Form(...), file: UploadFile = File(...))
     with open(file_path, "wb") as buffer: shutil.copyfileobj(file.file, buffer)
     return {"status": "success", "url": file_path}
 
+
+os.makedirs("watchlist_faces", exist_ok=True)
+
+def load_json_file(filename, default_key):
+    path = Path(__file__).parent / filename
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except:
+        return {default_key: []}
+
+def save_json_file(filename, data):
+    path = Path(__file__).parent / filename
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+@app.get("/watchlist/faces")
+def get_watchlist_faces():
+    return load_json_file("watchlist_faces.json", "faces")
+
+@app.post("/watchlist/faces")
+async def add_watchlist_face(name: str = Form(...), threat_level: str = Form(...), file: UploadFile = File(...)):
+    faces_data = load_json_file("watchlist_faces.json", "faces")
+    
+    face_id = str(int(time.time()))
+    safe_filename = f"{face_id}_{file.filename}"
+    file_path = os.path.join("watchlist_faces", safe_filename)
+    
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+        
+    faces_data["faces"].append({
+        "id": face_id,
+        "name": name,
+        "threat_level": threat_level,
+        "image": file_path,
+        "added_at": time.strftime("%Y-%m-%d %H:%M:%S")
+    })
+    save_json_file("watchlist_faces.json", faces_data)
+    
+    return {"status": "success"}
+
+@app.delete("/watchlist/faces/{face_id}")
+def delete_watchlist_face(face_id: str):
+    faces_data = load_json_file("watchlist_faces.json", "faces")
+    faces_data["faces"] = [f for f in faces_data["faces"] if f["id"] != face_id]
+    save_json_file("watchlist_faces.json", faces_data)
+    return {"status": "success"}
+
+class PlateConfig(BaseModel):
+    plate: str
+    reason: str
+
+@app.get("/watchlist/plates")
+def get_watchlist_plates():
+    return load_json_file("watchlist_plates.json", "plates")
+
+@app.post("/watchlist/plates")
+def add_watchlist_plate(plate: PlateConfig):
+    plates_data = load_json_file("watchlist_plates.json", "plates")
+    plates_data["plates"].append({
+        "plate": plate.plate,
+        "reason": plate.reason,
+        "added_at": time.strftime("%Y-%m-%d %H:%M:%S")
+    })
+    save_json_file("watchlist_plates.json", plates_data)
+    return {"status": "success"}
+
+@app.delete("/watchlist/plates/{plate_id}")
+def delete_watchlist_plate(plate_id: str):
+    plates_data = load_json_file("watchlist_plates.json", "plates")
+    plates_data["plates"] = [p for p in plates_data["plates"] if p["plate"] != plate_id]
+    save_json_file("watchlist_plates.json", plates_data)
+    return {"status": "success"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
