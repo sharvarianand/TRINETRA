@@ -4,14 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import FloatingEmergencyButton from '@/components/FloatingEmergencyButton';
 
-interface GlobalClientComponentsProps {
-    children: React.ReactNode;
-}
-
 // Pages where the emergency button should appear (protected routes after login)
 const protectedPaths = ['/dashboard', '/settings', '/heatmap', '/analysis', '/reports'];
 
-export default function GlobalClientComponents({ children }: GlobalClientComponentsProps) {
+export default function GlobalClientComponents() {
     const pathname = usePathname();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -27,7 +23,6 @@ export default function GlobalClientComponents({ children }: GlobalClientCompone
 
     return (
         <>
-            {children}
             {showEmergencyButton && (
                 <FloatingEmergencyButton
                     baseUrl="http://localhost:8000"
