@@ -20,7 +20,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-os.makedirs("uploads", exist_ok=True)
+UPLOAD_DIR = Path(__file__).parent / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 camera_capture = None
 yolo_model = None
@@ -53,23 +54,31 @@ def load_cameras():
         print(f"Error loading cameras.json: {e}")
         return {"cameras": []}
 
+current_camera_url = None
+
 def get_camera():
-    global camera_capture
-    if camera_capture is None or not camera_capture.isOpened():
-        cameras = load_cameras()
-        camera_url = "http://10.180.217.71:4747/video"
-        
-        for cam in cameras.get("cameras", []):
-            if cam.get("enabled") and cam.get("url"):
-                camera_url = cam["url"]
-                break
-        
-        print(f"Attempting to connect to: {camera_url}")
-        camera_capture = cv2.VideoCapture(camera_url)
+    global camera_capture, current_camera_url
+    
+    cameras = load_cameras()
+    target_url = "http://10.180.217.71:4747/video"
+    
+    for cam in cameras.get("cameras", []):
+        if cam.get("enabled") and cam.get("url"):
+            target_url = cam["url"]
+            break
+            
+    if camera_capture is None or not camera_capture.isOpened() or current_camera_url != target_url:
+        print(f"Switching camera to: {target_url}")
+        if camera_capture is not None:
+            camera_capture.release()
+            
+        camera_capture = cv2.VideoCapture(target_url)
+        current_camera_url = target_url
         
         if not camera_capture.isOpened():
             print("Failed, trying webcam (index 0)...")
             camera_capture = cv2.VideoCapture(0)
+            current_camera_url = 0
             
     return camera_capture
 
@@ -231,7 +240,7 @@ def delete_camera(camera_id: str):
 async def upload_video(camera_id: str = Form(...), file: UploadFile = File(...)):
     file_extension = file.filename.split(".")[-1]
     safe_filename = f"{camera_id}.{file_extension}"
-    file_path = os.path.join("uploads", safe_filename)
+    file_path = str(UPLOAD_DIR / safe_filename)
     with open(file_path, "wb") as buffer: shutil.copyfileobj(file.file, buffer)
     return {"status": "success", "url": file_path}
 
@@ -310,7 +319,47 @@ def delete_watchlist_plate(plate_id: str):
     save_json_file("watchlist_plates.json", plates_data)
     return {"status": "success"}
 
+
+@app.get("/analytics/global")
+def get_global_analytics():
+    cameras_data = load_cameras()
+    active_cameras = len([c for c in cameras_data.get("cameras", []) if c.get("enabled")])
+    
+    count = latest_coordinates.get("count", 0)
+    density = latest_coordinates.get("density", 0)
+    
+    hourly_history = [
+        12, 18, 9, 5, 7, 14, 35, 67, 82, 95, 88, 102,
+        115, 108, 98, 110, 121, 134, 118, 95, 76, 54, 38, 22
+    ]
+    
+    return JSONResponse(content={
+        "total_visitors": sum(hourly_history),
+        "current_count": count,
+        "peak_hour": "13:00",
+        "peak_count": max(hourly_history),
+        "hourly_history": hourly_history,
+        "active_cameras": active_cameras,
+        "density": density,
+        "recent_alerts": []
+    })
+
+@app.get("/settings")
+def get_settings():
+    return JSONResponse(content={
+        "alertThreshold": 80,
+        "autoRefreshInterval": 3000,
+        "nightVisionEnabled": True,
+        "virtualFenceEnabled": True,
+        "anprEnabled": True,
+        "faceRecognitionEnabled": True,
+        "notificationsEnabled": True,
+        "retentionDays": 30
+    })
+
 if __name__ == "__main__":
+
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 

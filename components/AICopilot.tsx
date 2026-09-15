@@ -23,110 +23,125 @@ const TacticalBotIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const SYSTEM_PROMPT = `You are TRINETRA AI, a military-grade surveillance intelligence assistant for the IBVAP (Intelligent Border Video Analytics Platform) deployed by the Sashastra Seema Bal (SSB) under India's Ministry of Home Affairs.
+
+You assist border security operators with:
+- Answering questions about detected human and vehicle activity
+- Explaining surveillance features (ANPR, Face Detection, Virtual Fence, Night Vision)
+- Navigating the dashboard (settings, heatmap, reports, watchlist, analysis)
+- Interpreting alerts and threat levels
+- General questions about the IBVAP platform and border security operations
+
+You speak in a concise, tactical, professional tone. You refer to the user as "Operator". Keep responses under 3 sentences unless detail is required. When navigating, tell the user you are routing them. Never reveal you are powered by a third-party LLM.`;
+
 export default function AICopilot() {
   const router = useRouter();
   const supabase = createClient();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      role: 'assistant',
-      content: 'I am your TRINETRA AI Assistant. I can analyze camera feeds, query the database for past incidents, and navigate the system for you. Try asking: "What time was the last person detected?" or "Go to settings".',
-      timestamp: new Date()
-    }
-  ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '1',
+      role: 'assistant',
+      content: 'TRINETRA AI online. I am your surveillance intelligence agent. Ask me about detected activity, alerts, or say "go to settings" to navigate the dashboard.',
+      timestamp: new Date(),
+    },
+  ]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping, isOpen]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
+
+  // Check for navigation intent client-side before calling API
+  const checkNavigation = (q: string): string | null => {
+    const lower = q.toLowerCase();
+    if ((lower.includes('go to') || lower.includes('open') || lower.includes('navigate') || lower.includes('take me')) ) {
+      if (lower.includes('setting') || lower.includes('control')) { setTimeout(() => router.push('/settings'), 800); return 'Routing you to System Control...'; }
+      if (lower.includes('map') || lower.includes('sector') || lower.includes('heat')) { setTimeout(() => router.push('/heatmap'), 800); return 'Routing you to the Sector Threat Map...'; }
+      if (lower.includes('report') || lower.includes('log') || lower.includes('incident')) { setTimeout(() => router.push('/reports'), 800); return 'Routing you to Incident Logs...'; }
+      if (lower.includes('watch') || lower.includes('suspect') || lower.includes('hotlist')) { setTimeout(() => router.push('/watchlist'), 800); return 'Routing you to the Suspect Watchlist...'; }
+      if (lower.includes('analys')) { setTimeout(() => router.push('/analysis'), 800); return 'Routing you to the Analytics module...'; }
+      if (lower.includes('blockchain') || lower.includes('ledger')) { setTimeout(() => router.push('/blockchain'), 800); return 'Routing you to the Blockchain Audit Ledger...'; }
+      if (lower.includes('dashboard') || lower.includes('home')) { setTimeout(() => router.push('/dashboard'), 800); return 'Routing you to the main Command Dashboard...'; }
+    }
+    return null;
+  };
+
+  const callOpenRouter = async (userMessage: string): Promise<string> => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+    if (!apiKey || apiKey === 'your-openrouter-api-key-here') {
+      return 'OpenRouter API key is not configured. Please add your NEXT_PUBLIC_OPENROUTER_API_KEY to .env.local to enable AI responses.';
+    }
+
+    // Build conversation history for context
+    const history = messages.slice(-8).map(m => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'http://localhost:3000',
+        'X-Title': 'TRINETRA IBVAP',
+      },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...history,
+          { role: 'user', content: userMessage },
+        ],
+        max_tokens: 300,
+        temperature: 0.7,
+      }),
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err?.error?.message || `OpenRouter error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || 'No response received.';
+  };
 
   const handleSend = async () => {
-    if (!input.trim()) return;
-    
-    const query = input;
+    const query = input.trim();
+    if (!query || isTyping) return;
+
     const userMsg: Message = {
       id: Date.now().toString(),
       role: 'user',
       content: query,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
-    
+
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
-    
-    // Simulate slight processing delay for natural feel
-    setTimeout(async () => {
-      const aiResponse = await processQuery(query);
-      const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: aiResponse,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, aiMsg]);
-      setIsTyping(false);
-    }, 800);
-  };
 
-  const processQuery = async (query: string): Promise<string> => {
-    const q = query.toLowerCase();
-    
-    // 1. ACTION AGENT (Navigation)
-    if (q.includes('navigate') || q.includes('go to') || q.includes('open') || q.includes('take me')) {
-      if (q.includes('setting') || q.includes('control')) {
-        setTimeout(() => router.push('/settings'), 1000);
-        return "Executing command: Navigating to System Control settings...";
+    try {
+      // Fast-path: check navigation locally without burning API tokens
+      const navResponse = checkNavigation(query);
+      if (navResponse) {
+        setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: navResponse, timestamp: new Date() }]);
+        setIsTyping(false);
+        return;
       }
-      if (q.includes('map') || q.includes('sector')) {
-        setTimeout(() => router.push('/heatmap'), 1000);
-        return "Executing command: Opening the Sector Map...";
-      }
-      if (q.includes('report') || q.includes('log')) {
-        setTimeout(() => router.push('/reports'), 1000);
-        return "Executing command: Accessing Incident Logs...";
-      }
-      if (q.includes('watch') || q.includes('suspect')) {
-        setTimeout(() => router.push('/watchlist'), 1000);
-        return "Executing command: Loading Suspect Watchlist...";
-      }
+
+      // Full LLM call via OpenRouter
+      const aiText = await callOpenRouter(query);
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: aiText, timestamp: new Date() }]);
+    } catch (err: any) {
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: `System error: ${err.message}`, timestamp: new Date() }]);
+    } finally {
+      setIsTyping(false);
     }
-    
-    // 2. DATA QUERY AGENT (Supabase DB)
-    if (q.includes('person') || q.includes('detected') || q.includes('time') || q.includes('when') || q.includes('last')) {
-      try {
-        const { data, error } = await supabase
-          .from('alerts')
-          .select('*')
-          .order('timestamp', { ascending: false })
-          .limit(1);
-          
-        if (data && data.length > 0) {
-           const latest = data[0];
-           const time = new Date(latest.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-           const date = new Date(latest.timestamp).toLocaleDateString();
-           return "I checked the secure ledger. The most recent detection was a **\** recorded at **\** (\) in the **\** zone.";
-        } else {
-           return "I scanned the database ledger, but there are no detection alerts logged in the system yet.";
-        }
-      } catch (err) {
-        return "I encountered an error querying the encrypted database for recent detections.";
-      }
-    }
-    
-    // 3. FALLBACK COMMANDS
-    if (q.includes('hello') || q.includes('hi')) {
-      return "System Agent Online. I am ready to process queries about the database or navigate the dashboard for you.";
-    }
-    
-    return "I am currently running in rule-based agent mode. I can query the database for recent detections (e.g., 'when was the last person detected?') or navigate the interface (e.g., 'go to settings').";
   };
 
   return (
@@ -150,7 +165,7 @@ export default function AICopilot() {
               <h3 className="text-white font-bold text-sm">TRINETRA AI</h3>
               <p className="text-white/80 text-xs flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_5px_rgba(74,222,128,0.8)]"></span>
-                System Copilot
+                Intelligence Agent · Llama 3.1
               </p>
             </div>
           </div>
@@ -163,13 +178,13 @@ export default function AICopilot() {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-brand-bg/50 relative">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-brand-bg/50">
           {messages.map(msg => (
             <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
               <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${msg.role === 'user' ? 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300' : 'bg-brand-red/10 text-brand-red border border-brand-red/20'}`}>
                 {msg.role === 'user' ? <User className="w-4 h-4" /> : <TacticalBotIcon className="w-4 h-4" />}
               </div>
-              <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${msg.role === 'user' ? 'bg-brand-red text-white rounded-tr-sm' : 'bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border text-gray-800 dark:text-brand-text rounded-tl-sm shadow-sm'}`}>
+              <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-brand-red text-white rounded-tr-sm' : 'bg-white dark:bg-brand-card border border-gray-200 dark:border-brand-border text-gray-800 dark:text-brand-text rounded-tl-sm shadow-sm'}`}>
                 {msg.content}
               </div>
             </div>
@@ -197,7 +212,7 @@ export default function AICopilot() {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
-              placeholder="Ask about video feeds, alerts..."
+              placeholder="Ask about alerts, detections, commands..."
               className="flex-1 bg-gray-100 dark:bg-brand-bg border border-transparent focus:border-brand-red/50 focus:bg-white dark:focus:bg-brand-card rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-brand-text placeholder-gray-500 dark:placeholder-brand-muted outline-none transition-all pr-12"
             />
             <button
@@ -208,9 +223,9 @@ export default function AICopilot() {
               <Send className="w-5 h-5" />
             </button>
           </div>
+          <p className="text-[10px] text-gray-400 dark:text-brand-muted mt-2 text-center">Powered by Llama 3.1 · OpenRouter</p>
         </div>
       </div>
     </>
   );
 }
-
