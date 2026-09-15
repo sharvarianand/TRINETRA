@@ -227,10 +227,6 @@ export default function LandingPage() {
             <button onClick={() => router.push('/dashboard')} className="w-full sm:w-auto flex items-center justify-center gap-3 rounded-full bg-brand-red px-8 py-4 text-sm font-bold tracking-widest text-white hover:bg-white hover:text-brand-red transition-all shadow-[0_0_30px_rgba(239,51,72,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]">
               LAUNCH COMMAND CENTER <ArrowRight size={18} />
             </button>
-            
-            <button className="w-full sm:w-auto flex items-center justify-center gap-3 rounded-full border border-brand-border bg-brand-card px-8 py-4 text-sm font-bold tracking-widest text-brand-text hover:border-brand-red hover:text-brand-red hover:shadow-[0_0_20px_rgba(239,51,72,0.2)] transition-all">
-              <Network size={18} /> VIEW ARCHITECTURE
-            </button>
           </div>
         </div>
       </section>

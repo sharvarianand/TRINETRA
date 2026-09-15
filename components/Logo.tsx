@@ -19,9 +19,9 @@ export default function Logo({ size = 'md', showText = true, className = '', var
   const s = sizes[size];
 
   return (
-    <div className={lex items-center gap-3 \}>
+    <div className={`flex items-center gap-3 ${className}`}>
       {/* TRINETRA Eye (Ashoka Chakra Pupil) - Matched to ChainSentinel Theme */}
-      <div className={\ rounded-md bg-brand-card/80 border border-brand-red/40 flex items-center justify-center shadow-[0_0_15px_var(--color-brand-red-glow)] relative overflow-hidden}>
+      <div className={`${s.icon} rounded-md bg-brand-card/80 border border-brand-red/40 flex items-center justify-center shadow-[0_0_15px_var(--color-brand-red-glow)] relative overflow-hidden`}>
         
         {/* Main Logo SVG */}
         <svg 
@@ -52,7 +52,7 @@ export default function Logo({ size = 'md', showText = true, className = '', var
       {/* Text */}
       {showText && (
         <div className="flex flex-col">
-          <span className={\ font-mono font-bold tracking-[0.2em] text-brand-text}>
+          <span className={`${s.text} font-mono font-bold tracking-[0.2em] text-brand-text`}>
             TRINETRA
           </span>
           {size === 'lg' && (
