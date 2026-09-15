@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${spaceGrotesk.variable} ${jetBrains.variable} font-sans bg-[#090A0F] antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${jetBrains.variable} font-sans bg-brand-bg text-brand-text antialiased`}>
         <ThemeProvider>
           <GlobalClientComponents />
           {children}
@@ -28,4 +28,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
