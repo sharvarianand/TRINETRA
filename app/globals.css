@@ -1,8 +1,9 @@
 @import "tailwindcss";
-@import "tailwindcss/theme.css";
-@import "tailwindcss/utilities.css";
 
-/* Tailwind v4 Configuration */
+/* Tailwind v4 dark mode via class */
+@variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 Theme */
 @theme {
   --font-sans: var(--font-space), system-ui, sans-serif;
   --font-mono: var(--font-mono), monospace;
@@ -21,13 +22,6 @@
   --color-brand-blue: #2453a0;
 }
 
-@layer base {
-  body {
-    background-color: var(--color-brand-bg);
-    color: var(--color-brand-text);
-  }
-}
-
 .giant-text {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
   color: transparent;
@@ -42,24 +36,13 @@
 }
 
 /* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-brand-bg);
-  border-left: 1px solid var(--color-brand-border);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-brand-border);
-  border-radius: 0;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-red);
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #ef3348; }
 
-/* Selection color */
-::selection {
-  background: var(--color-brand-red-dark);
-  color: #fff;
-}
+.dark ::-webkit-scrollbar-track { background: var(--color-brand-bg); border-left: 1px solid var(--color-brand-border); }
+.dark ::-webkit-scrollbar-thumb { background: var(--color-brand-border); border-radius: 0; }
+.dark ::-webkit-scrollbar-thumb:hover { background: var(--color-brand-red); }
+
+::selection { background: var(--color-brand-red-dark); color: #fff; }

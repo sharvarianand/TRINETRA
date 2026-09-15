@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${spaceGrotesk.variable} ${jetBrains.variable} font-sans bg-brand-bg text-brand-text antialiased`}>
+    <html lang="en" suppressHydrationWarning className="">
+      <body className={`${spaceGrotesk.variable} ${jetBrains.variable} font-sans antialiased`}>
         <ThemeProvider>
           <GlobalClientComponents />
           {children}
@@ -28,5 +28,6 @@ export default function RootLayout({
     </html>
   );
 }
+
 
 
