@@ -6,6 +6,9 @@ import { AreaUnit, DensityLevel, calculateCapacity } from '@/lib/types';
 import Logo from './Logo';
 
 interface CameraInput {
+    id: string;
+    name: string;
+    url: string;
     zone: string;
     area: number;
     areaUnit: AreaUnit;
