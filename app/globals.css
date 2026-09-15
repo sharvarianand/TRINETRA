@@ -1,147 +1,32 @@
 @import "tailwindcss";
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
 
-/* Enable dark mode with class selector for Tailwind v4 */
-/* stylelint-disable-next-line at-rule-no-unknown */
-@variant dark (&:where(.dark, .dark *));
-
-:root {
+/* Tailwind v4 Configuration */
+@theme {
   --font-sans: var(--font-space), system-ui, sans-serif;
   --font-mono: var(--font-mono), monospace;
+
+  /* ChainSentinel Color Palette */
+  --color-brand-bg: #030315;
+  --color-brand-card: #0d0b20;
+  --color-brand-border: #25203a;
   
-  /* IBVAP Tactical Military Theme */
-  --color-primary: #72d9ed;
-  --color-primary-hover: #b6f0fa;
-  --color-primary-light: #12333c;
+  --color-brand-red: #ef3348;
+  --color-brand-red-glow: #ff3048;
+  --color-brand-red-dark: #c9233c;
   
-  --color-alert: #ef4444; /* Red 500 */
-  --color-warning: #f59e0b; /* Amber 500 */
-  
-  --color-background: #07080d;
-  --color-background-alt: #11131c;
-  --color-foreground: #c8edf2;
-  --color-foreground-muted: #6b7280; /* Gray 500 */
-  --color-border: #064e3b; /* cyan 900 for subtle borders */
-  --color-border-light: #047857; /* cyan 700 */
+  --color-brand-text: #f4f4f5;
+  --color-brand-muted: #7f8ba5;
+  --color-brand-blue: #2453a0;
 }
 
-body {
-  color: var(--color-foreground);
-  background:
-    radial-gradient(circle at 78% 13%, rgba(28, 126, 151, .16), transparent 30rem),
-    radial-gradient(circle at 9% 90%, rgba(198, 45, 54, .12), transparent 26rem),
-    linear-gradient(135deg, #06070c 0%, #11131c 52%, #08090e 100%);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+  }
 }
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .28;
-  background-image:
-    linear-gradient(rgba(115, 223, 241, .12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(115, 223, 241, .12) 1px, transparent 1px),
-    repeating-linear-gradient(0deg, transparent 0 5px, rgba(255,255,255,.018) 6px 7px);
-  background-size: 48px 48px, 48px 48px, auto;
-  mask-image: linear-gradient(to bottom, black, transparent 92%);
-}
-
-/* Shared operational-surface palette: keeps every route visually part of the command suite. */
-.dark .bg-zinc-900 { background-color: rgba(10, 12, 18, .94) !important; }
-.dark .bg-zinc-800 { background-color: rgba(18, 23, 32, .88) !important; }
-.dark .bg-zinc-800\/50 { background-color: rgba(18, 23, 32, .5) !important; }
-.dark .bg-zinc-700 { background-color: #293744 !important; }
-.dark .border-zinc-700, .dark .border-zinc-800 { border-color: rgba(104, 202, 219, .2) !important; }
-.dark .text-zinc-100 { color: #e1f5f7 !important; }
-.dark .text-zinc-400, .dark .text-zinc-500 { color: #91aab2 !important; }
-
-.tactical-kicker {
-  color: #72d9ed;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-
-.tactical-rule {
-  height: 1px;
-  background: linear-gradient(90deg, #ff5258, rgba(255,82,88,.08), transparent);
-}
-
-.command-prototype {
-  position: relative;
-  isolation: isolate;
-  background-image: linear-gradient(rgba(255,255,255,.018) 50%, transparent 50%);
-  background-size: 100% 4px;
-}
-
-.command-prototype::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  pointer-events: none;
-  opacity: .13;
-  background: linear-gradient(90deg, transparent 48%, rgba(106, 233, 255, .22) 50%, transparent 52%);
-  mix-blend-mode: screen;
-}
-
-/* Glassmorphism / Floating 3D Panels */
-.glass-panel {
-  background: linear-gradient(145deg, rgba(20, 27, 37, .88), rgba(7, 9, 15, .92));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(108, 213, 232, 0.2);
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42), 0 0 22px rgba(89, 203, 226, 0.06) inset;
-  border-radius: 0.25rem;
-}
-
-.glass-panel-hover:hover {
-  border-color: rgba(255, 82, 88, 0.7);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 82, 88, 0.08) inset;
-  transform: translateY(-2px);
-  transition: all 0.3s ease;
-}
-
-/* Tactical glowing text */
-.text-glow {
-  text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-}
-
-.text-glow-alert {
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.8);
-  border-left: 1px solid rgba(16, 185, 129, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.4);
-  border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.8);
-}
-
-/* Selection color */
-::selection {
-  background: rgba(16, 185, 129, 0.3);
-  color: #34d399;
-}
-
 
 .giant-text {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
@@ -150,9 +35,31 @@ body::before {
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .giant-text:hover {
-  -webkit-text-stroke: 1px rgba(255, 82, 88, 0.4);
-  color: rgba(255, 82, 88, 0.05);
+  -webkit-text-stroke: 1px rgba(239, 51, 72, 0.4);
+  color: rgba(239, 51, 72, 0.05);
   opacity: 1;
-  text-shadow: 0 0 80px rgba(255, 82, 88, 0.3);
+  text-shadow: 0 0 80px rgba(239, 51, 72, 0.3);
 }
 
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-bg);
+  border-left: 1px solid var(--color-brand-border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-border);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-red);
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-brand-red-dark);
+  color: #fff;
+}
