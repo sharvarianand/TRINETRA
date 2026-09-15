@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Upload,  useRouter } from 'next/navigation';
-import { Upload,  usePathname } from 'next/navigation';
-import { Upload,  createClient } from '@/utils/supabase/client';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 import { Upload, 
     Home,
     Map,
@@ -38,8 +38,8 @@ import { Upload,
 } from 'lucide-react';
 import Logo from './Logo';
 
-import { Upload,  useTheme } from '@/lib/ThemeContext';
-import { Upload,  AppUser, Camera, calculateCapacity, DensityLevel, AreaUnit } from '@/lib/types';
+import { useTheme } from '@/lib/ThemeContext';
+import { AppUser, Camera, calculateCapacity, DensityLevel, AreaUnit } from '@/lib/types';
 
 interface SettingsData {
     lowBandwidthMode: boolean;
@@ -1201,6 +1201,7 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         </div>
     );
 }
+
 
 
 
