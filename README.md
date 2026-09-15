@@ -56,6 +56,17 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 ## 🏗️ System Architecture
 
 ```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'primaryColor': '#0a0d14',
+    'primaryBorderColor': '#06b6d4',
+    'primaryTextColor': '#ffffff',
+    'lineColor': '#06b6d4',
+    'clusterBkg': 'transparent',
+    'clusterBorder': '#06b6d4'
+  }
+}}%%
 graph TD
     subgraph "Border Out Post (Edge Node)"
         CCTV["CCTV / IP Camera Streams"] --> |Video Frames| EdgeProcessing["Python FastAPI Edge Server"]
@@ -91,6 +102,21 @@ graph TD
 ## 🔄 User & Data Flow
 
 ```mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'actorBkg': '#0a0d14',
+    'actorBorder': '#06b6d4',
+    'actorTextColor': '#ffffff',
+    'signalColor': '#06b6d4',
+    'signalTextColor': '#ffffff',
+    'noteBkg': '#06b6d4',
+    'noteTextColor': '#000000',
+    'noteBorderColor': '#06b6d4',
+    'activationBorderColor': '#06b6d4',
+    'activationBkgColor': '#06b6d4'
+  }
+}}%%
 sequenceDiagram
     participant Commander as Base Commander
     participant Auth as Supabase Auth
@@ -165,4 +191,5 @@ npm run dev
 The Command Center will be available at `http://localhost:3001`.
 
 ---
+
 
