@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="public/android-chrome-512x512.png" width="120" alt="TRINETRA Logo" />
-  <h1>TRINETRA // IBVAP</h1>
+  <img src="app/icon.svg" width="120" alt="TRINETRA Logo" />
+  <h1>TRINETRA</h1>
   <p><strong>Intelligent Video Analytics Platform for Border Surveillance</strong></p>
   <p>
     <img src="https://img.shields.io/badge/Category-Software-06b6d4?style=for-the-badge" alt="Software" />
@@ -49,7 +49,7 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
 
 ## 🧠 System Architecture
 
-`mermaid
+```mermaid
 %%{init: {
   'theme': 'base',
   'themeVariables': {
@@ -91,11 +91,11 @@ graph TD
         ImmutableLog --> |Tamper-Proof Logs| Frontend
         AlertGen --> |Twilio WhatsApp API| QRT["Quick Reaction Team (SOS)"]
     end
-`
+```
 
 ## 🔄 User & Data Flow
 
-`mermaid
+```mermaid
 %%{init: {
   'theme': 'base',
   'themeVariables': {
@@ -135,7 +135,7 @@ sequenceDiagram
     
     UI-->>Commander: Trigger Visual Red Alert & Twilio WhatsApp
     Commander->>UI: Acknowledge Threat & Deploy QRT
-`
+```
 
 ---
 
@@ -166,32 +166,32 @@ sequenceDiagram
 ### 1. Edge AI Node (Python Backend)
 Ensure you have Python 3.13+ installed.
 
-`ash
+```bash
 cd python-server
 python -m venv venv
 .\venv\Scripts\activate  # Windows
 # source venv/bin/activate # Linux/Mac
 pip install -r requirements.txt
 python main.py
-`
-*(Note: The first time main.py detects a face, it will pause for ~60 seconds to download the DeepFace FaceNet weights. This only happens once).*
+```
+*(Note: The first time `main.py` detects a face, it will pause for ~60 seconds to download the DeepFace FaceNet weights. This only happens once).*
 
 ### 2. Twilio WhatsApp Configuration (Optional but recommended)
-To receive actual WhatsApp alerts on your phone, create a .env.local file in the root directory and add:
-`
+To receive actual WhatsApp alerts on your phone, create a `.env.local` file in the root directory and add:
+```
 TWILIO_ACCOUNT_SID=your_sid
 TWILIO_AUTH_TOKEN=your_token
 TWILIO_WHATSAPP_NUMBER=your_twilio_number
 TWILIO_TO_NUMBER=your_personal_number
-`
+```
 
 ### 3. Central Command (Next.js Frontend)
 Ensure you have Node.js 18+ installed.
 
-`ash
+```bash
 npm install
 npm run dev
-`
-The Command Center will be available at http://localhost:3000.
+```
+The Command Center will be available at `http://localhost:3000`.
 
 ---
