@@ -93,6 +93,50 @@ graph TD
     end
 `
 
+## 🔄 User & Data Flow
+
+`mermaid
+%%{init: {
+  'theme': 'base',
+  'themeVariables': {
+    'actorBkg': '#0a0d14',
+    'actorBorder': '#06b6d4',
+    'actorTextColor': '#ffffff',
+    'signalColor': '#06b6d4',
+    'signalTextColor': '#ffffff',
+    'noteBkg': '#06b6d4',
+    'noteTextColor': '#000000',
+    'noteBorderColor': '#06b6d4',
+    'activationBorderColor': '#06b6d4',
+    'activationBkgColor': '#06b6d4'
+  }
+}}%%
+sequenceDiagram
+    participant Commander as Base Commander
+    participant Auth as Supabase Auth
+    participant UI as Next.js Dashboard
+    participant Edge as Edge AI Node
+    participant CCTV as Border Camera
+
+    Commander->>Auth: Secure Login (Email/Password)
+    Auth-->>Commander: Issue AES-256 JWT Session
+    Commander->>UI: Access TRINETRA Command Post
+    
+    UI->>Edge: Initialize Camera Grid
+    Edge->>CCTV: Connect via IP/RTSP
+    CCTV-->>Edge: Raw Video Feed
+    
+    Note over Edge: Run YOLOv8, FaceNet & EasyOCR
+    Edge-->>UI: Stream MJPEG with Tactical Overlays
+    
+    Note over CCTV,Edge: Threat Detected (e.g. Watchlist Match)
+    Edge->>Edge: Generate SHA-256 Immutable Incident Hash
+    Edge->>UI: Push Priority Alert to HUD
+    
+    UI-->>Commander: Trigger Visual Red Alert & Twilio WhatsApp
+    Commander->>UI: Acknowledge Threat & Deploy QRT
+`
+
 ---
 
 ## 🛠️ Technical Architecture & Stack
