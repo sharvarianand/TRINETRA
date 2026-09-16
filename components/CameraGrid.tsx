@@ -47,7 +47,7 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
     return {
       level: 'low',
       percentage: 0,
-      message: 'Restricted (Clear)',
+      message: 'Perimeter Secure',
       color: 'text-brand-red',
       bgColor: 'bg-brand-red',
       borderColor: 'border-brand-red'
@@ -56,38 +56,20 @@ function assessRisk(count: number, capacity: number): RiskAssessment {
 
   const percentage = Math.round((count / capacity) * 100);
 
-  if (percentage >= 90) {
+  if (count > 0) {
     return {
-      level: 'critical',
+      level: percentage >= 50 ? 'high' : 'medium',
       percentage,
-      message: 'CRITICAL: Evacuate immediately!',
-      color: 'text-red-500',
-      bgColor: 'bg-red-500',
-      borderColor: 'border-red-500'
-    };
-  } else if (percentage >= 70) {
-    return {
-      level: 'high',
-      percentage,
-      message: 'HIGH RISK: Limit entry',
-      color: 'text-orange-500',
-      bgColor: 'bg-orange-500',
-      borderColor: 'border-orange-500'
-    };
-  } else if (percentage >= 50) {
-    return {
-      level: 'medium',
-      percentage,
-      message: 'MODERATE: Monitor closely',
-      color: 'text-amber-500',
-      bgColor: 'bg-amber-500',
-      borderColor: 'border-amber-500'
+      message: `DETECTED: ${count} TARGETS IN SECTOR`,
+      color: percentage >= 50 ? 'text-orange-500' : 'text-amber-500',
+      bgColor: percentage >= 50 ? 'bg-orange-500' : 'bg-amber-500',
+      borderColor: percentage >= 50 ? 'border-orange-500' : 'border-amber-500'
     };
   } else {
     return {
       level: 'low',
       percentage,
-      message: 'Safe capacity',
+      message: 'Sector Clear',
       color: 'text-brand-red',
       bgColor: 'bg-brand-red',
       borderColor: 'border-brand-red'
