@@ -54,3 +54,7 @@ python-server/cameras.json
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+python-server/__pycache__/
+
+python-server/uploads/
