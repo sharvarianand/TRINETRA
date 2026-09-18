@@ -1,7 +1,20 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Camera, WifiOff, Maximize2, Users, RefreshCw, VideoOff, AlertTriangle, ShieldCheck, ShieldAlert, Ruler, Activity } from 'lucide-react';
+import { 
+  Camera, 
+  WifiOff, 
+  Maximize2, 
+  Minimize2,
+  Users, 
+  RefreshCw, 
+  VideoOff, 
+  AlertTriangle, 
+  ShieldCheck, 
+  ShieldAlert, 
+  Ruler, 
+  Activity 
+} from 'lucide-react';
 import { Camera as CameraType, AreaUnit, DensityLevel } from '@/lib/types';
 
 interface CameraConfig {
