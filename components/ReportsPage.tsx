@@ -79,6 +79,9 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
     const [expandedIncident, setExpandedIncident] = useState<string | null>(null);
     const [showIncidentModal, setShowIncidentModal] = useState(false);
     const [incidentToPrint, setIncidentToPrint] = useState<Incident | null>(null);
+    const [aiBriefing, setAiBriefing] = useState<string | null>(null);
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [showAiModal, setShowAiModal] = useState(false);
     const printRef = useRef<HTMLDivElement>(null);
     const [generatedTime, setGeneratedTime] = useState<string>('');
     const [baseUrl] = useState(process.env.NEXT_PUBLIC_PYTHON_SERVER_URL || 'http://localhost:8000');
@@ -260,6 +263,33 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
         }
     };
 
+    const handleGenerateAIBriefing = async () => {
+        setIsGenerating(true);
+        setShowAiModal(true);
+        try {
+            const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY;
+            if (!apiKey) throw new Error("Missing OpenRouter API Key");
+            const context = realIncidents.slice(0, 10).map(i => `[${i.timestamp.toISOString()}] ${i.type}: ${i.title} at ${i.zone}`).join('\n');
+            const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+                body: JSON.stringify({
+                    model: 'meta-llama/llama-3.1-8b-instruct:free',
+                    messages: [
+                        { role: 'system', content: 'You are an AI intelligence officer for TRINETRA. Write a 2-paragraph executive briefing summarizing the latest incidents.' },
+                        { role: 'user', content: `Latest incidents:\n${context || 'No recent incidents.'}` }
+                    ]
+                })
+            });
+            const data = await res.json();
+            setAiBriefing(data.choices?.[0]?.message?.content || 'Failed to generate briefing.');
+        } catch (e: any) {
+            setAiBriefing('Error: ' + e.message);
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
     const handleExportReport = () => {
         window.print();
     };
@@ -321,6 +351,13 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                         <p className="text-sm text-gray-500 dark:text-brand-muted">Incident reports and daily summaries</p>
                     </div>
                     <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleGenerateAIBriefing}
+                            className="flex items-center gap-2 px-4 py-2 bg-brand-red/20 text-brand-red dark:text-brand-red rounded-lg border border-brand-red/50 hover:bg-brand-red/30 transition-colors"
+                        >
+                            <Activity className="w-4 h-4" />
+                            AI Briefing
+                        </button>
                         <button
                             onClick={handleExportReport}
                             className="flex items-center gap-2 px-4 py-2 bg-brand-card/10 dark:bg-brand-card/30 text-brand-muted dark:text-brand-text rounded-lg border border-brand-border dark:border-brand-border hover:bg-brand-card/20 dark:hover:bg-brand-card/50 transition-colors"
