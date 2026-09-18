@@ -40,12 +40,17 @@ To ensure maximum security and reliability in harsh border environments, TRINETR
    All critical alerts (Intrusions, ANPR hits, Watchlist Matches) are cryptographically hashed using SHA-256 and chained to previous events. This ensures that logs cannot be tampered with, deleted, or altered by corrupt insiders, creating a verifiable and immutable audit trail.
 
 2. **Edge-to-Cloud Architecture (Zero-Internet Capability)**
-   BOPs often have poor internet connectivity. TRINETRA processes the heavy AI video analytics (YOLO, DeepFace, EasyOCR) locally at the Edge (using JSON flat-files and local image assets) and only transmits lightweight metadata to the central Supabase PostgreSQL cluster when a connection is available.
 
 3. **Military-Grade Tactical UI**
    A specialized dark-mode Command Center dashboard utilizing cyan/red color coding. It replaces civilian terminology (like "crowd capacity") with tactical Border Security threat-assessment logic (e.g. "Restricted Zone Breaches"), reducing eye strain for night-shift operators while highlighting high-priority threats immediately.
 
----
+4. **Advanced AI Autonomous Agents**
+   TRINETRA goes beyond basic object detection by incorporating **Agentic AI** to synthesize data and act autonomously:
+   - **Autonomous Watch Commander:** A background Python Agent that monitors the live alert stream and automatically drafts high-level Tactical Incident Reports if it detects coordinated threats.
+   - **RAG Database-Aware Copilot:** The AI chat assistant uses Retrieval-Augmented Generation (RAG) to fetch live alerts so commanders can query real-time border events.
+   - **Automated Incident Report Generator:** Instantly analyzes recent incidents to generate a military-standard Executive Briefing in seconds.
+   BOPs often have poor internet connectivity. TRINETRA processes the heavy AI video analytics (YOLO, DeepFace, EasyOCR) locally at the Edge (using JSON flat-files and local image assets) and only transmits lightweight metadata to the central Supabase PostgreSQL cluster when a connection is available.
+
 
 ## 🧠 System Architecture
 

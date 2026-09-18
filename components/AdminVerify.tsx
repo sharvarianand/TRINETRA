@@ -96,6 +96,9 @@ export default function AdminVerify({ user }: AdminVerifyProps) {
                                     autoFocus
                                 />
                             </div>
+                            <p className="text-sm text-brand-muted text-center mt-2">
+                                For this prototype, the access code is <span className="font-bold text-brand-red">123456</span>
+                            </p>
                         </div>
 
                         {/* Error Message */}
