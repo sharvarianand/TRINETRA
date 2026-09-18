@@ -1,0 +1,40 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Add EC2 to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Sync Files to EC2
+        run: |
+          rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='.next' --exclude='python-server/venv312' --exclude='python-server/__pycache__' --exclude='python-server/uploads' ./ ubuntu@${{ secrets.EC2_HOST }}:~/TRINETRA/
+
+      - name: Build and Restart Services
+        run: |
+          ssh ubuntu@${{ secrets.EC2_HOST }} "
+            cd ~/TRINETRA &&
+            npm install &&
+            npm run build &&
+            sudo systemctl restart trinetra &&
+            cd python-server &&
+            source venv312/bin/activate &&
+            pip install -r requirements.txt &&
+            sudo systemctl restart trinetra-api
+          "
