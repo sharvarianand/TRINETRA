@@ -27,6 +27,9 @@ from twilio.rest import Client
 import dotenv
 dotenv.load_dotenv(Path(__file__).parent.parent / '.env.local')
 
+import agent
+agent.start_agent()
+
 analysis_queue = queue.Queue(maxsize=10)
 last_anpr = {}
 
@@ -510,3 +513,29 @@ if __name__ == "__main__":
 
 
 
+
+@app.get("/api/alert/history")
+def get_alert_history():
+    return {"alerts": agent.global_alerts_store}
+
+@app.get("/api/reports")
+def get_reports():
+    return {"reports": agent.global_incident_reports}
+
+@app.post("/api/alert/mock")
+def mock_alert():
+    agent.global_alerts_store.append({
+        "id": f"ALT-{int(time.time())}",
+        "type": "loitering",
+        "zone": "Sector A",
+        "camera_id": "CAM-01",
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    })
+    agent.global_alerts_store.append({
+        "id": f"ALT-{int(time.time())+5}",
+        "type": "intrusion",
+        "zone": "Sector A Perimeter",
+        "camera_id": "CAM-02",
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    })
+    return {"status": "Mock alerts added to trigger agent"}
