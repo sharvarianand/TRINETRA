@@ -24,7 +24,7 @@ jobs:
 
       - name: Sync Files to EC2
         run: |
-          rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='.next' --exclude='python-server/venv312' --exclude='python-server/__pycache__' --exclude='python-server/uploads' --exclude='.env*' ./ ubuntu@${{ secrets.EC2_HOST }}:~/TRINETRA/
+          rsync -avz --delete --exclude='.git' --exclude='node_modules' --exclude='.next' --exclude='python-server/venv312' --exclude='python-server/__pycache__' --exclude='python-server/uploads' --exclude='python-server/watchlist_faces' --exclude='python-server/cameras.json' --exclude='python-server/watchlist_faces.json' --exclude='python-server/watchlist_plates.json' --exclude='python-server/settings.json' --exclude='.env*' ./ ubuntu@${{ secrets.EC2_HOST }}:~/TRINETRA/
 
       - name: Build and Restart Services
         run: |
