@@ -31,7 +31,9 @@ import {
     Users,
     Camera,
     FileWarning,
-    Shield
+    Shield,
+    X,
+    Activity
 } from 'lucide-react';
 import Logo from './Logo';
 

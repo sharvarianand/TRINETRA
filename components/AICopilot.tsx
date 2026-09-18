@@ -76,22 +76,36 @@ export default function AICopilot() {
     }
 
     // Build conversation history for context
-    let liveContext = "No recent alerts.";
+    let liveContext = 'No recent alerts.';
+
     try {
       const baseUrl = process.env.NEXT_PUBLIC_PYTHON_SERVER_URL || 'http://localhost:8000';
-      const res = await fetch(\/api/alert/history);
+      const res = await fetch(`${baseUrl}/api/alert/history`);
+
       if (res.ok) {
         const data = await res.json();
-        if (data.alerts && data.alerts.length > 0) {
-          liveContext = data.alerts.map((a: any) => []  at \).join('\n');
+        if (Array.isArray(data.alerts) && data.alerts.length > 0) {
+          liveContext = data.alerts
+            .map((alert: any) => {
+              const timestamp = alert.timestamp ?? alert.created_at ?? 'unknown time';
+              const type = alert.type ?? alert.alert_type ?? 'unknown alert';
+              const severity = alert.severity ?? alert.threat_level ?? 'unknown severity';
+              const location = alert.location ?? alert.camera ?? 'unknown location';
+              return `${timestamp} | ${type} | severity: ${severity} | location: ${location}`;
+            })
+            .join('\n');
         }
       }
-    } catch (e) {
-      console.error("Failed to fetch RAG context", e);
+    } catch (error) {
+      console.error('Failed to fetch RAG context', error);
     }
 
-    const augmentedUserMessage = LIVE DATABASE CONTEXT:\nRecent Alerts:\n\
-\nUser Question:\n\;
+    const augmentedUserMessage = `LIVE DATABASE CONTEXT:
+Recent Alerts:
+${liveContext}
+
+User Question:
+${userMessage}`;
     const history = messages.slice(-8).map(m => ({
       role: m.role,
       content: m.content,
