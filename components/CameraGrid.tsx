@@ -196,6 +196,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
   const [retryCount, setRetryCount] = useState(0);
   const [hasFirstFrame, setHasFirstFrame] = useState(false);
   const [alertTriggered, setAlertTriggered] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const lastAlertTimeRef = useRef<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -289,6 +290,15 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
     setIsLoading(true);
     setRetryCount(prev => prev + 1);
   };
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsFullscreen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isFullscreen]);
 
   useEffect(() => {
     if (hasError) {
@@ -410,7 +420,11 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
                       />
                     </div>
                   </div>
-                  <button className="p-1.5 bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/5 group">
+                  <button
+                    onClick={() => setIsFullscreen(true)}
+                    className="p-1.5 bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/5 group"
+                    title="Fullscreen"
+                  >
                     <Maximize2 className="w-3.5 h-3.5 text-white/40 group-hover:text-white transition-colors" />
                   </button>
                 </div>
@@ -419,6 +433,39 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
           </>
         )}
       </div>
+      {isFullscreen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex flex-col"
+          onClick={() => setIsFullscreen(false)}
+        >
+          <div
+            className="flex items-center justify-between px-4 py-3 border-b border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
+              <span className="text-xs text-red-400 font-black tracking-tighter">LIVE</span>
+              <span className="text-sm font-bold text-white uppercase">{camera.name}</span>
+              <span className="text-[10px] text-zinc-400 font-mono uppercase">{camera.zone}</span>
+            </div>
+            <button
+              onClick={() => setIsFullscreen(false)}
+              className="p-2 bg-white/5 hover:bg-white/15 rounded-lg transition-colors border border-white/10"
+              title="Exit fullscreen (Esc)"
+            >
+              <Minimize2 className="w-4 h-4 text-white" />
+            </button>
+          </div>
+          <div className="flex-1 flex items-center justify-center p-4 min-h-0">
+            <img
+              src={videoFeedUrl}
+              alt={camera.name}
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
