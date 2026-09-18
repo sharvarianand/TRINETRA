@@ -76,6 +76,22 @@ export default function AICopilot() {
     }
 
     // Build conversation history for context
+    let liveContext = "No recent alerts.";
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_PYTHON_SERVER_URL || 'http://localhost:8000';
+      const res = await fetch(\/api/alert/history);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.alerts && data.alerts.length > 0) {
+          liveContext = data.alerts.map((a: any) => []  at \).join('\n');
+        }
+      }
+    } catch (e) {
+      console.error("Failed to fetch RAG context", e);
+    }
+
+    const augmentedUserMessage = LIVE DATABASE CONTEXT:\nRecent Alerts:\n\
+\nUser Question:\n\;
     const history = messages.slice(-8).map(m => ({
       role: m.role,
       content: m.content,
@@ -94,7 +110,7 @@ export default function AICopilot() {
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           ...history,
-          { role: 'user', content: userMessage },
+          { role: 'user', content: augmentedUserMessage },
         ],
         max_tokens: 300,
         temperature: 0.7,
