@@ -200,6 +200,52 @@ def background_processing_loop():
     _, buffer_ph = cv2.imencode('.jpg', placeholder)
     ph_bytes = buffer_ph.tobytes()
     
+    plate_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_russian_plate_number.xml')
+    
+    global latest_ocr_boxes, last_anpr
+    latest_ocr_boxes = []
+    last_anpr = {}
+    
+    # Strict Indian number plate patterns (compiled once)
+    import re as _re
+    INDIAN_PLATE_RE = _re.compile(
+        r'^([A-Z]{2}\d{2}[A-Z]{1,3}\d{4}|\d{2}BH\d{4}[A-Z]{1,2})$'
+    )
+
+    def continuous_ocr_worker():
+        global latest_raw_frame, latest_ocr_boxes
+        while True:
+            try:
+                if latest_raw_frame is not None and ocr_reader is not None:
+                    small_frame = cv2.resize(latest_raw_frame, (640, 480))
+                    gray_small = cv2.cvtColor(small_frame, cv2.COLOR_BGR2GRAY)
+
+                    # Always scan full frame (OCR regex is the strict filter)
+                    scan_regions = [(0, 0, small_frame)]
+
+                    new_boxes = []
+                    seen_texts = set()
+                    for (ox, oy, roi) in scan_regions:
+                        results = ocr_reader.readtext(roi)
+                        for (bbox, raw_text, prob) in results:
+                            # Normalise: uppercase, strip spaces/hyphens/dots
+                            text = _re.sub(r'[\s\-\.]', '', raw_text.upper())
+                            if text in seen_texts:
+                                continue
+                            # Only accept strict Indian plate format with high confidence
+                            if prob >= 0.55 and INDIAN_PLATE_RE.match(text):
+                                (tl, tr, br, bl) = bbox
+                                x1 = ox + int(tl[0]); y1 = oy + int(tl[1])
+                                x2 = ox + int(br[0]); y2 = oy + int(br[1])
+                                new_boxes.append({"x1": x1, "y1": y1, "x2": x2, "y2": y2, "text": text})
+                                seen_texts.add(text)
+                    latest_ocr_boxes = new_boxes
+            except Exception:
+                pass
+            time.sleep(1.0)
+            
+    threading.Thread(target=continuous_ocr_worker, daemon=True).start()
+    
     while True:
         try:
             if latest_raw_frame is None:
@@ -282,16 +328,28 @@ def background_processing_loop():
                         if not analysis_queue.full():
                             analysis_queue.put({"type": "face", "crop": frame[fy:fy+fh, fx:fx+fw]})
                         
-                elif not is_person and (box["x2"] - box["x1"]) > 60:
-                    pw, ph = int((box["x2"] - box["x1"]) * 0.4), int((box["y2"] - box["y1"]) * 0.15)
-                    px, py = box["x1"] + int(pw * 0.8), box["y2"] - ph - 10
-                    cv2.rectangle(frame, (px, py), (px + pw, py + ph), (0, 255, 255), 2)
-                    cv2.putText(frame, "ANPR", (px, py - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 255), 2)
-                    
-                    plate_crop = frame[py:py+ph, px:px+pw]
-                    if plate_crop.size > 0 and not analysis_queue.full():
-                        analysis_queue.put({"type": "plate", "crop": plate_crop})
+            # (Removed crashing Haar Cascade. OCR Background thread handles plates)
             
+            # Draw continuous OCR plates
+            for obox in latest_ocr_boxes:
+                ox1, oy1, ox2, oy2, text = obox["x1"], obox["y1"], obox["x2"], obox["y2"], obox["text"]
+                # make sure bounds are safe
+                ox1, oy1 = max(0, ox1), max(0, oy1)
+                ox2, oy2 = min(width, ox2), min(height, oy2)
+                cv2.rectangle(frame, (ox1, oy1), (ox2, oy2), (0, 255, 255), 2)
+                cv2.putText(frame, f"ANPR: {text}", (ox1, oy1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+                
+                if time.time() - last_anpr.get(text, 0) > 30:
+                    print(f"ANPR LIVE: Detected Plate '{text}'")
+                    last_anpr[text] = time.time()
+                    import uuid
+                    global_alerts.append({
+                        "id": str(uuid.uuid4()),
+                        "type": "ANPR_DETECT",
+                        "msg": f"Identified Plate: {text}",
+                        "timestamp": time.time() * 1000
+                    })
+                    
             overlay = frame.copy()
             cv2.rectangle(overlay, (0, 0), (width, 45), (0, 0, 0), -1)
             frame = cv2.addWeighted(overlay, 0.6, frame, 0.4, 0)
@@ -308,7 +366,9 @@ def background_processing_loop():
             time.sleep(0.03) # Cap at ~30 FPS to prevent 100% CPU loops on files
             
         except Exception as e:
+            import traceback
             print(f"Loop error: {e}")
+            traceback.print_exc()
             time.sleep(1)
 
 # Start background processing thread
@@ -506,8 +566,11 @@ def delete_watchlist_plate(plate_id: str):
     save_json_file("watchlist_plates.json", plates_data)
     return {"status": "success"}
 
+global_alerts = []
+
 @app.get("/analytics/global")
 def get_global_analytics():
+    global latest_coordinates, global_alerts
     cameras_data = load_cameras()
     active_cameras = len([c for c in cameras_data.get("cameras", []) if c.get("enabled")])
     count = latest_coordinates.get("count", 0)
@@ -527,6 +590,10 @@ def get_global_analytics():
         get_global_analytics._peak_hour = time.strftime("%H:00")
     get_global_analytics._total = max(get_global_analytics._total, count)
     
+    # Only keep the 10 most recent alerts
+    if len(global_alerts) > 10:
+        global_alerts = global_alerts[-10:]
+    
     return JSONResponse(content={
         "total_visitors": get_global_analytics._total,
         "current_count": count,
@@ -535,7 +602,7 @@ def get_global_analytics():
         "hourly_history": get_global_analytics._hourly,
         "active_cameras": active_cameras,
         "density": density,
-        "recent_alerts": []
+        "recent_alerts": list(reversed(global_alerts))
     })
 
 @app.get("/settings")
