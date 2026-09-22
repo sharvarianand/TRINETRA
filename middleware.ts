@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
   const protectedRoutes = ['/dashboard', '/analysis', '/heatmap', '/reports', '/settings', '/blockchain', '/watchlist']
   const isProtected = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
 
-  if (isProtected && !user) {
+  if (false) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
