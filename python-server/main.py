@@ -123,6 +123,11 @@ def get_camera():
     for cam in cameras.get("cameras", []):
         if cam.get("enabled") and cam.get("url"):
             target_url = cam["url"]
+            # Auto-fix common DroidCam URL mistakes BEFORE checking for changes
+            if str(target_url).startswith("http://") and target_url.count(":") == 1:
+                target_url = target_url.rstrip("/") + ":4747/video"
+            elif ":4747" in target_url and not target_url.endswith("/video"):
+                target_url = target_url.rstrip("/") + "/video"
             break
             
     if target_url is None:
@@ -134,16 +139,60 @@ def get_camera():
             
     if camera_capture is None or not camera_capture.isOpened() or current_camera_url != target_url:
         print(f"Switching camera to: {target_url}")
+        
+        # Close old camera if it exists
         if camera_capture is not None:
             camera_capture.release()
             
         camera_capture = cv2.VideoCapture(int(target_url) if str(target_url).isdigit() else target_url)
+        camera_capture.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         current_camera_url = target_url
             
     return camera_capture
 
+
+import time
+latest_raw_frame = None
+
+def camera_reader_thread():
+    global latest_raw_frame, camera_capture
+    reconnect_delay = 0.5
+    consecutive_failures = 0
+    while True:
+        try:
+            camera = get_camera()
+            if camera is not None and camera.isOpened():
+                success, frame = camera.read()
+                if success:
+                    latest_raw_frame = frame
+                    consecutive_failures = 0
+                    reconnect_delay = 0.5
+                else:
+                    consecutive_failures += 1
+                    if consecutive_failures > 30:
+                        print(f"Camera unresponsive after {consecutive_failures} failures, reconnecting...")
+                        camera_capture.release()
+                        camera_capture = None
+                        latest_raw_frame = None
+                        consecutive_failures = 0
+                        time.sleep(reconnect_delay)
+                        reconnect_delay = min(reconnect_delay * 2, 8)
+                    else:
+                        time.sleep(0.01)
+            else:
+                time.sleep(reconnect_delay)
+                reconnect_delay = min(reconnect_delay * 2, 8)
+        except Exception as e:
+            print(f"Camera reader error: {e}")
+            time.sleep(reconnect_delay)
+            reconnect_delay = min(reconnect_delay * 2, 8)
+
+import threading
+threading.Thread(target=camera_reader_thread, daemon=True).start()
+
 def background_processing_loop():
-    global latest_coordinates, camera_capture, latest_frame_boxes, latest_frame_privacy
+    global latest_coordinates, camera_capture, latest_frame_boxes, latest_frame_privacy, latest_raw_frame
+
     model = get_yolo_model()
     
     placeholder = np.zeros((480, 640, 3), dtype=np.uint8)
@@ -153,22 +202,13 @@ def background_processing_loop():
     
     while True:
         try:
-            camera = get_camera()
-            
-            if camera is None or not camera.isOpened():
+            if latest_raw_frame is None:
                 latest_frame_boxes = ph_bytes
                 latest_frame_privacy = ph_bytes
-                time.sleep(2)
-                camera_capture = None
+                time.sleep(0.1)
                 continue
             
-            success, frame = camera.read()
-            
-            if not success:
-                print("Video stream ended, restarting...")
-                camera_capture = None
-                time.sleep(0.5)
-                continue
+            frame = latest_raw_frame.copy()
             
             height, width = frame.shape[:2]
             people = []
@@ -186,7 +226,7 @@ def background_processing_loop():
             
             if model is not None:
                 try:
-                    results = model(frame, classes=[0, 2, 3, 5, 7], conf=0.4, verbose=False)
+                    results = model(frame, classes=[0, 2, 3, 5, 7], conf=0.35, verbose=False)
                     for result in results:
                         for box in result.boxes:
                             x1, y1, x2, y2 = map(int, box.xyxy[0].cpu().numpy())
@@ -205,10 +245,11 @@ def background_processing_loop():
                     pass
             
             count = len(people)
+            density = min(round(count / max(1, (width * height) / 100000) * 10, 1), 100)
             latest_coordinates = {
                 "timestamp": time.time() * 1000,
-                "people": people,
-                "density": min(100, int(count / 15 * 100)),
+                "people": people if people else [],
+                "density": density,
                 "count": count
             }
             
@@ -471,13 +512,27 @@ def get_global_analytics():
     active_cameras = len([c for c in cameras_data.get("cameras", []) if c.get("enabled")])
     count = latest_coordinates.get("count", 0)
     density = latest_coordinates.get("density", 0)
-    hourly_history = [12, 18, 9, 5, 7, 14, 35, 67, 82, 95, 88, 102, 115, 108, 98, 110, 121, 134, 118, 95, 76, 54, 38, 22]
+    
+    # Build live hourly history from current hour's data
+    current_hour = int(time.strftime("%H"))
+    if not hasattr(get_global_analytics, '_hourly'):
+        get_global_analytics._hourly = [0] * 24
+        get_global_analytics._peak = 0
+        get_global_analytics._peak_hour = "00:00"
+        get_global_analytics._total = 0
+    
+    get_global_analytics._hourly[current_hour] = max(get_global_analytics._hourly[current_hour], count)
+    if count > get_global_analytics._peak:
+        get_global_analytics._peak = count
+        get_global_analytics._peak_hour = time.strftime("%H:00")
+    get_global_analytics._total = max(get_global_analytics._total, count)
+    
     return JSONResponse(content={
-        "total_visitors": sum(hourly_history),
+        "total_visitors": get_global_analytics._total,
         "current_count": count,
-        "peak_hour": "13:00",
-        "peak_count": max(hourly_history),
-        "hourly_history": hourly_history,
+        "peak_hour": get_global_analytics._peak_hour,
+        "peak_count": get_global_analytics._peak,
+        "hourly_history": get_global_analytics._hourly,
         "active_cameras": active_cameras,
         "density": density,
         "recent_alerts": []
