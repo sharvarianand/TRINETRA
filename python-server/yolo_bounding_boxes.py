@@ -330,7 +330,7 @@ def capture_loop(camera_id: str):
                     target_classes = [0, 2, 3, 5, 7]
                     class_names = {0: "person", 2: "car", 3: "motorcycle", 5: "bus", 7: "truck"}
                     
-                    results = model(detection_frame, conf=0.50, iou=0.45, classes=target_classes, imgsz=480, verbose=False)
+                    results = model(detection_frame, conf=0.35, iou=0.45, classes=target_classes, imgsz=480, verbose=False)
                     
                     yolo_detections = []
                     for result in results:
@@ -357,7 +357,7 @@ def capture_loop(camera_id: str):
                                 
                                 # Basic filtering for persons to avoid laptops/bags
                                 if det_type == "person":
-                                    if width > 40 and height > 80 and area > 3500 and height > width * 1.5:
+                                    if width > 15 and height > 25:
                                         yolo_detections.append({
                                             "x1": int(x1), "y1": int(y1),
                                             "x2": int(x2), "y2": int(y2),
@@ -376,28 +376,31 @@ def capture_loop(camera_id: str):
                                         "intruding": is_intruding
                                     })
                     
-                    # Combine detections with deduplication
-                    # Priority: Use faces when detected, supplement with YOLO for people without visible faces
-                    all_detections = face_detections.copy()
-                    
-                    # Add YOLO detections that don't overlap significantly with face detections
+                    # Use YOLO as the primary detector. Faces are supplementary info.
+                    # Add face-type tag to YOLO person detections that have a matching Haar face
                     for yolo_det in yolo_detections:
-                        # Check if this YOLO detection has a corresponding face detection
-                        has_face = False
-                        for face_det in face_detections:
-                            # Check if face is within upper portion of YOLO person box
-                            face_center_x = (face_det["x1"] + face_det["x2"]) / 2
-                            face_center_y = (face_det["y1"] + face_det["y2"]) / 2
-                            
-                            # If face is inside person box, they're the same person
-                            if (yolo_det["x1"] <= face_center_x <= yolo_det["x2"] and
-                                yolo_det["y1"] <= face_center_y <= yolo_det["y2"]):
-                                has_face = True
+                        if yolo_det.get("type") == "person":
+                            for face_det in face_detections:
+                                face_cx = (face_det["x1"] + face_det["x2"]) / 2
+                                face_cy = (face_det["y1"] + face_det["y2"]) / 2
+                                if (yolo_det["x1"] <= face_cx <= yolo_det["x2"] and
+                                    yolo_det["y1"] <= face_cy <= yolo_det["y2"]):
+                                    yolo_det["has_face"] = True
+                                    break
+                    
+                    # YOLO detections are the primary list; add standalone face detections too
+                    all_detections = yolo_detections.copy()
+                    for face_det in face_detections:
+                        face_cx = (face_det["x1"] + face_det["x2"]) / 2
+                        face_cy = (face_det["y1"] + face_det["y2"]) / 2
+                        covered = False
+                        for yolo_det in yolo_detections:
+                            if (yolo_det["x1"] <= face_cx <= yolo_det["x2"] and
+                                yolo_det["y1"] <= face_cy <= yolo_det["y2"]):
+                                covered = True
                                 break
-                        
-                        # Only add YOLO detection if no face found (e.g., back of head, profile)
-                        if not has_face:
-                            all_detections.append(yolo_det)
+                        if not covered:
+                            all_detections.append(face_det)
                     
                     # Use the combined detections
                     detections = all_detections
