@@ -58,3 +58,13 @@ python-server/cameras.json
 python-server/__pycache__/
 
 python-server/uploads/
+
+# Python virtualenv
+python-server/venv/
+venv/
+
+# Runtime data / watchlist assets (may contain PII)
+python-server/watchlist_faces.json
+python-server/watchlist_plates.json
+python-server/watchlist_faces/
+python-server/temp_face_*.jpg

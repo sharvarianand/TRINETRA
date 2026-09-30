@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import hashlib
 import numpy as np
 import cv2
 import shutil
@@ -32,6 +33,38 @@ agent.start_agent()
 
 analysis_queue = queue.Queue(maxsize=10)
 last_anpr = {}
+
+# Immutable SHA-256 hash-chained ledger of all tactical alerts (blockchain audit trail).
+# Each block embeds the previous block's hash, so any tampering breaks the chain.
+alert_chain = []
+_alert_seq = 0
+
+def record_alert(alert_type, zone, msg="", camera_id="", people_count=0, max_capacity=0, whatsapp_sent=False):
+    """Append an alert to the immutable hash chain and feed the AI Watch Commander agent."""
+    global _alert_seq
+    _alert_seq += 1
+    timestamp_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    previous_hash = alert_chain[-1]["hash"] if alert_chain else "0" * 64
+    data_string = f"{alert_type}{zone}{camera_id}{people_count}{max_capacity}{timestamp_iso}{previous_hash}"
+    new_hash = hashlib.sha256(data_string.encode()).hexdigest()
+    record = {
+        "id": f"ALT-{int(time.time() * 1000)}-{_alert_seq}",
+        "type": alert_type,
+        "zone": zone,
+        "msg": msg,
+        "camera_id": camera_id,
+        "people_count": people_count,
+        "max_capacity": max_capacity,
+        "timestamp": timestamp_iso,
+        "acknowledged": False,
+        "whatsapp_sent": whatsapp_sent,
+        "hash": new_hash,
+        "previous_hash": previous_hash,
+    }
+    alert_chain.append(record)
+    # The agent reads (and periodically clears) this store; the chain above persists.
+    agent.global_alerts_store.append(record)
+    return record
 
 def heavy_analysis_worker():
     while True:
@@ -342,14 +375,8 @@ def background_processing_loop():
                 if time.time() - last_anpr.get(text, 0) > 30:
                     print(f"ANPR LIVE: Detected Plate '{text}'")
                     last_anpr[text] = time.time()
-                    import uuid
-                    global_alerts.append({
-                        "id": str(uuid.uuid4()),
-                        "type": "ANPR_DETECT",
-                        "msg": f"Identified Plate: {text}",
-                        "timestamp": time.time() * 1000
-                    })
-                    
+                    record_alert("ANPR_DETECT", zone="ANPR Scan", msg=f"Identified Plate: {text}")
+
             overlay = frame.copy()
             cv2.rectangle(overlay, (0, 0), (width, 45), (0, 0, 0), -1)
             frame = cv2.addWeighted(overlay, 0.6, frame, 0.4, 0)
@@ -395,6 +422,7 @@ async def trigger_twilio_alert(alert: AlertConfig):
         whatsapp_number = os.getenv('TWILIO_WHATSAPP_NUMBER')
         to_number = os.getenv('TWILIO_TO_NUMBER')
         
+        whatsapp_sent = False
         if account_sid and auth_token and whatsapp_number and to_number:
             client = Client(account_sid, auth_token)
             message = client.messages.create(
@@ -402,9 +430,21 @@ async def trigger_twilio_alert(alert: AlertConfig):
                 body=f"RESTRICTED ZONE BREACH\nZone: {alert.zone}\nCamera: {alert.camera_id}\nIntruders: {alert.people_count}\nAction Required!",
                 to=f"whatsapp:{to_number}"
             )
+            whatsapp_sent = True
             print(f"Twilio WhatsApp sent: {message.sid}")
         else:
             print("Twilio credentials missing in .env.local, alert skipped.")
+
+        # Record the breach on the immutable hash chain regardless of WhatsApp delivery.
+        record_alert(
+            "no_entry_violation" if alert.max_capacity == 0 else "overcrowding",
+            zone=alert.zone,
+            msg=f"Restricted zone breach: {alert.people_count} target(s) in {alert.zone}",
+            camera_id=alert.camera_id,
+            people_count=alert.people_count,
+            max_capacity=alert.max_capacity,
+            whatsapp_sent=whatsapp_sent,
+        )
         return {"status": "success"}
     except Exception as e:
         print(f"Twilio error: {e}")
@@ -566,11 +606,9 @@ def delete_watchlist_plate(plate_id: str):
     save_json_file("watchlist_plates.json", plates_data)
     return {"status": "success"}
 
-global_alerts = []
-
 @app.get("/analytics/global")
 def get_global_analytics():
-    global latest_coordinates, global_alerts
+    global latest_coordinates
     cameras_data = load_cameras()
     active_cameras = len([c for c in cameras_data.get("cameras", []) if c.get("enabled")])
     count = latest_coordinates.get("count", 0)
@@ -590,10 +628,6 @@ def get_global_analytics():
         get_global_analytics._peak_hour = time.strftime("%H:00")
     get_global_analytics._total = max(get_global_analytics._total, count)
     
-    # Only keep the 10 most recent alerts
-    if len(global_alerts) > 10:
-        global_alerts = global_alerts[-10:]
-    
     return JSONResponse(content={
         "total_visitors": get_global_analytics._total,
         "current_count": count,
@@ -602,7 +636,7 @@ def get_global_analytics():
         "hourly_history": get_global_analytics._hourly,
         "active_cameras": active_cameras,
         "density": density,
-        "recent_alerts": list(reversed(global_alerts))
+        "recent_alerts": list(reversed(alert_chain[-10:]))
     })
 
 @app.get("/settings")
@@ -627,18 +661,11 @@ async def update_settings(settings: dict):
         json.dump(settings, f, indent=4)
     return {"status": "success"}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-
-
-
 
 
 @app.get("/api/alert/history")
-def get_alert_history():
-    return {"alerts": agent.global_alerts_store}
+def get_alert_history(limit: int = 50):
+    return {"alerts": alert_chain[-limit:]}
 
 @app.get("/api/reports")
 def get_reports():
@@ -646,18 +673,13 @@ def get_reports():
 
 @app.post("/api/alert/mock")
 def mock_alert():
-    agent.global_alerts_store.append({
-        "id": f"ALT-{int(time.time())}",
-        "type": "loitering",
-        "zone": "Sector A",
-        "camera_id": "CAM-01",
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    })
-    agent.global_alerts_store.append({
-        "id": f"ALT-{int(time.time())+5}",
-        "type": "intrusion",
-        "zone": "Sector A Perimeter",
-        "camera_id": "CAM-02",
-        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-    })
+    record_alert("loitering", zone="Sector A", camera_id="CAM-01",
+                 msg="Loitering detected in Sector A", people_count=1, max_capacity=0)
+    record_alert("intrusion", zone="Sector A Perimeter", camera_id="CAM-02",
+                 msg="Perimeter intrusion in Sector A", people_count=2, max_capacity=0)
     return {"status": "Mock alerts added to trigger agent"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
