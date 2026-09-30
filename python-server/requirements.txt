@@ -10,5 +10,8 @@ torchvision>=0.15.0
 easyocr>=1.7.0
 supabase
 deepface>=0.0.86
+# DeepFace fails to import against Keras 3 without this pinned. Without it
+# `from deepface import DeepFace` raises ValueError and face matching is dead.
+tf-keras==2.21.0
 twilio>=8.0.0
 requests

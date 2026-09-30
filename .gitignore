@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+*.crt
+*.key
 
 # debug
 npm-debug.log*
@@ -55,7 +57,7 @@ python-server/cameras.json
 # clerk configuration (can include secrets)
 /.clerk/
 
-python-server/__pycache__/
+**/__pycache__/
 
 python-server/uploads/
 

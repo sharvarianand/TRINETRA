@@ -3,40 +3,74 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Lock, Home, ArrowLeft, CheckCircle, Clock, Link as LinkIcon, Database, Server } from 'lucide-react';
+import { Lock, Home, ArrowLeft, CheckCircle, AlertTriangle, Clock, Link as LinkIcon, Database, Server } from 'lucide-react';
 
-interface RawAlert {
+interface LedgerAlert {
   id: string;
   type: string;
   zone: string;
   msg?: string;
+  camera_id?: string;
+  people_count?: number;
+  max_capacity?: number;
   timestamp: string;
   hash?: string;
   previous_hash?: string;
 }
 
+async function sha256Hex(input: string): Promise<string> {
+  const data = new TextEncoder().encode(input);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 export default function BlockchainPage() {
-  const [alerts, setAlerts] = useState<RawAlert[]>([]);
+  const [alerts, setAlerts] = useState<LedgerAlert[]>([]);
+  const [verified, setVerified] = useState<Record<string, boolean>>({});
   const router = useRouter();
   const baseUrl = process.env.NEXT_PUBLIC_PYTHON_SERVER_URL || 'http://localhost:8000';
 
   useEffect(() => {
-    const fetchAnalytics = async () => {
+    const fetchLedger = async () => {
       try {
-        const response = await fetch(`${baseUrl}/analytics/global`);
+        const response = await fetch(`${baseUrl}/api/alert/history?limit=200`);
         if (response.ok) {
           const data = await response.json();
-          setAlerts(data.recent_alerts || []);
+          setAlerts(data.alerts || []);
         }
       } catch (err) {
-        console.error('Failed to fetch analytics:', err);
+        console.error('Failed to fetch ledger:', err);
       }
     };
-    
-    fetchAnalytics();
-    const interval = setInterval(fetchAnalytics, 2000);
+
+    fetchLedger();
+    const interval = setInterval(fetchLedger, 2000);
     return () => clearInterval(interval);
   }, [baseUrl]);
+
+  // Recompute every block's SHA-256 and confirm it links to the one before it,
+  // so the status icon reflects real verification instead of being decoration.
+  useEffect(() => {
+    let cancelled = false;
+    const verify = async () => {
+      const ordered = alerts.slice().reverse(); // oldest first
+      const results: Record<string, boolean> = {};
+      for (let i = 0; i < ordered.length; i++) {
+        const a = ordered[i] as LedgerAlert;
+        const expectedPrev = i === 0 ? '0'.repeat(64) : (ordered[i - 1].hash ?? '0'.repeat(64));
+        const payload = `${a.type}${a.zone ?? ''}${a.camera_id ?? ''}${a.people_count ?? 0}${a.max_capacity ?? 0}${a.timestamp}${expectedPrev}`;
+        const digest = await sha256Hex(payload);
+        results[a.id] = digest === a.hash && (a.previous_hash ?? expectedPrev) === expectedPrev;
+      }
+      if (!cancelled) setVerified(results);
+    };
+    if (alerts.length) verify();
+    return () => { cancelled = true; };
+  }, [alerts]);
+
+  const allValid = alerts.length > 0 && Object.values(verified).every(Boolean);
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text font-mono flex flex-col">
@@ -57,6 +91,11 @@ export default function BlockchainPage() {
         <div className="flex items-center gap-6 text-xs font-bold tracking-widest text-brand-muted">
           <div className="flex items-center gap-2"><Server className="w-4 h-4" /> NODE: ACTIVE</div>
           <div className="flex items-center gap-2"><Database className="w-4 h-4" /> BLOCKS: {alerts.length}</div>
+          <div className="flex items-center gap-2">
+            {allValid
+              ? <><CheckCircle className="w-4 h-4 text-brand-red" /> CHAIN: VERIFIED</>
+              : <><AlertTriangle className="w-4 h-4 text-amber-400" /> CHAIN: CHECKING</>}
+          </div>
         </div>
       </header>
 
@@ -87,8 +126,10 @@ export default function BlockchainPage() {
               <div className="border border-brand-border/40 bg-brand-card p-5 rounded-lg md:ml-20 relative hover:border-brand-red/30 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
                 
                 {/* Timeline Node */}
-                <div className="absolute left-[-29px] md:left-[-60px] top-5 w-8 h-8 rounded-full bg-brand-card/20 border border-brand-red flex items-center justify-center shadow-[0_0_10px_rgba(239,51,72,0.3)]">
-                  <CheckCircle className="w-4 h-4 text-brand-text" />
+                <div className={`absolute left-[-29px] md:left-[-60px] top-5 w-8 h-8 rounded-full bg-brand-card/20 border flex items-center justify-center ${verified[alert.id] ? 'border-brand-red shadow-[0_0_10px_rgba(239,51,72,0.3)]' : 'border-amber-500'}`}>
+                  {verified[alert.id] === false
+                    ? <AlertTriangle className="w-4 h-4 text-amber-400" />
+                    : <CheckCircle className="w-4 h-4 text-brand-text" />}
                 </div>
                 
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">

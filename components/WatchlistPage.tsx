@@ -8,6 +8,7 @@ interface Suspect {
   id: string;
   name: string;
   threat_level: 'HIGH' | 'MEDIUM' | 'LOW';
+  image?: string;
   added_at?: string;
 }
 
@@ -35,8 +36,6 @@ export default function WatchlistPage() {
   const [plateNumber, setPlateNumber] = useState('');
   const [plateReason, setPlateReason] = useState('suspicious');
 
-  useEffect(() => { fetchData(); }, [activeTab]);
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -50,6 +49,8 @@ export default function WatchlistPage() {
     } catch (error) { console.error('Failed to fetch', error); }
     setLoading(false);
   };
+
+  useEffect(() => { fetchData(); }, [activeTab]);
 
   const handleAddFace = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,7 +127,17 @@ export default function WatchlistPage() {
                 {suspects.map((s) => (
                   <div key={s.id} className="border border-brand-border/40 bg-brand-card rounded-lg p-4 relative group hover:border-brand-red/30 transition-colors">
                     <button onClick={() => handleDeleteFace(s.id)} className="absolute top-2 right-2 p-2 text-brand-muted hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={16} /></button>
-                    <div className="w-full h-40 bg-brand-bg border border-brand-border/30 rounded mb-4 flex items-center justify-center"><Users size={40} className="text-brand-muted" /></div>
+                    <div className="w-full h-40 bg-brand-bg border border-brand-border/30 rounded mb-4 flex items-center justify-center overflow-hidden">
+                      {s.image ? (
+                        <img
+                          src={s.image.startsWith('http') ? s.image : `${baseUrl}/${s.image}`}
+                          alt={s.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Users size={40} className="text-brand-muted" />
+                      )}
+                    </div>
                     <h3 className="font-bold text-lg text-brand-text truncate">{s.name}</h3>
                     <div className="flex justify-between items-center text-xs mt-2">
                       <span className={`px-2 py-1 rounded font-bold ${s.threat_level === 'HIGH' ? 'bg-red-950 text-red-500 border border-red-900/50' : s.threat_level === 'MEDIUM' ? 'bg-amber-950 text-amber-500 border border-amber-900/50' : 'bg-brand-bg text-brand-red border border-brand-border/50'}`}>{s.threat_level}</span>

@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isSupabaseConfigured } from '@/lib/demoAuth'
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -28,7 +29,12 @@ export async function middleware(request: NextRequest) {
   const protectedRoutes = ['/dashboard', '/analysis', '/heatmap', '/reports', '/settings', '/blockchain', '/watchlist']
   const isProtected = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route))
 
-  if (false) {
+  // Demo mode: with placeholder Supabase credentials there is no real session,
+  // so redirecting would lock everyone out of the Command Center. Once real
+  // credentials are configured, unauthenticated visits are sent to /login.
+  if (!isSupabaseConfigured() && isProtected) {
+    // no redirect: local demo operator
+  } else if (!user && isProtected) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

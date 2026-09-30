@@ -97,23 +97,23 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
     useEffect(() => {
         const fetchRealAnalytics = async () => {
             try {
-                // 1. Fetch Global Data
+                let gData: any = null;
                 const globalRes = await fetch(`${baseUrl}/analytics/global`);
                 if (globalRes.ok) {
-                    const gData = await globalRes.json();
+                    gData = await globalRes.json();
 
                     setAnalyticsData(prev => ({
                         ...prev,
-                        totalVisitors: gData.total_visitors,
-                        peakHour: gData.peak_hour,
-                        crowdDensity: Math.round(gData.peak_count * 1.5), // Estimate based on peak
+                        totalVisitors: gData.total_visitors ?? 0,
+                        peakHour: gData.peak_hour ?? '14:00',
+                        crowdDensity: Math.round((gData.peak_count ?? 0) * 1.5), // Estimate based on peak
                         incidentCount: gData.recent_alerts?.length || 0,
                         safetyScore: 95 - (gData.recent_alerts?.filter((a: any) => a.type === 'emergency').length * 20 || 0)
                     }));
 
-                    setHourlyData(gData.hourly_history.map((count: number, idx: number) => ({
+                    setHourlyData((gData.hourly_history || []).map((count: number, idx: number) => ({
                         hour: `${idx.toString().padStart(2, '0')}:00`,
-                        count
+                        count: count ?? 0
                     })));
                 }
 
@@ -121,19 +121,21 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                 const allRes = await fetch(`${baseUrl}/analytics/all`);
                 if (allRes.ok) {
                     const aData = await allRes.json();
-                    setZoneAnalysis(aData.cameras.map((cam: any) => ({
-                        zone: cam.zone,
-                        avgOccupancy: cam.people_count,
-                        peakOccupancy: cam.people_count, // Instantaneous for now
-                        riskLevel: cam.density > 70 ? 'high' : cam.density > 40 ? 'medium' : 'low',
+                    const camerasList = aData.cameras || [];
+                    setZoneAnalysis(camerasList.map((cam: any) => ({
+                        zone: cam.zone || 'Unknown',
+                        avgOccupancy: cam.people_count ?? 0,
+                        peakOccupancy: cam.people_count ?? 0, // Instantaneous for now
+                        riskLevel: (cam.density ?? 0) > 70 ? 'high' : (cam.density ?? 0) > 40 ? 'medium' : 'low',
                         incidents: 0
                     })));
 
+                    const totalCount = aData.total_people_count ?? aData.total_people ?? gData?.current_count ?? 0;
                     setTrends([
-                        { label: 'Visitor Count', value: aData.total_people_count, change: 0, trend: 'up' },
-                        { label: 'Active Cameras', value: aData.cameras.length, change: 0, trend: 'up' },
+                        { label: 'Visitor Count', value: totalCount, change: 0, trend: 'up' },
+                        { label: 'Active Cameras', value: camerasList.length, change: 0, trend: 'up' },
                         { label: 'Safety Score', value: 98, change: 0, trend: 'up' },
-                        { label: 'Peak Hour', value: 0, change: 0, trend: 'up' } // Placeholder for chart
+                        { label: 'Peak Hour', value: gData?.peak_count ?? 0, change: 0, trend: 'up' }
                     ]);
                 }
 
@@ -292,7 +294,7 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     <ArrowUpRight className="w-3 h-3" /> 12.5%
                                 </span>
                             </div>
-                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{analyticsData.totalVisitors.toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-brand-text">{(analyticsData.totalVisitors ?? 0).toLocaleString()}</div>
                             <div className="text-xs text-gray-500 dark:text-brand-muted">Tracked Subjects</div>
                         </div>
                         <div className="bg-white dark:bg-brand-card rounded-xl p-4 border border-gray-200 dark:border-brand-border">
@@ -375,11 +377,11 @@ export default function AnalysisPage({ user }: { user?: AppUser }) {
                                     <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-brand-bg/50 rounded-lg border border-gray-100 dark:border-gray-600">
                                         <div>
                                             <div className="text-sm text-gray-500 dark:text-brand-muted">{trend.label}</div>
-                                            <div className="text-xl font-bold text-gray-900 dark:text-brand-text">{trend.value.toLocaleString()}</div>
+                                            <div className="text-xl font-bold text-gray-900 dark:text-brand-text">{(trend.value ?? 0).toLocaleString()}</div>
                                         </div>
                                         <div className={`flex items-center gap-1 text-sm ${trend.trend === 'up' ? 'text-brand-muted dark:text-brand-text' : 'text-red-600 dark:text-red-400'}`}>
                                             {trend.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-                                            {Math.abs(trend.change)}%
+                                            {Math.abs(trend.change ?? 0)}%
                                         </div>
                                     </div>
                                 ))}

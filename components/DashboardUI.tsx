@@ -148,10 +148,13 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     id: a.id,
     msg: a.type === 'overcrowding' ? `High crowd density at ${a.zone}` :
       a.type === 'no_entry_violation' ? `Restricted zone breach at ${a.zone}` :
-        a.type === 'emergency' ? `EMERGENCY: ${a.zone}` : a.msg || 'System Notice',
+      a.type === 'intrusion' ? `Perimeter intrusion at ${a.zone}` :
+      a.type === 'ANPR_HOTLIST_HIT' ? `Wanted vehicle flagged at ${a.zone}` :
+      a.type === 'FACE_WATCHLIST_MATCH' ? `Suspect face matched at ${a.zone}` :
+      a.type === 'emergency' ? `EMERGENCY: ${a.zone}` : a.msg || 'System Notice',
     time: new Date(a.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     type: a.type === 'overcrowding' ? 'warning' :
-      a.type === 'no_entry_violation' ? 'error' :
+      (a.type === 'no_entry_violation' || a.type === 'intrusion' || a.type === 'ANPR_HOTLIST_HIT' || a.type === 'FACE_WATCHLIST_MATCH') ? 'error' :
         a.type === 'emergency' ? 'info' : 'success'
   }));
 

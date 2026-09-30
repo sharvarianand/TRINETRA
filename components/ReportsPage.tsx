@@ -178,9 +178,9 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                     setRealDailyReport({
                         date: new Date(),
                         totalIncidents: gData.recent_alerts?.length || 0,
-                        critical: gData.recent_alerts?.filter((a: any) => a.type === 'emergency' || a.type === 'no_entry_violation').length || 0,
+                        critical: gData.recent_alerts?.filter((a: any) => a.type === 'emergency' || a.type === 'no_entry_violation' || a.type === 'intrusion' || a.type === 'ANPR_HOTLIST_HIT' || a.type === 'FACE_WATCHLIST_MATCH').length || 0,
                         warnings: gData.recent_alerts?.filter((a: any) => a.type === 'overcrowding').length || 0,
-                        info: gData.recent_alerts?.filter((a: any) => a.type === 'system_error').length || 0,
+                        info: gData.recent_alerts?.filter((a: any) => a.type === 'system_error' || a.type === 'ANPR_DETECT').length || 0,
                         avgResponseTime: 4.2, // Mocked for now
                         peakCrowdDensity: Math.round(gData.peak_count * 1.5),
                         totalVisitors: gData.total_visitors
@@ -194,10 +194,10 @@ export default function ReportsPage({ user }: { user?: AppUser }) {
                     const mappedIncidents: Incident[] = aData.alerts.map((a: any) => ({
                         id: a.id,
                         timestamp: new Date(a.timestamp),
-                        type: a.type === 'emergency' || a.type === 'no_entry_violation' ? 'critical' :
+                        type: (a.type === 'emergency' || a.type === 'no_entry_violation' || a.type === 'intrusion' || a.type === 'ANPR_HOTLIST_HIT' || a.type === 'FACE_WATCHLIST_MATCH') ? 'critical' :
                             a.type === 'overcrowding' ? 'warning' : 'info',
                         category: a.type.split('_').map((s: string) => s.charAt(0).toUpperCase() + s.slice(1)).join(' '),
-                        title: `${a.type.replace('_', ' ')} at ${a.zone}`,
+                        title: a.msg || `${a.type.replace(/_/g, ' ')} at ${a.zone}`,
                         description: `Automated detection system flagged ${a.type} in ${a.zone}. People count: ${a.people_count}, Threshold: ${a.max_capacity}.`,
                         zone: a.zone,
                         status: a.acknowledged ? 'resolved' : 'pending',

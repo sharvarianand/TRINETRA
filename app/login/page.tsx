@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { createClient } from '@/utils/supabase/client';
+import { isSupabaseConfigured } from '@/lib/demoAuth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,11 +23,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      if (false) {
+      // Demo mode: with placeholder Supabase credentials there is no auth
+      // backend to verify against, so any input signs in. Supply real
+      // NEXT_PUBLIC_SUPABASE_URL / ANON_KEY and this becomes a real check.
+      if (isSupabaseConfigured()) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      } else {
-        const error = null;
         if (error) throw error;
       }
       router.push('/dashboard');
