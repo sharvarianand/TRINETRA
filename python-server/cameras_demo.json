@@ -1,0 +1,37 @@
+{
+    "cameras": [
+        {
+            "id": "cam-gate-1",
+            "name": "Fence Line Alpha",
+            "url": "samples/people-detection.mp4",
+            "zone": "Sector A",
+            "enabled": true,
+            "area": 1200,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 3
+        },
+        {
+            "id": "cam-perim-2",
+            "name": "Observation Post Bravo",
+            "url": "samples/car-detection.mp4",
+            "zone": "Sector B",
+            "enabled": true,
+            "area": 2400,
+            "areaUnit": "sqm",
+            "densityLevel": "low",
+            "capacity": 6
+        },
+        {
+            "id": "cam-check-3",
+            "name": "Check Post Charlie",
+            "url": "samples/face-demographics-walking.mp4",
+            "zone": "Sector C",
+            "enabled": true,
+            "area": 800,
+            "areaUnit": "sqm",
+            "densityLevel": "high",
+            "capacity": 2
+        }
+    ]
+}

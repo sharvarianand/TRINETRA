@@ -252,13 +252,128 @@ def get_yolo_model():
             yolo_model = None
     return yolo_model
 
+reload_captures_flag = False
+
+def trigger_reload_captures():
+    global reload_captures_flag
+    reload_captures_flag = True
+
+def is_demo_mode() -> bool:
+    settings_path = Path(__file__).parent / "settings.json"
+    try:
+        with open(settings_path, "r") as f:
+            data = json.load(f)
+            return bool(data.get("demoMode", True))
+    except Exception:
+        return True
+
+def get_cameras_file() -> Path:
+    if is_demo_mode():
+        return Path(__file__).parent / "cameras_demo.json"
+    else:
+        return Path(__file__).parent / "cameras_live.json"
+
+DEFAULT_DEMO_CAMERAS = {
+    "cameras": [
+        {
+            "id": "cam-gate-1",
+            "name": "Fence Line Alpha",
+            "url": "samples/people-detection.mp4",
+            "zone": "Sector A",
+            "enabled": True,
+            "area": 1200,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 3
+        },
+        {
+            "id": "cam-perim-2",
+            "name": "Observation Post Bravo",
+            "url": "samples/car-detection.mp4",
+            "zone": "Sector B",
+            "enabled": True,
+            "area": 2400,
+            "areaUnit": "sqm",
+            "densityLevel": "low",
+            "capacity": 6
+        },
+        {
+            "id": "cam-check-3",
+            "name": "Check Post Charlie",
+            "url": "samples/face-demographics-walking.mp4",
+            "zone": "Sector C",
+            "enabled": True,
+            "area": 800,
+            "areaUnit": "sqm",
+            "densityLevel": "high",
+            "capacity": 2
+        }
+    ]
+}
+
+DEFAULT_LIVE_CAMERAS = {
+    "cameras": [
+        {
+            "id": "cam-live-1",
+            "name": "Optical Sensor 01 (Webcam 0)",
+            "url": "0",
+            "zone": "Sector A",
+            "enabled": True,
+            "area": 500,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 10
+        },
+        {
+            "id": "cam-live-2",
+            "name": "Mobile Node (DroidCam)",
+            "url": "http://192.168.1.100:4747/video",
+            "zone": "Sector B",
+            "enabled": False,
+            "area": 1000,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 20
+        },
+        {
+            "id": "cam-live-3",
+            "name": "Perimeter Surveillance (RTSP)",
+            "url": "rtsp://admin:password@192.168.1.200:554/stream1",
+            "zone": "Sector C",
+            "enabled": False,
+            "area": 1500,
+            "areaUnit": "sqm",
+            "densityLevel": "low",
+            "capacity": 30
+        }
+    ]
+}
+
 def load_cameras():
-    config_path = Path(__file__).parent / "cameras.json"
+    config_path = get_cameras_file()
+    if not config_path.exists():
+        fallback_data = DEFAULT_DEMO_CAMERAS if is_demo_mode() else DEFAULT_LIVE_CAMERAS
+        try:
+            with open(config_path, "w") as f:
+                json.dump(fallback_data, f, indent=4)
+        except Exception:
+            pass
+        return fallback_data
     try:
         with open(config_path, "r") as f:
             return json.load(f)
     except Exception:
-        return {"cameras": []}
+        return DEFAULT_DEMO_CAMERAS if is_demo_mode() else DEFAULT_LIVE_CAMERAS
+
+def save_cameras(cameras_data):
+    config_path = get_cameras_file()
+    with open(config_path, "w") as f:
+        json.dump(cameras_data, f, indent=4)
+    try:
+        with open(Path(__file__).parent / "cameras.json", "w") as f:
+            json.dump(cameras_data, f, indent=4)
+    except Exception:
+        pass
 
 VIDEO_EXTENSIONS = (".mp4", ".avi", ".mov", ".mkv", ".webm")
 
@@ -308,12 +423,31 @@ def background_processing_loop():
     model = get_yolo_model()
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-    ph = np.zeros((480, 640, 3), dtype=np.uint8)
-    cv2.putText(ph, "Connecting to camera feed...", (120, 240), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 100), 2)
-    _, ph_buf = cv2.imencode('.jpg', ph)
-    ph_bytes = ph_buf.tobytes()
-
     camera_captures = {}
+
+    def make_placeholder_frame(cam_name: str, zone: str, url: str, is_demo: bool) -> bytes:
+        img = np.zeros((480, 640, 3), dtype=np.uint8)
+        img[:] = (18, 18, 22)
+        cv2.rectangle(img, (15, 15), (625, 465), (45, 45, 55), 2)
+        if is_demo:
+            cv2.rectangle(img, (15, 15), (625, 75), (20, 110, 220), -1)
+            cv2.putText(img, "DEMO MODE: SIMULATED FEED", (30, 52), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+            cv2.putText(img, f"Channel: {cam_name}", (35, 125), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (220, 220, 220), 1)
+            cv2.putText(img, f"Sector: {zone}", (35, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (180, 180, 180), 1)
+            cv2.putText(img, f"Clip: {url}", (35, 195), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (140, 140, 140), 1)
+            cv2.putText(img, "Loading video sequence...", (35, 260), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 215, 255), 2)
+        else:
+            cv2.rectangle(img, (15, 15), (625, 75), (20, 20, 160), -1)
+            cv2.putText(img, "NORMAL MODE: HARDWARE OFFLINE", (30, 52), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+            cv2.putText(img, f"Channel: {cam_name}", (35, 125), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (220, 220, 220), 1)
+            cv2.putText(img, f"Sector: {zone}", (35, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (180, 180, 180), 1)
+            cv2.putText(img, f"Hardware Target: {url}", (35, 195), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (140, 140, 140), 1)
+            cv2.putText(img, "No physical video stream signal detected.", (35, 250), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 120, 255), 2)
+            cv2.putText(img, "Attach Webcam 0 / RTSP stream or switch to DEMO MODE.", (35, 285), cv2.FONT_HERSHEY_SIMPLEX, 0.48, (200, 200, 200), 1)
+
+        cv2.putText(img, "TRINETRA TACTICAL SURVEILLANCE v2.4", (35, 440), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (100, 100, 100), 1)
+        _, buf = cv2.imencode('.jpg', img)
+        return buf.tobytes()
 
     def get_capture(cam_info):
         cid = cam_info["id"]
@@ -326,20 +460,42 @@ def background_processing_loop():
                 return None
         else:
             target_url = raw_url
-            if str(target_url).startswith("http://") and target_url.count(":") == 1:
+            if str(target_url).isdigit():
+                target_url = int(target_url)
+            elif str(target_url).startswith("http://") and target_url.count(":") == 1:
                 target_url = target_url.rstrip("/") + ":4747/video"
             elif ":4747" in target_url and not target_url.endswith("/video"):
                 target_url = target_url.rstrip("/") + "/video"
 
         cap = camera_captures.get(cid)
         if cap is None or not cap.isOpened():
-            cap = cv2.VideoCapture(int(target_url) if str(target_url).isdigit() else target_url)
-            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-            camera_captures[cid] = cap
+            try:
+                cap = cv2.VideoCapture(target_url)
+                cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+                if cap.isOpened():
+                    camera_captures[cid] = cap
+                else:
+                    return None
+            except Exception:
+                return None
         return cap
 
     while True:
         try:
+            global reload_captures_flag
+            if reload_captures_flag:
+                for cid, cap in list(camera_captures.items()):
+                    try:
+                        cap.release()
+                    except Exception:
+                        pass
+                camera_captures.clear()
+                latest_raw_frames_map.clear()
+                camera_latest_frames.clear()
+                camera_latest_coords.clear()
+                reload_captures_flag = False
+
+            demo_active = is_demo_mode()
             cameras = load_cameras().get("cameras", [])
             active_cams = [c for c in cameras if c.get("enabled") and c.get("url")]
 
@@ -350,8 +506,11 @@ def background_processing_loop():
             for cam in active_cams:
                 cid = cam["id"]
                 czone = cam.get("zone", "Sector A")
+                cname = cam.get("name", cid)
+                curl = str(cam.get("url", ""))
                 cap = get_capture(cam)
                 if cap is None or not cap.isOpened():
+                    ph_bytes = make_placeholder_frame(cname, czone, curl, demo_active)
                     camera_latest_frames[cid] = {"boxes": ph_bytes, "privacy": ph_bytes}
                     continue
 
@@ -361,6 +520,8 @@ def background_processing_loop():
                         cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                         success, frame = cap.read()
                     if not success:
+                        ph_bytes = make_placeholder_frame(cname, czone, curl, demo_active)
+                        camera_latest_frames[cid] = {"boxes": ph_bytes, "privacy": ph_bytes}
                         continue
 
                 latest_raw_frames_map[cid] = frame
@@ -633,29 +794,28 @@ class CameraConfig(BaseModel):
 
 @app.post("/cameras")
 def add_camera(camera: CameraConfig):
-    config_path = Path(__file__).parent / "cameras.json"
     cameras_data = load_cameras()
     if "cameras" not in cameras_data: cameras_data["cameras"] = []
     cameras_data["cameras"] = [c for c in cameras_data["cameras"] if c.get("id") != camera.id]
     cameras_data["cameras"].append(camera.dict())
-    with open(config_path, "w") as f: json.dump(cameras_data, f, indent=4)
+    save_cameras(cameras_data)
+    trigger_reload_captures()
     return {"status": "success"}
 
 @app.delete("/cameras/{camera_id}")
 def delete_camera(camera_id: str):
-    config_path = Path(__file__).parent / "cameras.json"
     cameras_data = load_cameras()
     if "cameras" not in cameras_data: return {"status": "not_found"}
     original_len = len(cameras_data["cameras"])
     cameras_data["cameras"] = [c for c in cameras_data["cameras"] if c.get("id") != camera_id]
     if len(cameras_data["cameras"]) < original_len:
-        with open(config_path, "w") as f: json.dump(cameras_data, f, indent=4)
+        save_cameras(cameras_data)
+        trigger_reload_captures()
         return {"status": "deleted"}
     return {"status": "not_found"}
 
 @app.put("/cameras/{camera_id}")
 async def update_camera(camera_id: str, updates: dict):
-    config_path = Path(__file__).parent / "cameras.json"
     cameras_data = load_cameras()
     if "cameras" not in cameras_data: return {"status": "not_found"}
 
@@ -667,8 +827,8 @@ async def update_camera(camera_id: str, updates: dict):
             break
 
     if found:
-        with open(config_path, "w") as f:
-            json.dump(cameras_data, f, indent=4)
+        save_cameras(cameras_data)
+        trigger_reload_captures()
         return {"status": "success"}
     return {"status": "not_found"}
 
@@ -858,24 +1018,48 @@ async def trigger_emergency_alert(alert: EmergencyAlert):
 @app.get("/settings")
 def get_settings():
     path = Path(__file__).parent / "settings.json"
+    defaults = {
+        "lowBandwidthMode": False,
+        "privacyMaskingEnabled": False,
+        "autoRefreshInterval": 2000,
+        "showDensityOverlay": True,
+        "alertSoundEnabled": True,
+        "demoMode": True
+    }
     try:
         with open(path, "r") as f:
-            return json.load(f)
+            data = json.load(f)
+            defaults.update(data)
+            return defaults
     except:
-        return {
-            "lowBandwidthMode": False,
-            "privacyMaskingEnabled": False,
-            "autoRefreshInterval": 2000,
-            "showDensityOverlay": True,
-            "alertSoundEnabled": True
-        }
+        return defaults
 
 @app.put("/settings")
 async def update_settings(settings: dict):
     path = Path(__file__).parent / "settings.json"
+    current = get_settings()
+    mode_changed = ("demoMode" in settings and settings["demoMode"] != current.get("demoMode"))
+    current.update(settings)
+    with open(path, "w") as f:
+        json.dump(current, f, indent=4)
+    if mode_changed:
+        trigger_reload_captures()
+    return {"status": "success", "settings": current}
+
+@app.get("/api/mode")
+def get_mode():
+    return {"demoMode": is_demo_mode()}
+
+@app.post("/api/mode")
+def set_mode(payload: dict):
+    demo_mode = bool(payload.get("demoMode", False))
+    settings = get_settings()
+    settings["demoMode"] = demo_mode
+    path = Path(__file__).parent / "settings.json"
     with open(path, "w") as f:
         json.dump(settings, f, indent=4)
-    return {"status": "success"}
+    trigger_reload_captures()
+    return {"status": "success", "demoMode": demo_mode}
 
 @app.get("/api/alert/history")
 def get_alert_history(limit: int = 50):

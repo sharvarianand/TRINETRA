@@ -1,0 +1,37 @@
+{
+    "cameras": [
+        {
+            "id": "cam-live-1",
+            "name": "Optical Sensor 01 (Webcam 0)",
+            "url": "0",
+            "zone": "Sector A",
+            "enabled": true,
+            "area": 500,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 10
+        },
+        {
+            "id": "cam-live-2",
+            "name": "Mobile Node (DroidCam)",
+            "url": "http://192.168.1.100:4747/video",
+            "zone": "Sector B",
+            "enabled": false,
+            "area": 1000,
+            "areaUnit": "sqm",
+            "densityLevel": "medium",
+            "capacity": 20
+        },
+        {
+            "id": "cam-live-3",
+            "name": "Perimeter Surveillance (RTSP)",
+            "url": "rtsp://admin:password@192.168.1.200:554/stream1",
+            "zone": "Sector C",
+            "enabled": false,
+            "area": 1500,
+            "areaUnit": "sqm",
+            "densityLevel": "low",
+            "capacity": 30
+        }
+    ]
+}

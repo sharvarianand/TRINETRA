@@ -34,7 +34,8 @@ import { Upload,
     Ruler,
     Calculator,
     Pencil,
-    Network
+    Network,
+    Shield
 } from 'lucide-react';
 import Logo from './Logo';
 
@@ -48,6 +49,7 @@ interface SettingsData {
     showDensityOverlay: boolean;
     alertSoundEnabled: boolean;
     droidCamUrl?: string;
+    demoMode?: boolean;
 }
 
 interface NewCameraForm {
@@ -70,7 +72,8 @@ const defaultSettings: SettingsData = {
     autoRefreshInterval: 2000,
     showDensityOverlay: true,
     alertSoundEnabled: true,
-    droidCamUrl: ''
+    droidCamUrl: '',
+    demoMode: true
 };
 
 const defaultNewCamera: NewCameraForm = {
@@ -234,6 +237,20 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
         setSaved(true);
         setHasChanges(false);
         setTimeout(() => setSaved(false), 3000);
+    };
+
+    const handleModeSwitch = async (isDemo: boolean) => {
+        updateSetting('demoMode', isDemo);
+        try {
+            await fetch(`${baseUrl}/api/mode`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ demoMode: isDemo })
+            });
+            await fetchCameras();
+        } catch (e) {
+            console.error('Failed to switch mode in settings:', e);
+        }
     };
 
     // Camera management functions
@@ -517,6 +534,76 @@ export default function SettingsPage({ user }: { user?: AppUser }) {
                     <div className="max-w-4xl mx-auto">
                         {/* Settings Sections */}
                         <div className="space-y-6">
+                            {/* Surveillance Operation Mode */}
+                            <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border shadow-sm">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div>
+                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-brand-text flex items-center gap-2">
+                                            <Shield className="w-5 h-5 text-brand-red" />
+                                            Surveillance Operation Mode
+                                        </h3>
+                                        <p className="text-sm text-gray-500 dark:text-brand-muted mt-1">
+                                            Switch between Live Hardware Streams and Demo Simulation Mode
+                                        </p>
+                                    </div>
+                                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                        settings.demoMode 
+                                            ? 'bg-amber-500/15 text-amber-500 border border-amber-500/30' 
+                                            : 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/30'
+                                    }`}>
+                                        {settings.demoMode ? '⚡ DEMO SIMULATION' : '📡 NORMAL (LIVE)'}
+                                    </span>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleModeSwitch(false)}
+                                        className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                                            !settings.demoMode
+                                                ? 'bg-emerald-500/10 border-emerald-500/50 shadow-sm ring-1 ring-emerald-500/30'
+                                                : 'bg-gray-50 dark:bg-brand-bg/40 border-gray-200 dark:border-brand-border hover:border-gray-300 dark:hover:border-zinc-700'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className="font-bold text-gray-900 dark:text-zinc-100 flex items-center gap-2">
+                                                <span className={`w-2.5 h-2.5 rounded-full ${!settings.demoMode ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'}`} />
+                                                Normal Mode (Live Hardware)
+                                            </span>
+                                            {!settings.demoMode && (
+                                                <span className="text-xs font-semibold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded">Active</span>
+                                            )}
+                                        </div>
+                                        <p className="text-xs text-gray-500 dark:text-zinc-400">
+                                            Operate with physical camera hardware (Webcam 0, RTSP security cameras, DroidCam wireless mobile feed).
+                                        </p>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => handleModeSwitch(true)}
+                                        className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                                            settings.demoMode
+                                                ? 'bg-amber-500/10 border-amber-500/50 shadow-sm ring-1 ring-amber-500/30'
+                                                : 'bg-gray-50 dark:bg-brand-bg/40 border-gray-200 dark:border-brand-border hover:border-gray-300 dark:hover:border-zinc-700'
+                                        }`}
+                                    >
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className="font-bold text-gray-900 dark:text-zinc-100 flex items-center gap-2">
+                                                <span className={`w-2.5 h-2.5 rounded-full ${settings.demoMode ? 'bg-amber-500 animate-ping' : 'bg-zinc-400'}`} />
+                                                Demo Mode (Simulated Streams)
+                                            </span>
+                                            {settings.demoMode && (
+                                                <span className="text-xs font-semibold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">Active</span>
+                                            )}
+                                        </div>
+                                        <p className="text-xs text-gray-500 dark:text-zinc-400">
+                                            Run automated AI verification using bundled video clips with pre-staged intrusions, license plate hotlist, and suspect facial matches.
+                                        </p>
+                                    </button>
+                                </div>
+                            </div>
+
                             {/* Camera Configuration */}
                             <div className="bg-white dark:bg-brand-card rounded-xl p-6 border border-gray-200 dark:border-brand-border">
                                 <div className="flex items-center justify-between mb-1">

@@ -124,7 +124,7 @@ export default function CameraGrid({ className = '', settings }: { className?: s
     fetchCameras();
     const interval = setInterval(fetchCameras, 10000);
     return () => clearInterval(interval);
-  }, [serverUrl]);
+  }, [serverUrl, settings?.demoMode]);
 
   if (!isMounted) {
     return (
@@ -146,6 +146,15 @@ export default function CameraGrid({ className = '', settings }: { className?: s
           <span className="text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-700 px-2 py-0.5 rounded-full">
             {liveCameras.length} active
           </span>
+          {settings?.demoMode ? (
+            <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-amber-500/15 text-amber-500 border border-amber-500/30 flex items-center gap-1">
+              ⚡ Demo Simulation
+            </span>
+          ) : (
+            <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 flex items-center gap-1">
+              📡 Hardware Feeds
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           {serverConnected ? (
@@ -216,10 +225,11 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
 
   const privacyEnabled = settings?.privacyMaskingEnabled;
   const lowBandwidth = settings?.lowBandwidthMode;
+  const modeKey = settings?.demoMode ? 'demo' : 'normal';
 
   const videoFeedUrl = privacyEnabled
-    ? `${serverUrl}/stream-with-privacy?camera_id=${camera.id}`
-    : `${serverUrl}/stream-with-boxes?camera_id=${camera.id}`;
+    ? `${serverUrl}/stream-with-privacy?camera_id=${camera.id}&mode=${modeKey}`
+    : `${serverUrl}/stream-with-boxes?camera_id=${camera.id}&mode=${modeKey}`;
 
   const capacity = camera.capacity ?? 50;
   const isNoEntryZone = capacity === 0;
@@ -344,7 +354,7 @@ function LiveCameraFeed({ camera, serverUrl, settings }: LiveCameraFeedProps) {
         ) : !hasError ? (
           <>
             <img
-              key={`feed-${retryCount}-${privacyEnabled}`}
+              key={`feed-${camera.id}-${retryCount}-${privacyEnabled}-${modeKey}`}
               src={videoFeedUrl}
               alt={camera.name}
               className="w-full h-full object-cover"

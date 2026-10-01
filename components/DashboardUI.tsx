@@ -81,6 +81,7 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     autoRefreshInterval: number;
     showDensityOverlay: boolean;
     alertSoundEnabled: boolean;
+    demoMode?: boolean;
   }
 
   const [settings, setSettings] = useState<SettingsData>({
@@ -88,10 +89,42 @@ export default function DashboardUI({ user }: DashboardUIProps) {
     privacyMaskingEnabled: false,
     autoRefreshInterval: 2000,
     showDensityOverlay: true,
-    alertSoundEnabled: true
+    alertSoundEnabled: true,
+    demoMode: true
   });
 
+  const [isSwitchingMode, setIsSwitchingMode] = useState(false);
+
   const baseUrl = process.env.NEXT_PUBLIC_PYTHON_SERVER_URL || 'http://localhost:8000';
+
+  const handleModeToggle = async (targetDemoMode: boolean) => {
+    if (settings.demoMode === targetDemoMode && !isSwitchingMode) return;
+    setIsSwitchingMode(true);
+    setSettings(prev => ({ ...prev, demoMode: targetDemoMode }));
+    try {
+      const res = await fetch(`${baseUrl}/api/mode`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ demoMode: targetDemoMode })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSettings(prev => ({ ...prev, demoMode: data.demoMode }));
+        const camsRes = await fetch(`${baseUrl}/cameras`);
+        if (camsRes.ok) {
+          const camsData = await camsRes.json();
+          setGlobalData(prev => ({
+            ...prev,
+            active_cameras: (camsData.cameras || []).filter((c: any) => c.enabled).length
+          }));
+        }
+      }
+    } catch (err) {
+      console.error('Dashboard: Failed to toggle mode:', err);
+    } finally {
+      setIsSwitchingMode(false);
+    }
+  };
 
   // Helper: Get user initials
   function getUserInitials() {
@@ -328,9 +361,54 @@ export default function DashboardUI({ user }: DashboardUIProps) {
         <div className="flex-1 flex flex-col">
           {/* Top Bar */}
           <header className="bg-white dark:bg-brand-card border-b border-gray-200 dark:border-brand-border px-6 py-4 flex items-center justify-between transition-colors duration-200">
-            <div>
-              <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Dashboard</h1>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">Real-time crowd monitoring</p>
+            <div className="flex flex-wrap items-center gap-4 md:gap-6">
+              <div>
+                <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Dashboard</h1>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Real-time crowd monitoring</p>
+              </div>
+
+              {/* Tactical Mode Toggle (Conspicuous Non-Discrete Switch) */}
+              <div className="flex items-center bg-zinc-100 dark:bg-zinc-900/90 p-1 rounded-xl border border-zinc-200 dark:border-brand-border shadow-inner">
+                <button
+                  type="button"
+                  disabled={isSwitchingMode}
+                  onClick={() => handleModeToggle(false)}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer ${
+                    !settings.demoMode
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950/40 ring-1 ring-emerald-400/50'
+                      : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
+                  }`}
+                  title="Switch to Normal Mode (Live hardware camera streams: Webcam, RTSP, DroidCam)"
+                >
+                  <span className={`w-2 h-2 rounded-full ${!settings.demoMode ? 'bg-white animate-pulse' : 'bg-emerald-500/50'}`} />
+                  <span>NORMAL (LIVE)</span>
+                </button>
+
+                <button
+                  type="button"
+                  disabled={isSwitchingMode}
+                  onClick={() => handleModeToggle(true)}
+                  className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold tracking-wide transition-all duration-200 cursor-pointer ${
+                    settings.demoMode
+                      ? 'bg-amber-500 text-zinc-950 font-extrabold shadow-md shadow-amber-950/40 ring-1 ring-amber-300'
+                      : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50'
+                  }`}
+                  title="Switch to Demo Mode (Bundled video streams with pre-staged AI detections)"
+                >
+                  <span className={`w-2 h-2 rounded-full ${settings.demoMode ? 'bg-zinc-950 animate-ping' : 'bg-amber-500/50'}`} />
+                  <span>DEMO MODE</span>
+                </button>
+              </div>
+
+              {settings.demoMode ? (
+                <span className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/25">
+                  ⚡ Pre-staged Targets Active (Intrusion • ANPR • Face Match)
+                </span>
+              ) : (
+                <span className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25">
+                  📡 Live Hardware Feeds Active (Webcam 0 • RTSP • Mobile)
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-4">
               {/* Theme Toggle Button */}
